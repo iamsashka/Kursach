@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru"
+      th:with="theme=${currentTheme != null ? currentTheme : 'light'}"
+      th:attr="data-theme=${currentTheme}">
+<head>
+    <title>Корзина - TARENO</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/nav.css}">
+    <link rel="stylesheet" th:href="@{/css/cart.css}">
+</head>
+<body>
+<div th:replace="~{fragments/nav :: navbar}"></div>
+
+<div class="page-header bg-light py-4">
+    <div class="container">
+        <h1 class="page-title mb-2">КОРЗИНА ПОКУПОК</h1>
+        <p class="page-subtitle text-muted mb-0">Ваши выбранные товары</p>
+    </div>
+</div>
+
+<div class="container py-5">
+    <!-- Уведомления -->
+    <div th:if="${success}" class="alert alert-success alert-dismissible fade show mb-4">
+        <i class="fas fa-check-circle me-2"></i><span th:text="${success}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show mb-4">
+        <i class="fas fa-exclamation-circle me-2"></i><span th:text="${error}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <div class="row">
+        <!-- Товары в корзине -->
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-shopping-cart fa-lg me-3 text-primary"></i>
+                            <div>
+                                <h5 class="mb-1">В вашей корзине
+                                    <span th:text="${cartItems != null ? cartItems.size() : 0}" class="text-primary">0</span> товара(ов)
+                                </h5>
+                                <p class="mb-0 text-muted small">Проверьте состав заказа перед оформлением</p>
+                            </div>
+                        </div>
+                        <div th:if="${cartItems != null and not cartItems.empty}">
+                            <form th:action="@{/cart/clear}" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                    <i class="fas fa-trash me-1"></i>Очистить корзину
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body p-0">
+                    <!-- Сообщение если корзина пуста -->
+                    <div th:if="${cartItems == null or cartItems.empty}" class="text-center py-5">
+                        <i class="fas fa-shopping-cart fa-4x text-muted mb-4"></i>
+                        <h4 class="text-muted mb-3">Корзина пуста</h4>
+                        <p class="text-muted mb-4">Добавьте товары из каталога</p>
+                        <a th:href="@{/catalog}" class="btn btn-primary btn-lg">
+                            <i class="fas fa-bag-shopping me-2"></i>ПЕРЕЙТИ В КАТАЛОГ
+                        </a>
+                    </div>
+
+                    <!-- Список товаров -->
+                    <div th:each="item : ${cartItems}" th:if="${cartItems != null and not cartItems.empty}"
+                         class="cart-item border-bottom p-4">
+                        <div class="row align-items-center">
+                            <!-- Изображение -->
+                            <div class="col-2">
+                                <div class="cart-item-image">
+                                    <img th:if="${item?.product?.images != null and not item.product.images.empty}"
+                                         th:src="@{${item.product.images[0].imageUrl}}"
+                                         th:alt="${item?.product?.name}"
+                                         class="img-fluid w-100 h-100" style="object-fit: cover;">
+                                    <div th:unless="${item?.product?.images != null and not item.product.images.empty}"
+                                         class="cart-item-placeholder">
+                                        <i class="fas fa-tshirt"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Информация о товаре -->
+                            <div class="col-4">
+                                <h6 class="cart-item-name">
+                                    <a th:href="@{/products/{id}(id=${item?.product?.id})}" class="text-decoration-none text-dark">
+                                        <span th:text="${item?.product?.name}">Товар</span>
+                                    </a>
+                                </h6>
+                                <p class="cart-item-brand text-muted small"
+                                   th:text="${item?.product?.brand?.name}">Бренд</p>
+                                <div class="cart-item-attributes">
+                                    <span th:if="${item?.size}" class="badge bg-light text-dark me-1"
+                                          th:text="${item.size}"></span>
+                                    <span th:if="${item?.color}" class="badge bg-light text-dark"
+                                          th:text="${item.color}"></span>
+                                </div>
+                            </div>
+
+                            <!-- Управление количеством -->
+                            <div class="col-3">
+                                <div class="quantity-controls">
+                                    <form th:action="@{/cart/update}" method="post" class="d-inline">
+                                        <input type="hidden" name="itemId" th:value="${item?.id}">
+                                        <input type="hidden" name="quantity" th:value="${item.quantity - 1}">
+                                        <button type="submit" class="btn btn-outline-secondary btn-sm"
+                                                th:disabled="${item.quantity <= 1}">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                    </form>
+
+                                    <span class="quantity-display" th:text="${item.quantity}">1</span>
+
+                                    <form th:action="@{/cart/update}" method="post" class="d-inline">
+                                        <input type="hidden" name="itemId" th:value="${item?.id}">
+                                        <input type="hidden" name="quantity" th:value="${item.quantity + 1}">
+                                        <button type="submit" class="btn btn-outline-secondary btn-sm"
+                                                th:disabled="${item.quantity >= item.product.stockQuantity}">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="stock-info small text-muted">
+                                    В наличии: <span th:text="${item.product.stockQuantity}">0</span> шт.
+                                </div>
+                            </div>
+
+                            <!-- Цена -->
+                            <div class="col-2 text-end">
+                                <div class="cart-item-price">
+                                    <span th:text="|₽${#numbers.formatDecimal(item.product.price * item.quantity, 0, 'COMMA', 2, 'POINT')}|">₽0</span>
+                                    <div th:if="${item.product.originalPrice > item.product.price}"
+                                         class="original-price text-muted text-decoration-line-through small">
+                                        <span th:text="|₽${#numbers.formatDecimal(item.product.originalPrice * item.quantity, 0, 'COMMA', 2, 'POINT')}|"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Удаление -->
+                            <div class="col-1 text-end">
+                                <form th:action="@{/cart/remove}" method="post" class="d-inline">
+                                    <input type="hidden" name="itemId" th:value="${item?.id}">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer bg-white" th:if="${cartItems != null and not cartItems.empty}">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a th:href="@{/catalog}" class="btn btn-outline-primary">
+                            <i class="fas fa-arrow-left me-2"></i>ПРОДОЛЖИТЬ ПОКУПКИ
+                        </a>
+                        <span class="text-muted small">
+                            Бесплатная доставка от ₽200 000
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Боковая панель с итогами -->
+        <div class="col-lg-4 mt-4 mt-lg-0">
+            <div class="card shadow-sm sticky-top" style="top: 20px;">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0"><i class="fas fa-receipt me-2"></i>ИТОГИ ЗАКАЗА</h5>
+                </div>
+                <div class="card-body">
+                    <div class="summary-item d-flex justify-content-between mb-2">
+                        <span class="text-muted">Товары (<span th:text="${cartItems != null ? cartItems.size() : 0}">0</span> шт.)</span>
+                        <span th:text="|₽${#numbers.formatDecimal(subtotal != null ? subtotal : 0, 0, 'COMMA', 2, 'POINT')}|">₽0</span>
+                    </div>
+
+                    <div th:if="${totalDiscount > 0}" class="summary-item d-flex justify-content-between mb-2">
+                        <span class="text-success">Скидка</span>
+                        <span class="text-success" th:text="|-₽${#numbers.formatDecimal(totalDiscount, 0, 'COMMA', 2, 'POINT')}|"></span>
+                    </div>
+
+                    <div class="summary-item d-flex justify-content-between mb-2">
+                        <span class="text-muted">Доставка</span>
+                        <span th:if="${deliveryCost == 0}" class="text-success">БЕСПЛАТНО</span>
+                        <span th:if="${deliveryCost > 0}" th:text="|₽${#numbers.formatDecimal(deliveryCost, 0, 'COMMA', 2, 'POINT')}|">₽0</span>
+                    </div>
+
+                    <hr>
+
+                    <div class="summary-total d-flex justify-content-between mb-4">
+                        <strong class="fs-5">К ОПЛАТЕ</strong>
+                        <strong class="fs-5" th:text="|₽${#numbers.formatDecimal(finalTotal != null ? finalTotal : 0, 0, 'COMMA', 2, 'POINT')}|">₽0</strong>
+                    </div>
+
+                    <form th:action="@{/checkout}" method="get">
+                        <button type="submit" class="btn btn-success w-100 btn-lg py-3 fw-bold"
+                                th:disabled="${cartItems == null or cartItems.empty}">
+                            <i class="fas fa-credit-card me-2"></i>ПЕРЕЙТИ К ОФОРМЛЕНИЮ
+                        </button>
+                    </form>
+
+                    <!-- Промокод -->
+                    <div class="mt-4">
+                        <h6 class="mb-3"><i class="fas fa-tag me-2"></i>ПРОМОКОД</h6>
+                        <form th:action="@{/cart/apply-promo}" method="post">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="promoCode"
+                                       placeholder="Введите промокод"
+                                       th:disabled="${cartItems == null or cartItems.empty}">
+                                <button type="submit" class="btn btn-outline-primary"
+                                        th:disabled="${cartItems == null or cartItems.empty}">
+                                    ПРИМЕНИТЬ
+                                </button>
+                            </div>
+                        </form>
+                        <div class="mt-2">
+                            <small class="text-muted">Примеры промокодов: WELCOME10, SUMMER2024</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

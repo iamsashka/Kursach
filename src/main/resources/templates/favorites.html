@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru"
+      th:with="theme=${currentTheme != null ? currentTheme : 'light'}"
+      th:attr="data-theme=${currentTheme}">
+<head>
+    <title>Избранные товары - TARENO</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/nav.css}">
+    <link rel="stylesheet" th:href="@{/css/favorite.css}">
+</head>
+<body class="favorites-page">
+<div th:replace="~{fragments/nav :: navbar}"></div>
+
+<!-- Уведомления -->
+<div th:if="${success}" class="alert alert-success alert-dismissible fade show mb-0" role="alert" style="border-radius: 0; border: none;">
+    <div class="container">
+        <i class="fas fa-check me-2"></i>
+        <span th:text="${success}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+</div>
+
+<div th:if="${error}" class="alert alert-danger alert-dismissible fade show mb-0" role="alert" style="border-radius: 0; border: none;">
+    <div class="container">
+        <i class="fas fa-times me-2"></i>
+        <span th:text="${error}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+</div>
+
+<!-- Уведомление о достижении лимита -->
+<div th:if="${limitReached}" class="alert alert-warning alert-dismissible fade show mb-0" role="alert" style="border-radius: 0; border: none;">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                <strong>Достигнут лимит избранного!</strong><br>
+                <small>
+                    У вас уже 100 товаров в избранном. Хотите заменить
+                    "<span th:text="${oldestProductName ?: 'старый товар'}"></span>"
+                    на "<span th:text="${newProductName ?: 'новый товар'}"></span>"?
+                </small>
+            </div>
+            <div class="col-md-4 text-end">
+                <form th:action="@{/api/favorites/replace-oldest}" method="post" class="d-inline">
+                    <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <input type="hidden" name="newProductId" th:value="${newProductId}">
+                    <input type="hidden" name="oldestFavoriteId" th:value="${oldestFavoriteId}">
+                    <button type="submit" class="btn btn-sm btn-outline-dark me-2">
+                        <i class="fas fa-sync-alt me-1"></i>Заменить
+                    </button>
+                </form>
+                <a th:href="@{/api/favorites/page}" class="btn btn-sm btn-outline-secondary">
+                    <i class="fas fa-times me-1"></i>Отмена
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Заголовок страницы -->
+<div class="favorites-header">
+    <div class="container">
+        <h1 class="page-title">Избранные товары</h1>
+        <p class="page-subtitle">Ваша личная коллекция вдохновения</p>
+    </div>
+</div>
+
+<div class="container favorites-container">
+    <div class="favorites-content">
+        <div class="row">
+            <!-- Основной контент -->
+            <div class="col-lg-8">
+                <div th:if="${favorites != null and !favorites.empty}">
+                    <!-- Заголовок с количеством -->
+                    <div class="d-flex justify-content-between align-items-center mb-5">
+                        <div>
+                            <h4 class="favorites-count mb-0">
+                                <i class="fas fa-heart me-2"></i>
+                                Коллекция: <span th:text="${favorites.size()}"></span>/100 предметов
+                            </h4>
+                            <small class="text-muted" th:if="${favorites.size() >= 90}" style="color: #dc3545 !important;">
+                                <i class="fas fa-exclamation-triangle me-1"></i>
+                                Лимит почти достигнут
+                            </small>
+                            <small class="text-muted" th:if="${favorites.size() >= 80 and favorites.size() < 90}" style="color: #ffc107 !important;">
+                                <i class="fas fa-info-circle me-1"></i>
+                                Осталось мест: <span th:text="100 - ${favorites.size()}"></span>
+                            </small>
+                            <small class="text-muted" th:if="${favorites.size() < 80}">
+                                Ваши избранные находки
+                            </small>
+                        </div>
+                        <a th:href="@{/catalog}" class="btn btn-favorite">
+                            <i class="fas fa-plus me-2"></i>Добавить ещё
+                        </a>
+                    </div>
+
+                    <!-- Список избранных товаров -->
+                    <div class="favorites-list">
+                        <div class="favorite-item" th:each="favorite, stat : ${favorites}">
+                            <div class="favorite-item-content">
+                                <div class="favorite-item-row">
+                                    <!-- Номер в коллекции -->
+                                    <div class="item-number">
+                                        <span th:text="${stat.count}"></span>
+                                    </div>
+
+                                    <!-- Изображение товара -->
+                                    <div class="product-image-container">
+                                        <img th:if="${favorite?.product?.mainImage != null}"
+                                             th:src="${favorite?.product?.mainImage}"
+                                             th:alt="${favorite?.product?.name ?: 'Товар'}"
+                                             class="product-image">
+                                        <div th:unless="${favorite?.product?.mainImage != null}"
+                                             class="loading-placeholder w-100 h-100 d-flex align-items-center justify-content-center">
+                                            <i class="fas fa-shopping-bag fa-2x"></i>
+                                        </div>
+                                    </div>
+
+                                    <!-- Информация о товаре -->
+                                    <div class="product-info">
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <h6 th:text="${favorite?.product?.name ?: 'Название товара'}">Название товара</h6>
+                                            <small class="text-muted" th:if="${favorite?.createdAt != null}">
+                                                <span th:text="${#temporals.format(favorite.createdAt, 'dd.MM.yy')}"></span>
+                                            </small>
+                                        </div>
+                                        <p class="brand-name" th:text="${favorite?.product?.brand?.name ?: 'Бренд не указан'}">Бренд</p>
+
+                                        <!-- Наличие и теги -->
+                                        <div class="d-flex flex-wrap gap-2 mb-2">
+                                            <span th:if="${favorite?.product?.stockQuantity > 5}" class="stock-badge">
+                                                <i class="fas fa-check me-1"></i>В наличии
+                                            </span>
+                                            <span th:if="${favorite?.product?.stockQuantity > 0 and favorite?.product?.stockQuantity <= 5}"
+                                                  class="low-stock-badge">
+                                                <i class="fas fa-exclamation-triangle me-1"></i>Мало в наличии
+                                            </span>
+                                            <span th:if="${favorite?.product?.stockQuantity == 0}"
+                                                  class="out-of-stock-badge">
+                                                <i class="fas fa-times me-1"></i>Нет в наличии
+                                            </span>
+                                            <span th:if="${favorite?.product?.originalPrice != null and favorite?.product?.originalPrice > favorite?.product?.price}"
+                                                  class="sale-badge">
+                                                <i class="fas fa-bolt me-1"></i>Скидка
+                                            </span>
+                                        </div>
+
+                                        <!-- Цена -->
+                                        <div class="price-section">
+                                            <span class="current-price"
+                                                  th:text="'₽' + ${#numbers.formatDecimal(favorite?.product?.price ?: 0, 0, 'COMMA', 2, 'POINT')}"></span>
+                                            <span th:if="${favorite?.product?.originalPrice != null and favorite?.product?.originalPrice > favorite?.product?.price}"
+                                                  class="original-price"
+                                                  th:text="'₽' + ${#numbers.formatDecimal(favorite?.product?.originalPrice, 0, 'COMMA', 2, 'POINT')}">
+                                            </span>
+                                            <span th:if="${favorite?.product?.originalPrice != null and favorite?.product?.originalPrice > favorite?.product?.price}"
+                                                  class="discount-badge"
+                                                  th:text="'-' + ${((favorite?.product?.originalPrice - favorite?.product?.price) / favorite?.product?.originalPrice * 100).intValue()} + '%'">
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Действия -->
+                                    <div class="action-buttons">
+                                        <!-- Добавить в корзину -->
+                                        <form th:action="@{/cart/add}" method="post" class="favorite-form">
+                                            <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                            <input type="hidden" name="productId" th:value="${favorite?.product?.id}">
+                                            <input type="hidden" name="quantity" value="1">
+                                            <input type="hidden" name="size" value="M">
+                                            <input type="hidden" name="color"
+                                                   th:if="${favorite?.product?.colors != null and !favorite.product.colors.empty}"
+                                                   th:value="${favorite.product.colors[0].name}">
+                                            <input type="hidden" name="color" th:unless="${favorite?.product?.colors != null and !favorite.product.colors.empty}" value="Black">
+                                            <button type="submit"
+                                                    class="btn btn-favorite"
+                                                    th:disabled="${favorite?.product?.stockQuantity == 0}">
+                                                <i class="fas fa-shopping-cart me-2"></i>
+                                                <span th:if="${favorite?.product?.stockQuantity > 0}">В корзину</span>
+                                                <span th:if="${favorite?.product?.stockQuantity == 0}">Нет в наличии</span>
+                                            </button>
+                                        </form>
+
+                                        <!-- Подробнее -->
+                                        <a th:href="@{/products/{id}(id=${favorite?.product?.id})}"
+                                           class="btn btn-favorite">
+                                            <i class="fas fa-eye me-2"></i>Подробнее
+                                        </a>
+
+                                        <!-- Удалить из избранного -->
+                                        <form th:action="@{/api/favorites/remove-redirect}" method="post" class="favorite-form">
+                                            <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                            <input type="hidden" name="productId" th:value="${favorite?.product?.id}">
+                                            <button type="submit" class="btn btn-favorite btn-remove">
+                                                <i class="fas fa-trash me-2"></i>Удалить
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Пустая страница избранного -->
+                <div th:unless="${favorites != null and !favorites.empty}" class="empty-favorites">
+                    <div class="empty-favorites-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Ваша коллекция ждёт открытий</h3>
+                    <p>Сохраняйте понравившиеся товары в избранное, чтобы не потерять их.<br>Создайте свою идеальную подборку.</p>
+                    <div class="d-flex gap-3 justify-content-center flex-wrap">
+                        <a th:href="@{/catalog}" class="btn btn-favorite btn-lg">
+                            <i class="fas fa-compass me-2"></i>Исследовать каталог
+                        </a>
+                        <a th:href="@{/catalog/bestsellers}" class="btn btn-favorite btn-lg">
+                            <i class="fas fa-crown me-2"></i>Хиты продаж
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Боковая панель -->
+            <div class="col-lg-4" th:if="${favorites != null and !favorites.empty}">
+                <!-- Индикатор лимита -->
+                <div class="limit-card" th:if="${favorites.size() >= 80}">
+                    <h6>
+                        <i class="fas fa-tachometer-alt me-2"
+                           th:classappend="${favorites.size() >= 95} ? 'text-danger' : 'text-warning'"></i>
+                        Лимит избранного
+                    </h6>
+                    <div class="limit-progress">
+                        <div class="limit-label">
+                            <span>Использовано:</span>
+                            <span th:text="${favorites.size()} + '/100'"></span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar"
+                                 th:classappend="${favorites.size() >= 95} ? 'bg-danger' : 'bg-warning'"
+                                 th:style="'width: ' + ${favorites.size()} + '%;'"></div>
+                        </div>
+                        <div class="limit-message mt-2">
+                            <small th:if="${favorites.size() >= 95}" class="text-danger">
+                                <i class="fas fa-exclamation-circle me-1"></i>
+                                Лимит почти достигнут! Максимум - 100 товаров.
+                            </small>
+                            <small th:if="${favorites.size() >= 80 and favorites.size() < 95}" class="text-warning">
+                                <i class="fas fa-info-circle me-1"></i>
+                                Лимит: 100 товаров. Осталось мест: <span th:text="100 - ${favorites.size()}"></span>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Статистика коллекции -->
+                <div class="stats-card">
+                    <h5>
+                        <i class="fas fa-chart-pie me-2"></i>Статистика
+                    </h5>
+
+                    <div class="stat-item">
+                        <div class="stat-info">
+                            <i class="fas fa-box-open"></i>
+                            <span>Доступно для заказа</span>
+                        </div>
+                        <span class="stat-value" th:text="${#lists.size(favorites.?[product?.stockQuantity > 0])}"></span>
+                    </div>
+
+                    <div class="stat-item">
+                        <div class="stat-info">
+                            <i class="fas fa-tag"></i>
+                            <span>Товары со скидкой</span>
+                        </div>
+                        <span class="stat-value" th:text="${#lists.size(favorites.?[product?.originalPrice != null and product?.originalPrice > product?.price])}"></span>
+                    </div>
+
+                    <div class="stat-item">
+                        <div class="stat-info">
+                            <i class="fas fa-star"></i>
+                            <span>Всего товаров</span>
+                        </div>
+                        <span class="stat-value" th:text="${favorites.size()}"></span>
+                    </div>
+                </div>
+
+                <!-- Интересные факты -->
+                <div class="fun-facts-card">
+                    <h6>
+                        <i class="fas fa-gem me-2"></i>
+                        О вашей коллекции
+                    </h6>
+                    <div class="fact-content">
+                        <p th:if="${favorites.size() >= 20}">🎉 Впечатляющая коллекция! Более 20 избранных товаров.</p>
+                        <p th:if="${favorites.size() >= 10 and favorites.size() < 20}">✨ Отличный вкус! Ваша коллекция растёт.</p>
+                        <p th:if="${favorites.size() >= 5 and favorites.size() < 10}">💫 Хорошее начало! Продолжайте наполнять коллекцию.</p>
+                        <p th:if="${favorites.size() < 5}">🌟 Начните с малого - каждая коллекция начинается с первого предмета.</p>
+
+                        <div class="fact-tip mt-3">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>Совет: Используйте избранное для создания идеального гардероба</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Быстрые действия -->
+                <div class="quick-actions-card">
+                    <h6>
+                        <i class="fas fa-bolt me-2"></i>
+                        Быстрые действия
+                    </h6>
+                    <div class="actions-list">
+                        <a th:href="@{/catalog}" class="action-item">
+                            <i class="fas fa-newspaper"></i>
+                            <span>Посмотреть новинки</span>
+                        </a>
+                        <a th:href="@{/catalog}" class="action-item">
+                            <i class="fas fa-percentage"></i>
+                            <span>Товары со скидкой</span>
+                        </a>
+                        <a th:href="@{/catalog}" class="action-item">
+                            <i class="fas fa-fire"></i>
+                            <span>Бестселлеры</span>
+                        </a>
+                        <a th:href="@{/catalog}" class="action-item">
+                            <i class="fas fa-layer-group"></i>
+                            <span>Все коллекции</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

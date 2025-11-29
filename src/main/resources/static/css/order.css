@@ -1,0 +1,886 @@
+/* Черно-белая тема */
+:root {
+    --tareno-black: #000000;
+    --tareno-white: #ffffff;
+    --tareno-light: #f8f9fa;
+    --tareno-gray: #6c757d;
+    --tareno-dark: #212529;
+    --tareno-border: #e0e0e0;
+    --tareno-accent: #1a1a1a;
+    --tareno-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --tareno-shadow-hover: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="dark"] {
+    --tareno-black: #ffffff;
+    --tareno-white: #000000;
+    --tareno-light: #1a1a1a;
+    --tareno-gray: #8a8a8a;
+    --tareno-dark: #f8f9fa;
+    --tareno-border: #404040;
+    --tareno-accent: #ffffff;
+    --tareno-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+    --tareno-shadow-hover: 0 4px 15px rgba(255, 255, 255, 0.15);
+}
+
+/* Основные стили */
+body {
+    background-color: var(--tareno-white);
+    color: var(--tareno-black);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.5;
+}
+
+.container {
+    max-width: 1400px;
+    padding: 0 15px;
+}
+
+/* Заголовок страницы */
+.page-header {
+    background: var(--tareno-white);
+    border-bottom: 2px solid var(--tareno-black);
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+}
+
+.page-title {
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: var(--tareno-black);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.page-subtitle {
+    color: var(--tareno-gray);
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* Карточки статистики */
+.stats-card {
+    background: var(--tareno-white);
+    border: 2px solid var(--tareno-black);
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    margin-bottom: 1rem;
+}
+
+.stats-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--tareno-shadow-hover);
+}
+
+.stats-number {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--tareno-black);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+.stats-label {
+    font-size: 0.9rem;
+    color: var(--tareno-gray);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* Карточки */
+.card {
+    border: 2px solid var(--tareno-black);
+    margin-bottom: 1.5rem;
+    background: var(--tareno-white);
+}
+
+.card-header {
+    background: var(--tareno-white);
+    border-bottom: 2px solid var(--tareno-black);
+    padding: 1.25rem 1.5rem;
+    font-weight: 700;
+    color: var(--tareno-black);
+    font-size: 1.1rem;
+}
+
+.card-body {
+    padding: 1.5rem;
+    background: var(--tareno-white);
+}
+
+/* Единый размер кнопок */
+.btn {
+    border: 2px solid var(--tareno-black);
+    border-radius: 0;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    cursor: pointer;
+    min-width: 120px;
+    height: 45px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Primary кнопка */
+.btn-primary {
+    background: var(--tareno-black);
+    color: var(--tareno-white);
+}
+
+.btn-primary:hover {
+    background: var(--tareno-white);
+    color: var(--tareno-black);
+}
+
+/* Success кнопка */
+.btn-success {
+    background: var(--tareno-black);
+    color: var(--tareno-white);
+}
+
+.btn-success:hover {
+    background: var(--tareno-white);
+    color: var(--tareno-black);
+}
+
+/* Outline Secondary кнопка */
+.btn-outline-secondary {
+    background: var(--tareno-white);
+    color: var(--tareno-black);
+}
+
+.btn-outline-secondary:hover {
+    background: var(--tareno-black);
+    color: var(--tareno-white);
+}
+
+/* Warning кнопка */
+.btn-warning {
+    background: var(--tareno-black);
+    color: var(--tareno-white);
+}
+
+.btn-warning:hover {
+    background: var(--tareno-white);
+    color: var(--tareno-black);
+}
+
+/* Danger кнопка */
+.btn-danger {
+    background: var(--tareno-black);
+    color: var(--tareno-white);
+}
+
+.btn-danger:hover {
+    background: var(--tareno-white);
+    color: var(--tareno-black);
+}
+
+/* Small кнопки - одинакового размера */
+.btn-sm {
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+    min-width: 40px;
+    width: 40px;
+    height: 40px;
+    border-width: 1px;
+}
+
+/* Формы */
+.form-control,
+.form-select {
+    border: 2px solid var(--tareno-black);
+    border-radius: 0;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    background-color: var(--tareno-white);
+    color: var(--tareno-black);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--tareno-black);
+    box-shadow: 0 0 0 2px var(--tareno-black);
+    background-color: var(--tareno-white);
+    color: var(--tareno-black);
+}
+
+.input-group-text {
+    background: var(--tareno-white);
+    border: 2px solid var(--tareno-black);
+    border-right: none;
+    color: var(--tareno-black);
+    font-weight: 600;
+}
+
+.input-group .form-control {
+    border-left: none;
+}
+
+/* Стили для группы кнопок экспорта */
+.export-buttons {
+    display: flex;
+    gap: 0;
+    border: 2px solid var(--tareno-black);
+}
+
+.export-buttons .btn {
+    border: none;
+    border-right: 2px solid var(--tareno-black);
+    border-radius: 0;
+    margin: 0;
+    flex: 1;
+    min-width: 80px;
+    white-space: nowrap;
+}
+
+.export-buttons .btn:last-child {
+    border-right: none;
+}
+
+/* Стили для кнопок создания заказа и архива */
+.action-row {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+.action-row .btn {
+    min-width: 140px;
+    height: 40px;
+    font-size: 0.8rem;
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--tareno-black);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.action-row .btn-sm {
+    min-width: 140px;
+    height: 40px;
+    font-size: 0.8rem;
+    padding: 0.5rem 1rem;
+}
+
+/* Кнопка создания заказа */
+.action-row .btn-success {
+    background: var(--tareno-black);
+    color: var(--tareno-white);
+    border-color: var(--tareno-black);
+}
+
+.action-row .btn-success:hover {
+    background: var(--tareno-white);
+    color: var(--tareno-black);
+}
+
+/* Кнопка архива */
+.action-row .btn-outline-secondary {
+    background: var(--tareno-white);
+    color: var(--tareno-black);
+    border-color: var(--tareno-black);
+}
+
+.action-row .btn-outline-secondary:hover {
+    background: var(--tareno-black);
+    color: var(--tareno-white);
+}
+
+/* Header buttons layout */
+.header-buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: flex-end;
+}
+
+.export-row {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+/* АДАПТИВНАЯ ТАБЛИЦА */
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 0;
+    color: var(--tareno-black);
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.table th {
+    border-bottom: 3px solid var(--tareno-black);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.85rem;
+    padding: 1rem 0.75rem;
+    background: var(--tareno-white);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.table td {
+    padding: 1rem 0.75rem;
+    border-bottom: 1px solid var(--tareno-border);
+    vertical-align: middle;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+
+/* АДАПТИВНЫЕ КОЛОНКИ - Desktop (1200px+) */
+.table th:nth-child(1),
+.table td:nth-child(1) {
+    width: 10%;
+    min-width: 100px;
+}
+
+.table th:nth-child(2),
+.table td:nth-child(2) {
+    width: 18%;
+    min-width: 150px;
+}
+
+.table th:nth-child(3),
+.table td:nth-child(3) {
+    width: 22%;
+    min-width: 180px;
+}
+
+.table th:nth-child(4),
+.table td:nth-child(4) {
+    width: 8%;
+    min-width: 80px;
+}
+
+.table th:nth-child(5),
+.table td:nth-child(5) {
+    width: 10%;
+    min-width: 100px;
+}
+
+.table th:nth-child(6),
+.table td:nth-child(6) {
+    width: 15%;
+    min-width: 140px;
+}
+
+.table th:nth-child(7),
+.table td:nth-child(7) {
+    width: 17%;
+    min-width: 150px;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .table-hover tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Форма статуса в таблице */
+.status-form {
+    margin: 0;
+}
+
+.status-form .form-select {
+    width: 100%;
+    min-width: 120px;
+    height: 40px;
+    border: 1px solid var(--tareno-black);
+    font-size: 0.8rem;
+    padding: 0.5rem;
+}
+
+/* Бейджи */
+.badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0;
+    letter-spacing: 0.5px;
+    border: 1px solid var(--tareno-black);
+    white-space: nowrap;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    max-width: 120px;
+}
+
+.bg-warning {
+    background: var(--tareno-white) !important;
+    color: var(--tareno-black) !important;
+    border-color: var(--tareno-black) !important;
+}
+
+.bg-info {
+    background: var(--tareno-white) !important;
+    color: var(--tareno-black) !important;
+    border-color: var(--tareno-black) !important;
+}
+
+.bg-primary {
+    background: var(--tareno-black) !important;
+    color: var(--tareno-white) !important;
+    border-color: var(--tareno-black) !important;
+}
+
+.bg-success {
+    background: var(--tareno-black) !important;
+    color: var(--tareno-white) !important;
+    border-color: var(--tareno-black) !important;
+}
+
+.bg-danger {
+    background: var(--tareno-black) !important;
+    color: var(--tareno-white) !important;
+    border-color: var(--tareno-black) !important;
+}
+
+/* Action buttons */
+.action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.action-buttons .btn {
+    min-width: 40px;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Пагинация */
+.pagination {
+    margin: 2rem 0;
+    justify-content: center;
+}
+
+.page-link {
+    border: 2px solid var(--tareno-black);
+    border-radius: 0;
+    color: var(--tareno-black);
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    background: var(--tareno-white);
+    margin: 0 0.25rem;
+    min-width: 45px;
+    text-align: center;
+}
+
+.page-link:hover {
+    background: var(--tareno-black);
+    color: var(--tareno-white);
+}
+
+.page-item.active .page-link {
+    background: var(--tareno-black);
+    color: var(--tareno-white);
+    border-color: var(--tareno-black);
+}
+
+.page-item.disabled .page-link {
+    background: var(--tareno-white);
+    border-color: var(--tareno-gray);
+    color: var(--tareno-gray);
+    opacity: 0.5;
+}
+
+/* Empty state */
+.empty-state {
+    padding: 3rem 2rem;
+    text-align: center;
+}
+
+.empty-state i {
+    margin-bottom: 1rem;
+    opacity: 0.3;
+}
+
+.empty-state h4 {
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--tareno-black);
+}
+
+.empty-state p {
+    color: var(--tareno-gray);
+}
+
+/* Customer info */
+.customer-info {
+    line-height: 1.4;
+}
+
+.customer-info .text-muted {
+    font-size: 0.85rem;
+}
+
+/* Products list */
+.products-list {
+    line-height: 1.4;
+}
+
+.products-list .text-muted {
+    font-size: 0.85rem;
+}
+
+/* АДАПТИВНОСТЬ ДЛЯ ТАБЛИЦЫ И КНОПОК */
+
+/* Desktop (992px - 1199px) */
+@media (max-width: 1199px) and (min-width: 992px) {
+    .table th:nth-child(1),
+    .table td:nth-child(1) { width: 11%; min-width: 90px; }
+
+    .table th:nth-child(2),
+    .table td:nth-child(2) { width: 17%; min-width: 140px; }
+
+    .table th:nth-child(3),
+    .table td:nth-child(3) { width: 20%; min-width: 160px; }
+
+    .table th:nth-child(4),
+    .table td:nth-child(4) { width: 9%; min-width: 70px; }
+
+    .table th:nth-child(5),
+    .table td:nth-child(5) { width: 11%; min-width: 90px; }
+
+    .table th:nth-child(6),
+    .table td:nth-child(6) { width: 16%; min-width: 130px; }
+
+    .table th:nth-child(7),
+    .table td:nth-child(7) { width: 16%; min-width: 140px; }
+
+    .table th,
+    .table td {
+        padding: 0.8rem 0.5rem;
+        font-size: 0.82rem;
+    }
+
+    .status-form .form-select {
+        min-width: 110px;
+        font-size: 0.75rem;
+    }
+
+    /* Кнопки экспорта для Desktop */
+    .export-buttons .btn-sm {
+        min-width: 70px;
+        font-size: 0.8rem;
+        padding: 0.5rem 0.6rem;
+    }
+
+    /* Кнопки создания заказа и архива для Desktop */
+    .action-row .btn {
+        min-width: 130px;
+        font-size: 0.75rem;
+        padding: 0.5rem 0.8rem;
+    }
+}
+
+/* Tablet (768px - 991px) */
+@media (max-width: 991px) and (min-width: 768px) {
+    .table th:nth-child(1),
+    .table td:nth-child(1) { width: 12%; min-width: 80px; }
+
+    .table th:nth-child(2),
+    .table td:nth-child(2) { width: 16%; min-width: 120px; }
+
+    .table th:nth-child(3),
+    .table td:nth-child(3) { width: 18%; min-width: 140px; }
+
+    .table th:nth-child(4),
+    .table td:nth-child(4) { width: 10%; min-width: 60px; }
+
+    .table th:nth-child(5),
+    .table td:nth-child(5) { width: 12%; min-width: 80px; }
+
+    .table th:nth-child(6),
+    .table td:nth-child(6) { width: 18%; min-width: 120px; }
+
+    .table th:nth-child(7),
+    .table td:nth-child(7) { width: 14%; min-width: 120px; }
+
+    .table th,
+    .table td {
+        padding: 0.7rem 0.4rem;
+        font-size: 0.8rem;
+    }
+
+    .badge {
+        font-size: 0.7rem;
+        padding: 0.4rem 0.5rem;
+        max-width: 100px;
+    }
+
+    .action-buttons {
+        gap: 0.3rem;
+    }
+
+    .action-buttons .btn {
+        min-width: 35px;
+        width: 35px;
+        height: 35px;
+    }
+
+    .status-form .form-select {
+        min-width: 100px;
+        height: 35px;
+        font-size: 0.7rem;
+    }
+
+    /* Кнопки экспорта для Tablet */
+    .header-buttons-container {
+        align-items: center;
+    }
+
+    .export-row {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .action-row {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .export-buttons {
+        min-width: 160px;
+    }
+
+    .export-buttons .btn-sm {
+        min-width: 70px;
+        font-size: 0.75rem;
+    }
+
+    /* Кнопки создания заказа и архива для Tablet */
+    .action-row .btn {
+        min-width: 120px;
+        font-size: 0.75rem;
+        padding: 0.5rem 0.7rem;
+    }
+}
+
+/* Small (до 767px) */
+@media (max-width: 767px) {
+    .table th:nth-child(1),
+    .table td:nth-child(1) { width: 14%; min-width: 70px; }
+
+    .table th:nth-child(2),
+    .table td:nth-child(2) { width: 18%; min-width: 100px; }
+
+    .table th:nth-child(3),
+    .table td:nth-child(3) { width: 20%; min-width: 120px; }
+
+    .table th:nth-child(4),
+    .table td:nth-child(4) { width: 12%; min-width: 50px; }
+
+    .table th:nth-child(5),
+    .table td:nth-child(5) { width: 14%; min-width: 70px; }
+
+    .table th:nth-child(6),
+    .table td:nth-child(6) { width: 22%; min-width: 110px; }
+
+    .table th:nth-child(7),
+    .table td:nth-child(7) { width: 0%; min-width: 120px; display: none; }
+
+    .table th,
+    .table td {
+        padding: 0.6rem 0.3rem;
+        font-size: 0.75rem;
+    }
+
+    .badge {
+        font-size: 0.65rem;
+        padding: 0.3rem 0.4rem;
+        max-width: 80px;
+    }
+
+    .table td:nth-child(7) {
+        display: table-cell;
+        width: 100%;
+        text-align: center;
+        border-top: 2px solid var(--tareno-black);
+    }
+
+    .action-buttons {
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .action-buttons .btn {
+        min-width: 32px;
+        width: 32px;
+        height: 32px;
+    }
+
+    .status-form .form-select {
+        min-width: 90px;
+        height: 32px;
+        font-size: 0.65rem;
+    }
+
+    /* Кнопки экспорта для Small */
+    .page-header .row {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .page-header .text-end {
+        text-align: center !important;
+        margin-top: 1rem;
+        width: 100%;
+    }
+
+    .header-buttons-container {
+        align-items: center;
+        width: 100%;
+    }
+
+    .export-row,
+    .action-row {
+        justify-content: center;
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .export-buttons {
+        min-width: 120px;
+    }
+
+    .export-buttons .btn-sm {
+        min-width: 50px;
+        font-size: 0.7rem;
+        padding: 0.4rem 0.5rem;
+    }
+
+    /* Компактные кнопки - скрываем текст */
+    .export-buttons .btn span {
+        display: none;
+    }
+
+    .export-buttons .btn {
+        min-width: 40px;
+        padding: 0.5rem;
+    }
+
+    .export-buttons .btn i {
+        margin-right: 0 !important;
+        font-size: 0.8rem;
+    }
+
+    /* Кнопки создания заказа и архива для Small */
+    .action-row .btn {
+        min-width: 140px;
+        font-size: 0.75rem;
+        padding: 0.5rem 0.8rem;
+        flex: 1;
+        max-width: 160px;
+    }
+
+    /* На очень маленьких экранах делаем кнопки компактнее */
+    @media (max-width: 400px) {
+        .action-row .btn {
+            min-width: 120px;
+            font-size: 0.7rem;
+            padding: 0.4rem 0.6rem;
+        }
+
+        .action-row .btn .me-1 {
+            margin-right: 0.3rem !important;
+        }
+    }
+
+    /* Скрываем колонки суммы и даты на маленьких экранах */
+    .table th:nth-child(4),
+    .table td:nth-child(4),
+    .table th:nth-child(5),
+    .table td:nth-child(5) {
+        display: none;
+    }
+}
+
+/* Улучшенная доступность */
+.btn:focus,
+.form-control:focus,
+.form-select:focus,
+.page-link:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .btn:focus,
+[data-theme="dark"] .form-control:focus,
+[data-theme="dark"] .form-select:focus,
+[data-theme="dark"] .page-link:focus {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+}
+
+/* Утилиты */
+.text-muted {
+    color: var(--tareno-gray) !important;
+}
+
+.fw-bold {
+    font-weight: 700 !important;
+}
+
+.text-success {
+    color: var(--tareno-black) !important;
+    font-weight: 700;
+}
+
+[data-theme="dark"] .text-success {
+    color: var(--tareno-white) !important;
+}
+
+/* Анимация появления таблицы */
+.table-responsive {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Гарантия что кнопки не будут перекрывать друг друга */
+.d-flex.gap-2 {
+    gap: 0.5rem !important;
+}
+
+/* Убедимся что контейнеры не переполняются */
+.container {
+    overflow-x: hidden;
+}

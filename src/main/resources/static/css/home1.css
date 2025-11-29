@@ -1,0 +1,625 @@
+/* Переменные для темы */
+:root {
+    --tareno-black: #000000;
+    --tareno-white: #ffffff;
+    --tareno-light: #f8f9fa;
+    --tareno-gray: #6c757d;
+    --tareno-dark: #212529;
+    --tareno-border: #dee2e6;
+    --tareno-accent: #1a1a1a;
+}
+
+[data-theme="dark"] {
+    --tareno-black: #ffffff;
+    --tareno-white: #1a1a1a;
+    --tareno-light: #2d2d2d;
+    --tareno-gray: #a0a0a0;
+    --tareno-dark: #e0e0e0;
+    --tareno-border: #404040;
+    --tareno-accent: #ffffff;
+}
+
+/* Minimalist TARENO Styles */
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: var(--tareno-black);
+    background-color: var(--tareno-white);
+    line-height: 1.6;
+    font-weight: 300;
+}
+
+/* Hero Section */
+.tareno-hero {
+    background-color: var(--tareno-white);
+    color: var(--tareno-black);
+    padding: 120px 0 80px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--tareno-border);
+}
+
+.tareno-hero-content {
+    max-width: 600px;
+}
+
+.tareno-logo {
+    font-size: 4.5rem;
+    font-weight: 300;
+    letter-spacing: 8px;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    color: var(--tareno-black);
+}
+
+.tareno-subtitle {
+    font-size: 1.2rem;
+    color: var(--tareno-gray);
+    margin-bottom: 2rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+.tareno-description {
+    font-size: 1rem;
+    color: var(--tareno-gray);
+    margin-bottom: 3rem;
+    line-height: 1.7;
+    max-width: 500px;
+}
+
+.tareno-hero-buttons .btn {
+    padding: 12px 35px;
+    border-radius: 0;
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin-right: 15px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+}
+
+.btn-tareno-dark {
+    background-color: var(--tareno-black);
+    color: var(--tareno-white);
+    border: 1px solid var(--tareno-black);
+}
+
+.btn-tareno-dark:hover {
+    background-color: var(--tareno-white);
+    color: var(--tareno-black);
+}
+
+.btn-tareno-outline {
+    background-color: transparent;
+    color: var(--tareno-black);
+    border: 1px solid var(--tareno-black);
+}
+
+.btn-tareno-outline:hover {
+    background-color: var(--tareno-black);
+    color: var(--tareno-white);
+}
+
+.tareno-hero-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.tareno-logo-image {
+    max-width: 100%;
+    height: auto;
+    max-height: 400px;
+    filter: grayscale(100%);
+}
+
+/* Stats Section */
+.tareno-stats {
+    padding: 70px 0;
+    background-color: var(--tareno-white);
+    border-bottom: 1px solid var(--tareno-border);
+}
+
+.tareno-stat-item {
+    text-align: center;
+    padding: 20px;
+}
+
+.tareno-stat-number {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--tareno-black);
+    margin-bottom: 10px;
+}
+
+.tareno-stat-label {
+    font-size: 0.85rem;
+    color: var(--tareno-gray);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+/* Product Sections */
+.tareno-section {
+    padding: 100px 0;
+    background-color: var(--tareno-white);
+}
+
+.tareno-section-alt {
+    background-color: var(--tareno-light);
+}
+
+.tareno-section-header {
+    text-align: center;
+    margin-bottom: 70px;
+}
+
+.tareno-section-title {
+    font-size: 2.2rem;
+    font-weight: 300;
+    margin-bottom: 15px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--tareno-black);
+}
+
+.tareno-section-subtitle {
+    color: var(--tareno-gray);
+    font-size: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.tareno-section-footer {
+    text-align: center;
+    margin-top: 70px;
+}
+
+/* Product Cards */
+.tareno-product-card {
+    background: var(--tareno-white);
+    border-radius: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    height: 100%;
+    border: 1px solid var(--tareno-border);
+    position: relative;
+}
+
+.tareno-product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.tareno-product-image-container {
+    position: relative;
+}
+
+.tareno-product-image {
+    height: 300px;
+    background-color: var(--tareno-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--tareno-gray);
+    font-size: 3rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.tareno-product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.tareno-product-card:hover .tareno-product-image img {
+    transform: scale(1.05);
+}
+
+.tareno-product-tag {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 5px 12px;
+    border-radius: 0;
+    font-size: 0.7rem;
+    font-weight: 500;
+    z-index: 2;
+    letter-spacing: 1px;
+}
+
+.tareno-tag-new {
+    background-color: var(--tareno-black);
+    color: var(--tareno-white);
+}
+
+.tareno-tag-sale {
+    background-color: var(--tareno-black);
+    color: var(--tareno-white);
+}
+
+.tareno-tag-bestseller {
+    background-color: var(--tareno-black);
+    color: var(--tareno-white);
+}
+
+.tareno-discount-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: var(--tareno-black);
+    color: var(--tareno-white);
+    padding: 5px 10px;
+    border-radius: 0;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.tareno-stock-badge {
+    position: absolute;
+    top: 50px;
+    left: 15px;
+    background-color: var(--tareno-black);
+    color: var(--tareno-white);
+    padding: 5px 10px;
+    border-radius: 0;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.tareno-product-info {
+    padding: 25px 20px;
+    background: var(--tareno-white);
+}
+
+.tareno-product-name {
+    font-weight: 400;
+    margin-bottom: 8px;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    color: var(--tareno-black);
+}
+
+.tareno-product-brand {
+    color: var(--tareno-gray);
+    font-size: 0.8rem;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.tareno-product-price-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.tareno-product-price {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--tareno-black);
+}
+
+.tareno-original-price {
+    text-decoration: line-through;
+    color: var(--tareno-gray);
+    font-size: 0.9rem;
+    margin-left: 8px;
+}
+
+.tareno-stock-info {
+    color: var(--tareno-gray);
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+
+.tareno-product-info .btn {
+    border-radius: 0;
+    padding: 10px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    border: 1px solid var(--tareno-black);
+    transition: all 0.3s ease;
+}
+
+/* Categories Section */
+.tareno-categories {
+    padding: 100px 0;
+    background-color: var(--tareno-white);
+    border-top: 1px solid var(--tareno-border);
+}
+
+.tareno-category-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.tareno-category-link:hover {
+    color: inherit;
+}
+
+.tareno-category-card {
+    background: var(--tareno-white);
+    border-radius: 0;
+    padding: 40px 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    height: 100%;
+    border: 1px solid var(--tareno-border);
+    position: relative;
+    overflow: hidden;
+}
+
+.tareno-category-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--tareno-black);
+    transition: all 0.5s ease;
+    z-index: 0;
+}
+
+.tareno-category-card:hover::before {
+    left: 0;
+}
+
+.tareno-category-card:hover {
+    transform: translateY(-10px);
+}
+
+.tareno-category-icon {
+    width: 80px;
+    height: 80px;
+    background-color: transparent;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+    color: var(--tareno-black);
+    font-size: 1.8rem;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+    border: 1px solid var(--tareno-black);
+}
+
+.tareno-category-card:hover .tareno-category-icon {
+    color: var(--tareno-white);
+    border-color: var(--tareno-white);
+}
+
+.tareno-category-card h4 {
+    font-weight: 400;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease;
+    color: var(--tareno-black);
+}
+
+.tareno-category-card:hover h4 {
+    color: var(--tareno-white);
+}
+
+.tareno-category-description {
+    color: var(--tareno-gray);
+    margin-bottom: 25px;
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease;
+}
+
+.tareno-category-card:hover .tareno-category-description {
+    color: var(--tareno-white);
+}
+
+.tareno-category-card .btn {
+    border-radius: 0;
+    padding: 8px 25px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 1;
+    background-color: transparent;
+    color: var(--tareno-black);
+    border: 1px solid var(--tareno-black);
+    transition: all 0.3s ease;
+}
+
+.tareno-category-card:hover .btn {
+    color: var(--tareno-white);
+    border-color: var(--tareno-white);
+}
+
+.tareno-category-card:hover .btn:hover {
+    background-color: var(--tareno-white);
+    color: var(--tareno-black);
+}
+
+/* Benefits Section */
+.tareno-benefits {
+    padding: 100px 0;
+    background-color: var(--tareno-light);
+}
+
+.tareno-benefit-item {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.tareno-benefit-icon {
+    width: 80px;
+    height: 80px;
+    background-color: var(--tareno-black);
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+    color: var(--tareno-white);
+    font-size: 1.8rem;
+    transition: all 0.3s ease;
+}
+
+.tareno-benefit-item:hover .tareno-benefit-icon {
+    transform: scale(1.1);
+}
+
+.tareno-benefit-item h4 {
+    font-weight: 400;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+    color: var(--tareno-black);
+}
+
+.tareno-benefit-description {
+    color: var(--tareno-gray);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.tareno-newsletter {
+    padding: 80px 0;
+    background-color: var(--tareno-white);
+    color: var(--tareno-black);
+    border-top: 1px solid var(--tareno-border);
+}
+
+[data-theme="dark"] .tareno-newsletter {
+    background-color: var(--tareno-white);
+    color: var(--tareno-black);
+}
+
+.tareno-newsletter-title {
+    font-weight: 300;
+    margin-bottom: 15px;
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+}
+
+[data-theme="dark"] .tareno-newsletter-title {
+    color: var(--tareno-black);
+}
+
+.tareno-newsletter-description {
+    margin-bottom: 0;
+    color: var(--tareno-gray);
+}
+
+[data-theme="dark"] .tareno-newsletter-description {
+    color: var(--tareno-gray);
+}
+
+.tareno-newsletter-form .input-group {
+    max-width: 500px;
+    border: 1px solid var(--tareno-border);
+}
+
+.tareno-newsletter-form .form-control {
+    border-radius: 0;
+    border: none;
+    border-right: 1px solid var(--tareno-border);
+    padding: 15px 20px;
+    font-size: 1rem;
+    background-color: var(--tareno-white);
+    color: var(--tareno-black);
+}
+
+[data-theme="dark"] .tareno-newsletter-form .form-control {
+    background-color: var(--tareno-light);
+    color: var(--tareno-black);
+    border: 1px solid var(--tareno-border);
+}
+
+.tareno-newsletter-form .btn {
+    border-radius: 0;
+    border: none;
+    padding: 15px 25px;
+    background-color: var(--tareno-white);
+    color: var(--tareno-black);
+    font-weight: 400;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .tareno-newsletter-form .btn {
+    background-color: var(--tareno-black);
+    color: var(--tareno-white);
+    border: 1px solid var(--tareno-black);
+}
+
+.tareno-newsletter-form .btn:hover {
+    background-color: var(--tareno-gray);
+    color: var(--tareno-white);
+}
+
+[data-theme="dark"] .tareno-newsletter-form .btn:hover {
+    background-color: var(--tareno-white);
+    color: var(--tareno-black);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .tareno-logo {
+        font-size: 3rem;
+        letter-spacing: 5px;
+    }
+
+    .tareno-hero-buttons .btn {
+        display: block;
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+
+    .tareno-stat-number {
+        font-size: 2rem;
+    }
+
+    .tareno-section-title {
+        font-size: 1.8rem;
+    }
+
+    .tareno-newsletter .row {
+        text-align: center;
+    }
+
+    .tareno-newsletter-title {
+        font-size: 1.5rem;
+    }
+
+    .tareno-newsletter-form {
+        margin-top: 30px;
+    }
+}
+
+@media (max-width: 576px) {
+    .tareno-hero {
+        padding: 80px 0 60px;
+    }
+
+    .tareno-logo {
+        font-size: 2.2rem;
+        letter-spacing: 3px;
+    }
+
+    .tareno-section {
+        padding: 70px 0;
+    }
+
+    .tareno-product-image {
+        height: 250px;
+    }
+}

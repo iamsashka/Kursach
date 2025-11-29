@@ -1,0 +1,258 @@
+/* === Переменные тем === */
+:root {
+    --bg-color: #f8f9fa;
+    --card-bg: rgba(255, 255, 255, 0.8);
+    --text-color: #1c1c1e;
+    --muted-color: #6c757d;
+    --primary-color: #007bff;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --border-radius: 12px;
+    --shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+[data-theme="dark"] {
+    --bg-color: #121212;
+    --card-bg: rgba(30, 30, 30, 0.85);
+    --text-color: #e0e0e0;
+    --muted-color: #a0a0a0;
+}
+
+/* === Базовые стили === */
+body.tareno-analytics-container {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg-color);
+    color: var(--text-color);
+    transition: background 0.3s, color 0.3s;
+}
+
+/* === Заголовки === */
+.tareno-section-title {
+    font-weight: 600;
+    font-size: 1.75rem;
+}
+
+/* === Карточки метрик === */
+.tareno-metric-card {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 1rem;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+.tareno-metric-card:hover {
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+}
+
+/* === Метрики === */
+.tareno-metric-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.tareno-metric-label {
+    font-size: 0.875rem;
+    color: var(--muted-color);
+}
+
+.tareno-growth-positive {
+    color: var(--success-color);
+    font-weight: 500;
+}
+
+.tareno-growth-negative {
+    color: var(--danger-color);
+    font-weight: 500;
+}
+
+/* === Карточки фильтров и таблиц === */
+.tareno-filter-card, .tareno-data-container, .tareno-chart {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+/* === Таблицы === */
+.tareno-table {
+    background: transparent;
+    border-collapse: separate;
+    border-spacing: 0 0.5rem;
+}
+
+.tareno-table th, .tareno-table td {
+    vertical-align: middle;
+    border: none;
+}
+
+.tareno-table tbody tr {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    transition: background 0.3s;
+}
+
+.tareno-table tbody tr:hover {
+    box-shadow: var(--shadow);
+}
+
+/* === Ссылки === */
+.tareno-product-link {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.tareno-product-link:hover {
+    text-decoration: underline;
+}
+
+/* === Кнопки темы и dropdown === */
+.theme-toggle-btn {
+    background: var(--card-bg);
+    border-radius: 50%;
+    border: none;
+    color: var(--text-color);
+    transition: background 0.3s;
+}
+
+.theme-toggle-btn:hover {
+    background: rgba(0,0,0,0.1);
+}
+
+/* === Чат- и графические карточки === */
+.tareno-chart canvas {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+}
+
+/* === Гибкая сетка горячих клавиш === */
+.tareno-filter-card .badge {
+    border-radius: 8px;
+    padding: 0.35em 0.6em;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+.tareno-metric-card {
+    /* существующие стили */
+    transition: all 0.3s ease;
+}
+
+.tareno-metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    cursor: pointer;
+}
+/* === Адаптивные брейкпоинты === */
+
+/* Mobile (до 768px) */
+@media (max-width: 767.98px) {
+    .tareno-section-title {
+        font-size: 1.5rem !important;
+    }
+
+    .tareno-metric-number {
+        font-size: 1.25rem;
+    }
+
+    .tareno-chart {
+        padding: 0.75rem;
+    }
+
+    /* Сетка метрик для мобильных */
+    .col-6 {
+        margin-bottom: 0.5rem;
+    }
+
+    /* Горячие клавиши - вертикальное расположение */
+    .tareno-filter-card .d-flex {
+        flex-direction: column;
+        gap: 0.5rem !important;
+    }
+
+    /* Таблицы с горизонтальным скроллом */
+    .table-responsive {
+        font-size: 0.875rem;
+    }
+}
+
+/* Tablet (768px - 1199px) */
+@media (min-width: 768px) and (max-width: 1199.98px) {
+    .tareno-section-title {
+        font-size: 1.6rem;
+    }
+
+    .tareno-metric-number {
+        font-size: 1.35rem;
+    }
+
+    /* Адаптивная сетка для планшетов */
+    .col-md-4 {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Desktop (1200px и выше) */
+@media (min-width: 1200px) {
+    .container-fluid {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+}
+
+/* Улучшенная адаптивность для контейнеров графиков */
+.tareno-chart {
+    position: relative;
+    min-height: 250px;
+}
+
+.tareno-chart canvas {
+    width: 100% !important;
+    height: 250px !important;
+}
+
+/* Адаптивные карточки */
+.tareno-metric-card,
+.tareno-filter-card,
+.tareno-data-container {
+    transition: all 0.3s ease;
+}
+
+/* Улучшенная читаемость на мобильных */
+@media (max-width: 575.98px) {
+    body {
+        font-size: 0.9rem;
+    }
+
+    .btn-sm {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.8rem;
+    }
+
+    .dropdown-menu {
+        font-size: 0.875rem;
+    }
+}
+
+/* Адаптивные таблицы */
+@media (max-width: 767.98px) {
+    .tareno-table th,
+    .tareno-table td {
+        padding: 0.5rem;
+        font-size: 0.8rem;
+    }
+
+    .badge {
+        font-size: 0.7rem;
+    }
+}
+
+/* Плавные переходы для тем */
+.tareno-metric-card,
+.tareno-filter-card,
+.tareno-data-container,
+.tareno-chart {
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}

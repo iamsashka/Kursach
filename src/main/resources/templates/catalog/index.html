@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:attr="data-theme=${currentTheme}">
+<head>
+    <title>Каталог товаров - TARENO</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/nav.css}">
+
+</head>
+<body>
+<div th:replace="~{fragments/nav :: navbar}"></div>
+
+<div class="page-header">
+    <div class="container">
+        <h1 class="page-title" th:text="${title != null ? title : 'Каталог товаров'}">Каталог товаров</h1>
+        <p class="page-subtitle">Эксклюзивная коллекция премиальной одежды</p>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card sticky-top" style="top: 20px;">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-filter me-2"></i>Фильтры</h5>
+                </div>
+                <div class="card-body">
+                    <form id="filterForm" th:action="@{/catalog}" method="get">
+                        <!-- Поиск -->
+                        <div class="filter-section">
+                            <label class="form-label">Поиск</label>
+                            <input type="text" class="form-control" name="search"
+                                   th:value="${search}" placeholder="Название товара..."
+                                   id="searchInput">
+                        </div>
+
+                        <!-- Категория -->
+                        <div class="filter-section">
+                            <label class="form-label">Категория</label>
+                            <select class="form-select" name="categoryId" id="categorySelect">
+                                <option value="">Все категории</option>
+                                <option th:each="category : ${categories}"
+                                        th:value="${category.id}"
+                                        th:text="${category.name}"
+                                        th:selected="${categoryId == category.id}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- Бренд -->
+                        <div class="filter-section">
+                            <label class="form-label">Бренд</label>
+                            <select class="form-select" name="brandId" id="brandSelect">
+                                <option value="">Все бренды</option>
+                                <option th:each="brand : ${brands}"
+                                        th:value="${brand.id}"
+                                        th:text="${brand.name}"
+                                        th:selected="${brandId == brand.id}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- Цена -->
+                        <div class="filter-section">
+                            <label class="form-label">Цена, ₽</label>
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <input type="number" class="form-control" name="minPrice"
+                                           th:value="${minPrice}" placeholder="От" min="0"
+                                           id="minPriceInput">
+                                </div>
+                                <div class="col-6">
+                                    <input type="number" class="form-control" name="maxPrice"
+                                           th:value="${maxPrice}" placeholder="До" min="0"
+                                           id="maxPriceInput">
+                                </div>
+                            </div>
+                            <div class="mt-2">
+                                <div id="priceRange" class="form-range"></div>
+                            </div>
+                        </div>
+
+                        <!-- Цвет -->
+                        <div class="filter-section" th:if="${availableColors != null && !availableColors.empty}">
+                            <label class="form-label">Цвет</label>
+                            <select class="form-select" name="color" id="colorSelect">
+                                <option value="">Все цвета</option>
+                                <option th:each="color : ${availableColors}"
+                                        th:value="${color}"
+                                        th:text="${color}"
+                                        th:selected="${color == param.color}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- Размер -->
+                        <div class="filter-section" th:if="${availableSizes != null && !availableSizes.empty}">
+                            <label class="form-label">Размер</label>
+                            <select class="form-select" name="sizeFilter" id="sizeSelect">
+                                <option value="">Все размеры</option>
+                                <option th:each="size : ${availableSizes}"
+                                        th:value="${size}"
+                                        th:text="${size}"
+                                        th:selected="${sizeFilter == size}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- Страна -->
+                        <div class="filter-section" th:if="${availableCountries != null && !availableCountries.empty}">
+                            <label class="form-label">Страна производитель</label>
+                            <select class="form-select" name="country" id="countrySelect">
+                                <option value="">Все страны</option>
+                                <option th:each="country : ${availableCountries}"
+                                        th:value="${country}"
+                                        th:text="${country}"
+                                        th:selected="${country == param.country}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- Целевая аудитория -->
+                        <div class="filter-section">
+                            <label class="form-label">Для кого</label>
+                            <select class="form-select" name="audience" id="audienceSelect">
+                                <option value="">Все</option>
+                                <option th:each="audienceItem : ${targetAudiences}"
+                                        th:value="${audienceItem}"
+                                        th:text="${audienceItem.name() == 'MEN'} ? 'Мужчины' :
+                (${audienceItem.name() == 'WOMEN'} ? 'Женщины' :
+                (${audienceItem.name() == 'TEENS'} ? 'Подростки' :
+                (${audienceItem.name() == 'KIDS'} ? 'Дети' : 'Унисекс')))"
+                                        th:selected="${audience == audienceItem}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- Теги -->
+                        <div class="filter-section">
+                            <label class="form-label">Теги</label>
+                            <select class="form-select" name="tag" id="tagSelect">
+                                <option value="">Все товары</option>
+                                <option th:each="tagItem : ${productTags}"
+                                        th:value="${tagItem}"
+                                        th:text="${tagItem.name() == 'NEW_ARRIVAL'} ? 'Новинки' :
+                (${tagItem.name() == 'SALE'} ? 'Распродажа' :
+                (${tagItem.name() == 'BESTSELLER'} ? 'Хиты' :
+                (${tagItem.name() == 'REGULAR_PRICE'} ? 'Без скидок' :
+                (${tagItem.name() == 'LIMITED_EDITION'} ? 'Лимитированная серия' : 'Другое'))))"
+                                        th:selected="${tag == tagItem}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- Наличие -->
+                        <div class="filter-section">
+                            <label class="form-label">Наличие</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="inStock" id="inStockCheckbox"
+                                       th:checked="${param.inStock != null}">
+                                <label class="form-check-label" for="inStockCheckbox">
+                                    Только в наличии
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Скрытые поля для сортировки -->
+                        <input type="hidden" name="sortBy" th:value="${sortBy != null ? sortBy : 'name'}" id="sortByInput">
+                        <input type="hidden" name="sortDir" th:value="${sortDir != null ? sortDir : 'asc'}" id="sortDirInput">
+                        <input type="hidden" name="view" th:value="${param.view != null ? param.view : 'grid'}" id="viewInput">
+
+                        <div class="d-grid gap-2 mt-3">
+                            <button type="submit" class="btn btn-primary" id="applyFiltersBtn">
+                                <i class="fas fa-search me-2"></i>Применить фильтры
+                            </button>
+                            <a th:href="@{/catalog}" class="btn btn-outline-secondary" id="resetFiltersBtn">
+                                <i class="fas fa-times me-2"></i>Сбросить все
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Товары -->
+        <div class="col-md-9">
+            <!-- Активные фильтры -->
+            <div class="active-filters" th:if="${categoryId != null || brandId != null || minPrice != null || maxPrice != null || color != null || sizeFilter != null || country != null || audience != null || tag != null || search != null || param.inStock != null}">
+                <h6 class="mb-3"><i class="fas fa-tags me-2"></i>Активные фильтры:</h6>
+                <div>
+                    <span th:if="${search != null}" class="filter-tag">
+                        Поиск: "<span th:text="${search}"></span>"
+                        <a th:href="@{/catalog(categoryId=${categoryId}, brandId=${brandId}, minPrice=${minPrice}, maxPrice=${maxPrice}, color=${color}, sizeFilter=${sizeFilter}, country=${country}, audience=${audience}, tag=${tag}, sortBy=${sortBy}, sortDir=${sortDir}, inStock=${param.inStock}, view=${param.view})}" class="remove">×</a>
+                    </span>
+                    <span th:if="${categoryId != null}" class="filter-tag">Категория: <span th:text="${selectedCategory != null ? selectedCategory.name : 'Unknown'}"></span>
+                        <a th:href="@{/catalog(search=${search}, brandId=${brandId}, minPrice=${minPrice}, maxPrice=${maxPrice}, color=${color}, sizeFilter=${sizeFilter}, country=${country}, audience=${audience}, tag=${tag}, sortBy=${sortBy}, sortDir=${sortDir}, inStock=${param.inStock}, view=${param.view})}" class="remove">×</a>
+                    </span>
+                    <span th:if="${brandId != null}" class="filter-tag">Бренд: <span th:text="${selectedBrand != null ? selectedBrand.name : 'Unknown'}"></span>
+                        <a th:href="@{/catalog(search=${search}, categoryId=${categoryId}, minPrice=${minPrice}, maxPrice=${maxPrice}, color=${color}, sizeFilter=${sizeFilter}, country=${country}, audience=${audience}, tag=${tag}, sortBy=${sortBy}, sortDir=${sortDir}, inStock=${param.inStock}, view=${param.view})}" class="remove">×</a>
+                    </span>
+                    <span th:if="${tag != null}" class="filter-tag">
+    Тег: <span th:text="${tag.name() == 'NEW_ARRIVAL'} ? 'Новинки' :
+              (${tag.name() == 'SALE'} ? 'Распродажа' :
+              (${tag.name() == 'BESTSELLER'} ? 'Хиты' :
+              (${tag.name() == 'LIMITED_EDITION'} ? 'Лимитированная серия' : 'Другое')))"></span>
+    <a th:href="@{/catalog(search=${search}, categoryId=${categoryId}, brandId=${brandId}, minPrice=${minPrice}, maxPrice=${maxPrice}, color=${color}, sizeFilter=${sizeFilter}, country=${country}, audience=${audience}, sortBy=${sortBy}, sortDir=${sortDir}, inStock=${param.inStock}, view=${param.view})}" class="remove">×</a>
+</span>
+                </div>
+            </div>
+
+            <!-- Панель управления -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <span class="text-muted" th:if="${products.totalElements > 0}">
+                        Найдено товаров: <strong th:text="${products.totalElements}"></strong>
+                    </span>
+                    <span class="text-muted" th:unless="${products.totalElements > 0}">
+                        Товары не найдены
+                    </span>
+                </div>
+                <div class="d-flex gap-3 align-items-center">
+                    <!-- Сортировка -->
+                    <div class="btn-group">
+                        <a th:href="@{/catalog(sortBy='name', sortDir='asc', search=${search}, categoryId=${categoryId}, brandId=${brandId}, minPrice=${minPrice}, maxPrice=${maxPrice}, color=${color}, sizeFilter=${sizeFilter}, country=${country}, audience=${audience}, tag=${tag}, inStock=${param.inStock}, view=${param.view})}"
+                           class="btn btn-outline-primary btn-sm" th:classappend="${sortBy == 'name' && sortDir == 'asc'} ? 'active' : ''">
+                            А-Я
+                        </a>
+                        <a th:href="@{/catalog(sortBy='price', sortDir='asc', search=${search}, categoryId=${categoryId}, brandId=${brandId}, minPrice=${minPrice}, maxPrice=${maxPrice}, color=${color}, sizeFilter=${sizeFilter}, country=${country}, audience=${audience}, tag=${tag}, inStock=${param.inStock}, view=${param.view})}"
+                           class="btn btn-outline-primary btn-sm" th:classappend="${sortBy == 'price' && sortDir == 'asc'} ? 'active' : ''">
+                            Сначала дешевые
+                        </a>
+                        <a th:href="@{/catalog(sortBy='price', sortDir='desc', search=${search}, categoryId=${categoryId}, brandId=${brandId}, minPrice=${minPrice}, maxPrice=${maxPrice}, color=${color}, sizeFilter=${sizeFilter}, country=${country}, audience=${audience}, tag=${tag}, inStock=${param.inStock}, view=${param.view})}"
+                           class="btn btn-outline-primary btn-sm" th:classappend="${sortBy == 'price' && sortDir == 'desc'} ? 'active' : ''">
+                            Сначала дорогие
+                        </a>
+                        <a th:href="@{/catalog(sortBy='createdAt', sortDir='desc', search=${search}, categoryId=${categoryId}, brandId=${brandId}, minPrice=${minPrice}, maxPrice=${maxPrice}, color=${color}, sizeFilter=${sizeFilter}, country=${country}, audience=${audience}, tag=${tag}, inStock=${param.inStock}, view=${param.view})}"
+                           class="btn btn-outline-primary btn-sm" th:classappend="${sortBy == 'createdAt' && sortDir == 'desc'} ? 'active' : ''">
+                            Новинки
+                        </a>
+                    </div>
+                    <div class="page-size-selector">
+                        <span class="text-muted me-1">На странице:</span>
+                        <div class="btn-group">
+                            <a th:href="@{/catalog(size=5, page=0, search=${search}, categoryId=${categoryId}, brandId=${brandId}, minPrice=${minPrice}, maxPrice=${maxPrice}, color=${color}, sizeFilter=${sizeFilter}, country=${country}, audience=${audience}, tag=${tag}, sortBy=${sortBy}, sortDir=${sortDir}, inStock=${param.inStock}, view=${param.view})}"
+                               class="btn btn-outline-secondary btn-sm" th:classappend="${products.size == 5} ? 'active' : ''">5</a>
+                            <a th:href="@{/catalog(size=10, page=0, search=${search}, categoryId=${categoryId}, brandId=${brandId}, minPrice=${minPrice}, maxPrice=${maxPrice}, color=${color}, sizeFilter=${sizeFilter}, country=${country}, audience=${audience}, tag=${tag}, sortBy=${sortBy}, sortDir=${sortDir}, inStock=${param.inStock}, view=${param.view})}"
+                               class="btn btn-outline-secondary btn-sm" th:classappend="${products.size == 10} ? 'active' : ''">10</a>
+                            <a th:href="@{/catalog(size=20, page=0, search=${search}, categoryId=${categoryId}, brandId=${brandId}, minPrice=${minPrice}, maxPrice=${maxPrice}, color=${color}, sizeFilter=${sizeFilter}, country=${country}, audience=${audience}, tag=${tag}, sortBy=${sortBy}, sortDir=${sortDir}, inStock=${param.inStock}, view=${param.view})}"
+                               class="btn btn-outline-secondary btn-sm" th:classappend="${products.size == 20} ? 'active' : ''">20</a>
+                            <a th:href="@{/catalog(size=50, page=0, search=${search}, categoryId=${categoryId}, brandId=${brandId}, minPrice=${minPrice}, maxPrice=${maxPrice}, color=${color}, sizeFilter=${sizeFilter}, country=${country}, audience=${audience}, tag=${tag}, sortBy=${sortBy}, sortDir=${sortDir}, inStock=${param.inStock}, view=${param.view})}"
+                               class="btn btn-outline-secondary btn-sm" th:classappend="${products.size == 50} ? 'active' : ''">50</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Индикатор загрузки -->
+            <div class="loading-spinner" id="loadingSpinner">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Загрузка...</span>
+                </div>
+                <p class="mt-2 text-muted">Загрузка товаров...</p>
+            </div>
+
+            <!-- Список товаров -->
+            <div th:classappend="${param.view == 'list'} ? 'list-view' : 'grid-view'">
+                <div class="product-grid" th:if="${products.totalElements > 0}">
+                    <div class="product-item" th:each="product : ${products.content}">
+                        <div class="product-card" th:classappend="${product.stockQuantity == 0} ? 'out-of-stock' : ''">
+                            <div class="position-relative">
+                                <!-- Изображение товара -->
+                                <div class="product-image">
+                                    <a th:href="@{/products/{id}(id=${product.id})}" class="product-image-link">
+                                        <img th:if="${product.mainImage != null && !product.mainImage.isEmpty()}"
+                                             th:src="${product.mainImage}"
+                                             th:alt="${product.name}"
+                                             style="width: 100%; height: 100%; object-fit: cover;">
+                                        <i th:classappend="'fas ' + ${product.category.id == 1 ? 'fa-tshirt' : (product.category.id == 2 ? 'fa-vest' : (product.category.id == 3 ? 'fa-female' : (product.category.id == 4 ? 'fa-shoe-prints' : (product.category.id == 5 ? 'fa-gem' : 'fa-shopping-bag'))))}"
+                                           th:unless="${product.mainImage != null && !product.mainImage.isEmpty()}"></i>
+                                    </a>
+
+                                    <!-- Бейджи (остаются поверх изображения) -->
+                                    <span th:each="tag : ${product.tags}"
+                                          class="tag-badge"
+                                          th:classappend="${tag.name() == 'NEW_ARRIVAL'} ? 'tag-new' :
+                 (${tag.name() == 'SALE'} ? 'tag-sale' :
+                 (${tag.name() == 'BESTSELLER'} ? 'tag-bestseller' :
+                 (${tag.name() == 'LIMITED_EDITION'} ? 'tag-limited' : '')))"
+                                          th:text="${tag.name() == 'NEW_ARRIVAL'} ? 'НОВИНКА' :
+          (${tag.name() == 'SALE'} ? 'СКИДКА' :
+          (${tag.name() == 'BESTSELLER'} ? 'ХИТ' :
+          (${tag.name() == 'LIMITED_EDITION'} ? 'ЛИМИТ' : '')))">
+    </span>
+
+                                    <!-- Бейдж скидки -->
+                                    <span th:if="${product.isOnSale()}" class="discount-badge">
+        -<span th:text="${product.discountPercent.intValue()}"></span>%
+    </span>
+
+                                    <!-- Кнопка быстрого просмотра -->
+                                    <button class="quick-view-btn" th:onclick="|quickView(${product.id})|">
+                                        <i class="fas fa-eye me-1"></i>Быстрый просмотр
+                                    </button>
+                                </div>
+
+                                <!-- Бейдж наличия -->
+                                <div class="stock-badge" th:if="${product.stockQuantity < 5 && product.stockQuantity > 0}">
+                                    <span th:if="${product.stockQuantity == 1}">Последний!</span>
+                                    <span th:if="${product.stockQuantity > 1 && product.stockQuantity < 5}">Мало!</span>
+                                </div>
+
+                                <!-- Нет в наличии -->
+                                <div class="out-of-stock-overlay" th:if="${product.stockQuantity == 0}">
+                                    Нет в наличии
+                                </div>
+                            </div>
+                            <div th:classappend="${param.view == 'list'} ? 'product-details' : 'p-3'">
+                                <div>
+                                    <h6 class="mb-2" th:text="${product.name}">Название товара</h6>
+                                    <p class="text-muted small mb-2" th:text="${product.brand.name}">Бренд</p>
+
+                                    <!-- Рейтинг -->
+                                    <div class="rating-stars mb-2" th:if="${product.rating > 0}">
+                                        <i class="fas fa-star" th:each="i : ${#numbers.sequence(1, 5)}"
+                                           th:classappend="${i <= product.rating} ? 'text-warning' : 'text-muted'"></i>
+                                        <small class="text-muted ms-1" th:text="'(' + ${product.rating} + ')'"></small>
+                                    </div>
+
+                                    <!-- Цены -->
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <div>
+                                            <span class="product-price" th:text="'₽' + ${#numbers.formatDecimal(product.price, 0, 'COMMA', 2, 'POINT')}"></span>
+                                            <span th:if="${product.originalPrice != null}"
+                                                  class="original-price ms-2"
+                                                  th:text="'₽' + ${#numbers.formatDecimal(product.originalPrice, 0, 'COMMA', 2, 'POINT')}"></span>
+                                        </div>
+                                        <small class="text-muted"
+                                               th:text="'В наличии: ' + ${product.stockQuantity}"
+                                               th:classappend="${product.stockQuantity == 0} ? 'text-danger' : ''">
+                                        </small>
+                                    </div>
+
+                                    <!-- Дополнительная информация -->
+                                    <div class="small text-muted mb-2">
+                                        <div th:if="${product.targetAudience != null}">
+                                            <i class="fas fa-user me-1"></i>
+                                            <span th:text="${product.targetAudience.name() == 'MEN'} ? 'Мужчины' :
+              (${product.targetAudience.name() == 'WOMEN'} ? 'Женщины' :
+              (${product.targetAudience.name() == 'TEENS'} ? 'Подростки' :
+              (${product.targetAudience.name() == 'KIDS'} ? 'Дети' : 'Унисекс')))"></span>
+                                        </div>
+                                        <div th:if="${product.countryOfOrigin != null}">
+                                            <i class="fas fa-flag me-1"></i>
+                                            <span th:text="${product.countryOfOrigin}"></span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Описание (только в списке) -->
+                                    <p class="text-muted small" th:if="${param.view == 'list' && product.description != null}"
+                                       th:text="${#strings.abbreviate(product.description, 150)}"></p>
+                                </div>
+
+                                <div class="product-actions">
+                                    <a th:href="@{/products/{id}(id=${product.id})}" class="btn btn-outline-primary flex-fill">
+                                        <i class="fas fa-eye me-2"></i>Подробнее
+                                    </a>
+                                    <!-- Кнопка избранного с проверкой авторизации через Thymeleaf -->
+                                    <div class="favorite-section">
+                                        <form th:action="@{/api/favorites/toggle}" method="post">
+                                            <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                            <input type="hidden" name="productId" th:value="${product.id}">
+                                            <input type="hidden" name="redirectUrl" th:value="@{/catalog}">
+                                            <button type="submit" class="btn-favorite-icon"
+                                                    th:title="${product.isInFavorites ? 'Удалить из избранного' : 'Добавить в избранное'}">
+                                                <img th:if="${product.isInFavorites}" src="/img/heart2.jpg" alt="В избранном" class="favorite-icon">
+                                                <img th:unless="${product.isInFavorites}" src="/img/heart.jpg" alt="Добавить в избранное" class="favorite-icon">
+                                            </button>
+                                        </form>
+                                    </div>
+
+                                    <!-- Форма корзины -->
+                                    <form th:action="@{/cart/add}" method="post" class="flex-fill">
+                                        <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                        <input type="hidden" name="productId" th:value="${product.id}">
+                                        <input type="hidden" name="quantity" value="1">
+                                        <input type="hidden" name="size" value="M">
+                                        <input type="hidden" name="color" value="Black">
+                                        <button type="submit" class="btn btn-primary w-100" th:disabled="${product.stockQuantity == 0}">
+                                            <i class="fas fa-shopping-cart me-1"></i>В корзину
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Сообщение если товаров нет -->
+            <div th:unless="${products.totalElements > 0}" class="text-center py-5">
+                <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                <h4 class="text-muted">Товары не найдены</h4>
+                <p class="text-muted">Попробуйте изменить параметры фильтрации</p>
+                <a th:href="@{/catalog}" class="btn btn-primary">
+                    <i class="fas fa-times me-2"></i>Сбросить фильтры
+                </a>
+            </div>
+
+            <!-- Пагинация -->
+            <nav class="mt-5" th:if="${products.totalPages > 1}">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:classappend="${products.first} ? 'disabled' : ''">
+                        <a class="page-link"
+                           th:href="@{/catalog(page=0, size=${products.size}, sortBy=${sortBy}, sortDir=${sortDir}, search=${search}, categoryId=${categoryId}, brandId=${brandId}, minPrice=${minPrice}, maxPrice=${maxPrice}, color=${color}, sizeFilter=${sizeFilter}, country=${country}, audience=${audience}, tag=${tag}, inStock=${param.inStock}, view=${param.view})}">
+                            <i class="fas fa-angle-double-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item" th:classappend="${products.first} ? 'disabled' : ''">
+                        <a class="page-link"
+                           th:href="@{/catalog(page=${products.number - 1}, size=${products.size}, sortBy=${sortBy}, sortDir=${sortDir}, search=${search}, categoryId=${categoryId}, brandId=${brandId}, minPrice=${minPrice}, maxPrice=${maxPrice}, color=${color}, sizeFilter=${sizeFilter}, country=${country}, audience=${audience}, tag=${tag}, inStock=${param.inStock}, view=${param.view})}">
+                            <i class="fas fa-angle-left"></i>
+                        </a>
+                    </li>
+
+                    <li class="page-item" th:each="i : ${#numbers.sequence(0, products.totalPages - 1)}"
+                        th:classappend="${i == products.number} ? 'active' : ''">
+                        <a class="page-link"
+                           th:href="@{/catalog(page=${i}, size=${products.size}, sortBy=${sortBy}, sortDir=${sortDir}, search=${search}, categoryId=${categoryId}, brandId=${brandId}, minPrice=${minPrice}, maxPrice=${maxPrice}, color=${color}, sizeFilter=${sizeFilter}, country=${country}, audience=${audience}, tag=${tag}, inStock=${param.inStock}, view=${param.view})}"
+                           th:text="${i + 1}">1</a>
+                    </li>
+
+                    <li class="page-item" th:classappend="${products.last} ? 'disabled' : ''">
+                        <a class="page-link"
+                           th:href="@{/catalog(page=${products.number + 1}, size=${products.size}, sortBy=${sortBy}, sortDir=${sortDir}, search=${search}, categoryId=${categoryId}, brandId=${brandId}, minPrice=${minPrice}, maxPrice=${maxPrice}, color=${color}, sizeFilter=${sizeFilter}, country=${country}, audience=${audience}, tag=${tag}, inStock=${param.inStock}, view=${param.view})}">
+                            <i class="fas fa-angle-right"></i>
+                        </a>
+                    </li>
+                    <li class="page-item" th:classappend="${products.last} ? 'disabled' : ''">
+                        <a class="page-link"
+                           th:href="@{/catalog(page=${products.totalPages - 1}, size=${products.size}, sortBy=${sortBy}, sortDir=${sortDir}, search=${search}, categoryId=${categoryId}, brandId=${brandId}, minPrice=${minPrice}, maxPrice=${maxPrice}, color=${color}, sizeFilter=${sizeFilter}, country=${country}, audience=${audience}, tag=${tag}, inStock=${param.inStock}, view=${param.view})}">
+                            <i class="fas fa-angle-double-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<!-- Футер -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<!-- Модальное окно для авторизации -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Требуется авторизация</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="loginModalMessage">Для добавления в избранное необходимо авторизоваться</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                <a href="/login" class="btn btn-primary">Войти</a>
+                <a href="/register" class="btn btn-outline-primary">Зарегистрироваться</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/catalog.js}"></script>
+<!-- Модальные окна для избранного -->
+<div th:each="product : ${products.content}"
+     th:id="'favoriteModal' + ${product.id}"
+     class="modal fade"
+     tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Добавить в избранное</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form th:action="@{/favorites/add}" method="post">
+                <div class="modal-body">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <input type="hidden" name="productId" th:value="${product.id}">
+
+                    <div class="mb-3">
+                        <h6 class="text-primary" th:text="${product.name}"></h6>
+                        <p class="text-muted mb-0" th:text="'Бренд: ' + ${product.brand.name}"></p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Размер</label>
+                        <select class="form-select" name="size">
+                            <option value="">Не выбрано</option>
+                            <option value="XS">XS</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                            <option value="XXL">XXL</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Цвет</label>
+                        <select class="form-select" name="color">
+                            <option value="">Не выбрано</option>
+                            <option value="Черный">Черный</option>
+                            <option value="Белый">Белый</option>
+                            <option value="Красный">Красный</option>
+                            <option value="Синий">Синий</option>
+                            <option value="Зеленый">Зеленый</option>
+                            <option value="Желтый">Желтый</option>
+                            <option value="Розовый">Розовый</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-heart me-2"></i>Добавить в избранное
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

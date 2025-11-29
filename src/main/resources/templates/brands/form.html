@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${brand.id != null} ? 'Редактирование бренда - StyleHub' : 'Создание бренда - StyleHub'">Форма бренда</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="~{fragments/nav :: navbar}"></div>
+
+<div class="page-header">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="page-title">
+                    <i class="fas" th:classappend="${brand.id != null} ? 'fa-edit' : 'fa-plus-circle'"></i>
+                    <span th:text="${brand.id != null} ? 'Редактирование бренда' : 'Создание бренда'"></span>
+                </h1>
+                <p class="page-subtitle" th:text="${brand.id != null} ?
+                       'Обновление информации о бренде' :
+                       'Добавление нового бренда в систему'"></p>
+            </div>
+            <div class="col-md-4 text-end">
+                <a th:href="@{/brands}" class="btn btn-light">
+                    <i class="fas fa-arrow-left me-2"></i>Назад к списку
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="form-card">
+                <form th:action="${brand.id != null} ? @{/brands/update/{id}(id=${brand.id}) : @{/brands/create}"
+                      method="post" th:object="${brand}">
+
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            <i class="fas fa-info-circle"></i>Основная информация
+                        </h3>
+
+                        <div class="mb-3">
+                            <label class="form-label">Название бренда *</label>
+                            <input type="text" th:field="*{name}" class="form-control"
+                                   placeholder="Введите название бренда" required />
+                            <div class="form-text">Уникальное название бренда от 2 до 50 символов</div>
+                            <div th:if="${#fields.hasErrors('name')}" class="text-danger">
+                                <small th:errors="*{name}"></small>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Контактный email</label>
+                            <input type="email" th:field="*{contactEmail}" class="form-control"
+                                   placeholder="email@example.com" />
+                            <div class="form-text">Email для связи с представителем бренда</div>
+                            <div th:if="${#fields.hasErrors('contactEmail')}" class="text-danger">
+                                <small th:errors="*{contactEmail}"></small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div th:if="${brand.id != null}" class="form-section">
+                        <h3 class="form-section-title">
+                            <i class="fas fa-chart-bar"></i>Информация о бренде
+                        </h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="info-item">
+                                    <label>ID бренда:</label>
+                                    <span th:text="${brand.id}" class="text-muted">-</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="info-item">
+                                    <label>Статус:</label>
+                                    <span th:if="${brand.deleted}" class="badge bg-danger">Удален</span>
+                                    <span th:unless="${brand.deleted}" class="badge bg-success">Активен</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Кнопки действий -->
+                    <div class="row mt-4">
+                        <div class="col-md-12 d-flex justify-content-between">
+                            <a th:href="@{/brands}" class="btn btn-secondary">
+                                <i class="fas fa-times me-2"></i>Отмена
+                            </a>
+                            <div>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas" th:classappend="${brand.id != null} ? 'fa-save' : 'fa-plus'"></i>
+                                    <span th:text="${brand.id != null} ? 'Обновить бренд' : 'Создать бренд'"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div th:if="${brand.deleted}" class="alert alert-warning mt-4">
+                <div class="d-flex">
+                    <i class="fas fa-exclamation-triangle me-3 mt-1"></i>
+                    <div>
+                        <strong>Внимание!</strong> Этот бренд находится в архиве.
+                        Для восстановления свяжитесь с администратором системы.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{fragments/footer :: footer}"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

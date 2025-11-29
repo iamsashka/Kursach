@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:attr="data-theme=${currentTheme}">
+<head>
+    <title>Бренды - TARENO</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/orders.css}">
+</head>
+<body>
+<div th:replace="~{fragments/nav :: navbar}"></div>
+
+<div class="page-header">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="page-title">
+                    <i class="fas fa-copyright"></i>
+                    Управление брендами
+                </h1>
+                <p class="page-subtitle">Добавление и редактирование брендов одежды</p>
+            </div>
+            <div class="col-md-4 text-end">
+                <div class="header-buttons-container">
+                    <div class="export-row">
+                        <div class="export-buttons">
+                            <a th:href="@{/brands/export/excel}" class="btn btn-outline-success btn-sm">
+                                <i class="fas fa-file-excel me-1"></i><span>Excel</span>
+                            </a>
+                            <a th:href="@{/brands/export/pdf}" class="btn btn-outline-success btn-sm">
+                                <i class="fas fa-file-pdf me-1"></i><span>PDF</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="action-row">
+                        <a th:href="@{/brands/archive}" class="btn btn-outline-secondary btn-sm">
+                            <i class="fas fa-archive me-1"></i>Архив
+                        </a>
+                        <button class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#createBrandModal">
+                            <i class="fas fa-plus me-1"></i>Добавить бренд
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-copyright"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 th:text="${totalBrandsCount}">0</h3>
+                    <p>Всего брендов</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 th:text="${activeBrandsCount}">0</h3>
+                    <p>Активных</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-archive"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 th:text="${archivedBrandsCount}">0</h3>
+                    <p>В архиве</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Фильтры и поиск -->
+    <div class="card mb-4">
+        <div class="card-header d-flex align-items-center">
+            <i class="fas fa-filter me-2"></i> Фильтры и поиск
+        </div>
+        <div class="card-body">
+            <form th:action="@{/brands}" method="get" class="filter-form">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            <input type="text" name="search" th:value="${search}" class="form-control"
+                                   placeholder="Поиск по названию бренда или email">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <select name="status" class="form-select">
+                            <option value="">Все статусы</option>
+                            <option value="active" th:selected="${status == 'active'}">Активные</option>
+                            <option value="archived" th:selected="${status == 'archived'}">В архиве</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select name="size" class="form-select" onchange="this.form.submit()">
+                            <option value="10" th:selected="${param.size == 10}">10 на странице</option>
+                            <option value="25" th:selected="${param.size == 25}">25 на странице</option>
+                            <option value="50" th:selected="${param.size == 50}">50 на странице</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 text-end">
+                        <button type="submit" class="btn btn-primary me-2">
+                            <i class="fas fa-filter me-1"></i> Применить
+                        </button>
+                        <a th:href="@{/brands}" class="btn btn-outline-secondary">
+                            <i class="fas fa-refresh me-1"></i> Сбросить
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Таблица брендов -->
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <span><i class="fas fa-list me-2"></i> Список брендов</span>
+            <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-primary" th:text="${brandPage.totalElements} + ' брендов'"></span>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Название</th>
+                        <th>Email</th>
+                        <th>Статус</th>
+                        <th>Действия</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- ИСПРАВЛЕНО: используем brandPage.content вместо brands -->
+                    <tr th:each="brand : ${brandPage.content}" th:classappend="${brand.deleted} ? 'table-secondary' : ''">
+                        <td th:text="${brand.id}">1</td>
+                        <td>
+                            <strong th:text="${brand.name}">Название бренда</strong>
+                        </td>
+                        <td>
+                            <span th:if="${brand.contactEmail}" th:text="${brand.contactEmail}" class="text-muted">email@example.com</span>
+                            <span th:unless="${brand.contactEmail}" class="text-muted">—</span>
+                        </td>
+                        <td>
+                            <span th:if="${brand.deleted}" class="badge bg-danger">Удален</span>
+                            <span th:unless="${brand.deleted}" class="badge bg-success">Активен</span>
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a th:href="@{/brands/edit/{id}(id=${brand.id})}"
+                                   class="btn btn-sm btn-outline-primary"
+                                   th:if="${!brand.deleted}">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a th:href="@{/brands/soft-delete/{id}(id=${brand.id})}"
+                                   class="btn btn-sm btn-outline-warning"
+                                   th:if="${!brand.deleted}"
+                                   onclick="return confirm('Вы уверены, что хотите переместить бренд в архив?')">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                                <a th:href="@{/brands/restore/{id}(id=${brand.id})}"
+                                   class="btn btn-sm btn-outline-success"
+                                   th:if="${brand.deleted}"
+                                   onclick="return confirm('Вы уверены, что хотите восстановить бренд из архива?')">
+                                    <i class="fas fa-undo"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- ИСПРАВЛЕНО: используем brandPage.content вместо brands -->
+                    <tr th:if="${#lists.isEmpty(brandPage.content)}">
+                        <td colspan="5" class="text-center text-muted py-4">
+                            <i class="fas fa-inbox fa-2x mb-3"></i>
+                            <p>Бренды не найдены</p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Пагинация -->
+    <nav th:if="${brandPage.totalPages > 1}" class="mt-4">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${brandPage.first} ? 'disabled' : ''">
+                <a class="page-link"
+                   th:href="@{/brands(size=${param.size}, page=0, search=${search}, status=${status})}">
+                    <i class="fas fa-angle-double-left"></i>
+                </a>
+            </li>
+            <li class="page-item" th:classappend="${brandPage.first} ? 'disabled' : ''">
+                <a class="page-link"
+                   th:href="@{/brands(size=${param.size}, page=${currentPage - 1}, search=${search}, status=${status})}">
+                    <i class="fas fa-angle-left"></i>
+                </a>
+            </li>
+            <li th:each="i : ${#numbers.sequence(0, brandPage.totalPages - 1)}"
+                class="page-item" th:classappend="${i == currentPage} ? 'active' : ''">
+                <a class="page-link"
+                   th:href="@{/brands(size=${param.size}, page=${i}, search=${search}, status=${status})}"
+                   th:text="${i + 1}">
+                </a>
+            </li>
+            <li class="page-item" th:classappend="${brandPage.last} ? 'disabled' : ''">
+                <a class="page-link"
+                   th:href="@{/brands(size=${param.size}, page=${currentPage + 1}, search=${search}, status=${status})}">
+                    <i class="fas fa-angle-right"></i>
+                </a>
+            </li>
+            <li class="page-item" th:classappend="${brandPage.last} ? 'disabled' : ''">
+                <a class="page-link"
+                   th:href="@{/brands(size=${param.size}, page=${brandPage.totalPages - 1}, search=${search}, status=${status})}">
+                    <i class="fas fa-angle-double-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<div class="modal fade" id="createBrandModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-plus-circle me-2"></i>Добавить бренд
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form th:action="@{/brands/create}" method="post" th:object="${brand}">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Название бренда *</label>
+                        <input type="text" th:field="*{name}" class="form-control"
+                               placeholder="Введите название бренда" required />
+                        <div class="form-text">Уникальное название бренда от 2 до 50 символов</div>
+                        <div th:if="${#fields.hasErrors('name')}" class="text-danger">
+                            <small th:errors="*{name}"></small>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Контактный email</label>
+                        <input type="email" th:field="*{contactEmail}" class="form-control"
+                               placeholder="email@example.com" />
+                        <div class="form-text">Email для связи с представителем бренда</div>
+                        <div th:if="${#fields.hasErrors('contactEmail')}" class="text-danger">
+                            <small th:errors="*{contactEmail}"></small>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Создать бренд</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

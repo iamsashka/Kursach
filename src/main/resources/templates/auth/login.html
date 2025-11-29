@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:attr="data-theme=${currentTheme}">
+<head>
+    <title>Вход - TARENO</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/aytentification.css}">
+    <style>
+
+    </style>
+</head>
+<body>
+<div class="auth-background"></div>
+<div class="auth-pattern"></div>
+
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="auth-logo">TARENO</div>
+            <h2>ВХОД В СИСТЕМУ</h2>
+            <p>Войдите в ваш аккаунт</p>
+        </div>
+
+        <div th:if="${param.error}" class="alert alert-danger">
+            <i class="fas fa-exclamation-circle me-2"></i>Неверные данные для входа
+        </div>
+        <div th:if="${param.logout}" class="alert alert-success">
+            <i class="fas fa-check-circle me-2"></i>Выход выполнен успешно
+        </div>
+        <div th:if="${param.timeout}" class="alert alert-warning">
+            <i class="fas fa-clock me-2"></i>Сессия истекла
+        </div>
+
+        <form th:action="@{/login}" method="post" class="auth-form" id="loginForm">
+            <input type="hidden" name="returnUrl" th:value="${returnUrl != null ? returnUrl : '/'}">
+            <div class="mb-3">
+                <label class="form-label">ПОЧТА</label>
+                <input type="email" name="username" class="form-control"
+                       placeholder="Введите email" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">ПАРОЛЬ</label>
+                <input type="password" name="password" class="form-control"
+                       placeholder="Введите пароль" required>
+                <div class="form-text">
+                    <a th:href="@{/forgot-password}" class="auth-link">ЗАБЫЛИ ПАРОЛЬ?</a>
+                </div>
+            </div>
+
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="rememberMe" name="remember-me">
+                <label class="form-check-label" for="rememberMe">ЗАПОМНИТЬ МЕНЯ</label>
+            </div>
+
+            <button type="submit" class="btn auth-btn w-100 mb-3" id="loginBtn">
+                <i class="fas fa-sign-in-alt me-2"></i>ВОЙТИ
+            </button>
+        </form>
+
+        <div class="auth-divider">
+            <span>ИЛИ ВОЙДИТЕ ЧЕРЕЗ</span>
+        </div>
+        <div class="social-auth">
+            <div class="social-buttons-grid">
+                <a href="https://www.gosuslugi.ru/" target="_blank" class="social-btn">
+                    <i class="fas fa-passport me-2"></i>ГОСУСЛУГИ
+                </a>
+                <a href="https://yandex.ru/" target="_blank" class="social-btn">
+                    <i class="fab fa-yandex me-2"></i>ЯНДЕКС
+                </a>
+                <a href="https://mail.ru/" target="_blank" class="social-btn">
+                    <i class="fas fa-envelope me-2"></i>MAIL.RU
+                </a>
+                <a href="https://id.vk.com/" target="_blank" class="social-btn">
+                    <i class="fab fa-vk me-2"></i>VK ID
+                </a>
+            </div>
+        </div>
+        <div class="text-center mt-3">
+            <p class="mb-0">НЕТ АККАУНТА?
+                <a th:href="@{/register}" class="auth-link">ЗАРЕГИСТРИРОВАТЬСЯ</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        const btn = document.getElementById('loginBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>ВХОД...';
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:with="theme=${currentTheme != null ? currentTheme : 'light'}"
+      th:attr="data-theme=${currentTheme}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/admin-style.css}">
+    <link rel="stylesheet" th:href="@{/css/nav.css}">
+</head>
+<body>
+<!-- Сообщение об успешной регистрации -->
+<div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+    <i class="fas fa-check-circle me-2"></i>
+    <span th:text="${success}"></span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+
+<!-- Информация о вошедшем администраторе -->
+<div th:if="${isAdmin}" class="alert alert-info mb-0 text-center">
+    <i class="fas fa-user-shield me-2"></i>
+    Вы вошли как администратор: <strong th:text="${userEmail}"></strong>
+</div>
+
+<div th:replace="~{fragments/nav :: navbar}"></div>
+
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1>Система управления интернет-магазином одежды</h1>
+                <p>Профессиональная платформа для управления товарами, клиентами и заказами с полным набором функций CRUD.</p>
+                <a class="btn btn-light btn-lg" th:href="@{/products}" role="button">
+                    <i class="fas fa-shopping-bag me-2"></i>Перейти к товарам
+                </a>
+            </div>
+            <div class="col-lg-6 text-center">
+                <i class="fas fa-shopping-cart" style="font-size: 12rem; opacity: 0.8;"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container mb-5">
+    <div class="row mb-5">
+        <div class="col-md-4 mb-4">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-tshirt"></i>
+                </div>
+                <h3>Управление товарами</h3>
+                <p>Полный контроль над каталогом товаров с возможностью добавления, редактирования, поиска и фильтрации.</p>
+                <a class="btn btn-primary" th:href="@{/products}" role="button">Управление</a>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-tags"></i>
+                </div>
+                <h3>Категории и бренды</h3>
+                <p>Создание и управление категориями товаров и брендами для удобной навигации и фильтрации.</p>
+                <a class="btn btn-primary" th:href="@{/categories}" role="button">Категории</a>
+                <a class="btn btn-outline-primary ms-2" th:href="@{/brands}" role="button">Бренды</a>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Клиенты и заказы</h3>
+                <p>Управление клиентской базой и обработка заказов с отслеживанием статусов и истории.</p>
+                <a class="btn btn-primary" th:href="@{/customers}" role="button">Клиенты</a>
+                <a class="btn btn-outline-primary ms-2" th:href="@{/orders}" role="button">Заказы</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2 class="section-title">Возможности системы</h2>
+        </div>
+        <div class="col-md-6">
+            <div class="dashboard-card">
+                <h3><i class="fas fa-search me-2"></i>Поиск и фильтрация</h3>
+                <p>Мощные инструменты поиска и фильтрации товаров по различным параметрам: категориям, брендам, цене и другим характеристикам.</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="dashboard-card">
+                <h3><i class="fas fa-check-circle me-2"></i>Валидация данных</h3>
+                <p>Автоматическая проверка вводимых данных через аннотации для обеспечения целостности и корректности информации.</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="dashboard-card">
+                <h3><i class="fas fa-database me-2"></i>Управление связями</h3>
+                <p>Поддержка различных типов связей между сущностями: один-к-одному, один-ко-многим, многие-ко-многим.</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="dashboard-card">
+                <h3><i class="fas fa-trash-alt me-2"></i>Двойное удаление</h3>
+                <p>Возможность как мягкого (логического), так и жесткого (физического) удаления записей для разных сценариев использования.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <h2 class="section-title">Быстрый доступ</h2>
+        </div>
+        <div class="col-md-3 col-6 mb-3">
+            <a th:href="@{/products}" class="btn btn-outline-primary w-100 py-3">
+                <i class="fas fa-tshirt fa-2x mb-2 d-block"></i>
+                Товары
+            </a>
+        </div>
+        <div class="col-md-3 col-6 mb-3">
+            <a th:href="@{/categories}" class="btn btn-outline-primary w-100 py-3">
+                <i class="fas fa-tags fa-2x mb-2 d-block"></i>
+                Категории
+            </a>
+        </div>
+        <div class="col-md-3 col-6 mb-3">
+            <a th:href="@{/brands}" class="btn btn-outline-primary w-100 py-3">
+                <i class="fas fa-copyright fa-2x mb-2 d-block"></i>
+                Бренды
+            </a>
+        </div>
+        <div class="col-md-3 col-6 mb-3">
+            <a th:href="@{/customers}" class="btn btn-outline-primary w-100 py-3">
+                <i class="fas fa-users fa-2x mb-2 d-block"></i>
+                Клиенты
+            </a>
+        </div>
+        <div class="col-md-3 col-6 mb-3">
+            <a th:href="@{/orders}" class="btn btn-outline-primary w-100 py-3">
+                <i class="fas fa-shopping-cart fa-2x mb-2 d-block"></i>
+                Заказы
+            </a>
+        </div>
+        <div class="col-md-3 col-6 mb-3">
+            <a th:href="@{/products/create}" class="btn btn-outline-primary w-100 py-3">
+                <i class="fas fa-plus fa-2x mb-2 d-block"></i>
+                Новый товар
+            </a>
+        </div>
+        <div class="col-md-3 col-6 mb-3">
+            <a th:href="@{/customers/create}" class="btn btn-outline-primary w-100 py-3">
+                <i class="fas fa-user-plus fa-2x mb-2 d-block"></i>
+                Новый клиент
+            </a>
+        </div>
+        <div class="col-md-3 col-6 mb-3">
+            <a th:href="@{/orders/create}" class="btn btn-outline-primary w-100 py-3">
+                <i class="fas fa-file-invoice-dollar fa-2x mb-2 d-block"></i>
+                Новый заказ
+            </a>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
