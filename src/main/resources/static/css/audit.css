@@ -1,0 +1,570 @@
+/* Черно-белая тема для аудита */
+:root {
+    --tareno-black: #000000;
+    --tareno-white: #ffffff;
+    --tareno-light: #f8f9fa;
+    --tareno-gray: #6c757d;
+    --tareno-dark: #212529;
+    --tareno-border: #e0e0e0;
+    --tareno-accent: #1a1a1a;
+    --tareno-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --tareno-shadow-hover: 0 4px 15px rgba(0, 0, 0, 0.15);
+    --audit-success: #198754;
+    --audit-primary: #0d6efd;
+    --audit-warning: #ffc107;
+    --audit-danger: #dc3545;
+    --audit-info: #0dcaf0;
+}
+
+[data-theme="dark"] {
+    --tareno-black: #ffffff;
+    --tareno-white: #000000;
+    --tareno-light: #1a1a1a;
+    --tareno-gray: #8a8a8a;
+    --tareno-dark: #f8f9fa;
+    --tareno-border: #404040;
+    --tareno-accent: #ffffff;
+    --tareno-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+    --tareno-shadow-hover: 0 4px 15px rgba(255, 255, 255, 0.15);
+    --audit-success: #198754;
+    --audit-primary: #0d6efd;
+    --audit-warning: #ffc107;
+    --audit-danger: #dc3545;
+    --audit-info: #0dcaf0;
+}
+
+/* Основные стили */
+body {
+    background-color: var(--tareno-white);
+    color: var(--tareno-black);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.5;
+}
+
+.container {
+    max-width: 1400px;
+    padding: 0 15px;
+}
+
+/* Заголовок страницы */
+.page-header {
+    background: var(--tareno-white);
+    border-bottom: 2px solid var(--tareno-black);
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+}
+
+.page-title {
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: var(--tareno-black);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.page-subtitle {
+    color: var(--tareno-gray);
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* Карточки статистики */
+.stats-card {
+    background: var(--tareno-white);
+    border: 2px solid var(--tareno-black);
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: all 0.3s ease;
+    margin-bottom: 1rem;
+}
+
+.stats-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--tareno-shadow-hover);
+}
+
+.stats-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--tareno-black);
+    color: var(--tareno-white);
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.stats-info h3 {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--tareno-black);
+    margin: 0;
+    line-height: 1;
+}
+
+.stats-info p {
+    color: var(--tareno-gray);
+    margin: 0.25rem 0 0 0;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Карточки */
+.card {
+    border: 2px solid var(--tareno-black);
+    margin-bottom: 1.5rem;
+    background: var(--tareno-white);
+}
+
+.card-header {
+    background: var(--tareno-white);
+    border-bottom: 2px solid var(--tareno-black);
+    padding: 1.25rem 1.5rem;
+    font-weight: 700;
+    color: var(--tareno-black);
+    font-size: 1.1rem;
+}
+
+.card-body {
+    padding: 1.5rem;
+    background: var(--tareno-white);
+}
+
+/* Карточка фильтров аудита */
+.audit-filter-card {
+    background: var(--tareno-white);
+}
+
+.audit-filter-card .card-header {
+    background: var(--tareno-light);
+    border-bottom: 2px solid var(--tareno-black);
+}
+
+/* Таблица аудита */
+.audit-log-table {
+    width: 100%;
+    margin-bottom: 0;
+    color: var(--tareno-black);
+    border-collapse: collapse;
+}
+
+.audit-log-table th {
+    border-bottom: 3px solid var(--tareno-black);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.85rem;
+    padding: 1rem 0.75rem;
+    background: var(--tareno-white);
+    white-space: nowrap;
+}
+
+.audit-log-table td {
+    padding: 1rem 0.75rem;
+    border-bottom: 1px solid var(--tareno-border);
+    vertical-align: middle;
+}
+
+.audit-log-row:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .audit-log-row:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Бейджи аудита */
+.audit-badge .badge {
+    border: 1px solid var(--tareno-black);
+    border-radius: 0;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    padding: 0.5rem 0.75rem;
+}
+
+.bg-success {
+    background: var(--audit-success) !important;
+    color: var(--tareno-white) !important;
+    border-color: var(--audit-success) !important;
+}
+
+.bg-primary {
+    background: var(--audit-primary) !important;
+    color: var(--tareno-white) !important;
+    border-color: var(--audit-primary) !important;
+}
+
+.bg-warning {
+    background: var(--audit-warning) !important;
+    color: var(--tareno-black) !important;
+    border-color: var(--audit-warning) !important;
+}
+
+.bg-danger {
+    background: var(--audit-danger) !important;
+    color: var(--tareno-white) !important;
+    border-color: var(--audit-danger) !important;
+}
+
+.bg-info {
+    background: var(--audit-info) !important;
+    color: var(--tareno-black) !important;
+    border-color: var(--audit-info) !important;
+}
+
+.bg-secondary {
+    background: var(--tareno-gray) !important;
+    color: var(--tareno-white) !important;
+    border-color: var(--tareno-gray) !important;
+}
+
+.bg-light {
+    background: var(--tareno-light) !important;
+    color: var(--tareno-black) !important;
+    border-color: var(--tareno-border) !important;
+}
+
+/* Детали аудита */
+.audit-details {
+    font-size: 0.875rem;
+}
+
+.audit-old-values {
+    border-right: 2px solid var(--audit-danger);
+    padding-right: 1rem;
+}
+
+.audit-new-values {
+    border-left: 2px solid var(--audit-success);
+    padding-left: 1rem;
+}
+
+.audit-pre {
+    background: var(--tareno-light);
+    border: 1px solid var(--tareno-border);
+    border-radius: 0;
+    padding: 0.75rem;
+    font-size: 0.8rem;
+    font-family: 'Courier New', monospace;
+    color: var(--tareno-black);
+    margin: 0;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+/* Кнопки */
+.btn {
+    border: 2px solid var(--tareno-black);
+    border-radius: 0;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    min-width: auto;
+    height: auto;
+}
+
+.btn-primary {
+    background: var(--tareno-black);
+    color: var(--tareno-white);
+    border-color: var(--tareno-black);
+}
+
+.btn-primary:hover {
+    background: var(--tareno-white);
+    color: var(--tareno-black);
+    border-color: var(--tareno-black);
+}
+
+.btn-outline-primary {
+    background: var(--tareno-white);
+    color: var(--tareno-black);
+    border-color: var(--tareno-black);
+}
+
+.btn-outline-primary:hover {
+    background: var(--tareno-black);
+    color: var(--tareno-white);
+    border-color: var(--tareno-black);
+}
+
+.btn-outline-secondary {
+    background: var(--tareno-white);
+    color: var(--tareno-black);
+    border-color: var(--tareno-black);
+}
+
+.btn-outline-secondary:hover {
+    background: var(--tareno-black);
+    color: var(--tareno-white);
+    border-color: var(--tareno-black);
+}
+
+.btn-sm {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.8rem;
+    min-width: auto;
+    width: auto;
+    height: auto;
+    border-width: 1px;
+}
+
+/* Формы */
+.form-control {
+    border: 2px solid var(--tareno-black);
+    border-radius: 0;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    background-color: var(--tareno-white);
+    color: var(--tareno-black);
+}
+
+.form-control:focus {
+    border-color: var(--tareno-black);
+    box-shadow: 0 0 0 2px var(--tareno-black);
+    background-color: var(--tareno-white);
+    color: var(--tareno-black);
+}
+
+.form-select {
+    border: 2px solid var(--tareno-black);
+    border-radius: 0;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    background-color: var(--tareno-white);
+    color: var(--tareno-black);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23000000' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+}
+
+.form-select:focus {
+    border-color: var(--tareno-black);
+    box-shadow: 0 0 0 2px var(--tareno-black);
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--tareno-black);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+}
+
+/* Утилиты */
+.text-muted {
+    color: var(--tareno-gray) !important;
+}
+
+.text-danger {
+    color: var(--audit-danger) !important;
+    font-weight: 600;
+}
+
+.text-success {
+    color: var(--audit-success) !important;
+    font-weight: 600;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* Empty state */
+.empty-state {
+    padding: 3rem 2rem;
+    text-align: center;
+}
+
+.empty-state i {
+    color: var(--tareno-gray);
+    opacity: 0.5;
+    margin-bottom: 1rem;
+}
+
+.empty-state h5 {
+    color: var(--tareno-gray);
+    margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+    font-weight: 600;
+    color: var(--tareno-gray);
+}
+
+/* Пагинация */
+.pagination {
+    margin-bottom: 0;
+}
+
+.page-link {
+    border: 1px solid var(--tareno-black);
+    color: var(--tareno-black);
+    background: var(--tareno-white);
+    padding: 0.5rem 0.75rem;
+}
+
+.page-link:hover {
+    background: var(--tareno-black);
+    color: var(--tareno-white);
+    border-color: var(--tareno-black);
+}
+
+.page-item.active .page-link {
+    background: var(--tareno-black);
+    color: var(--tareno-white);
+    border-color: var(--tareno-black);
+}
+
+.page-item.disabled .page-link {
+    background: var(--tareno-light);
+    color: var(--tareno-gray);
+    border-color: var(--tareno-border);
+}
+
+/* Анимации */
+.audit-log-table {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Адаптивность */
+
+/* Tablet (768px - 991px) */
+@media (max-width: 991px) and (min-width: 768px) {
+    .stats-card {
+        padding: 1rem;
+    }
+
+    .stats-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.25rem;
+    }
+
+    .stats-info h3 {
+        font-size: 1.75rem;
+    }
+
+    .audit-log-table th,
+    .audit-log-table td {
+        padding: 0.8rem 0.5rem;
+        font-size: 0.82rem;
+    }
+
+    .audit-details .row {
+        flex-direction: column;
+    }
+
+    .audit-old-values,
+    .audit-new-values {
+        border: none;
+        padding: 0.5rem 0;
+    }
+}
+
+/* Small (до 767px) */
+@media (max-width: 767px) {
+    .page-header {
+        padding: 1.5rem 0;
+    }
+
+    .page-title {
+        font-size: 1.5rem;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .page-subtitle {
+        text-align: center;
+    }
+
+    .stats-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 1rem;
+    }
+
+    .stats-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.25rem;
+    }
+
+    .stats-info h3 {
+        font-size: 1.5rem;
+    }
+
+    .audit-log-table th,
+    .audit-log-table td {
+        padding: 0.6rem 0.3rem;
+        font-size: 0.75rem;
+    }
+
+    /* Скрываем колонки на маленьких экранах */
+    .audit-log-table th:nth-child(6),
+    .audit-log-table td:nth-child(6),
+    .audit-log-table th:nth-child(7),
+    .audit-log-table td:nth-child(7) {
+        display: none;
+    }
+
+    .audit-details .row {
+        flex-direction: column;
+    }
+
+    .audit-old-values,
+    .audit-new-values {
+        border: none;
+        padding: 0.5rem 0;
+    }
+
+    .audit-pre {
+        font-size: 0.7rem;
+        padding: 0.5rem;
+    }
+}
+
+/* Улучшенная доступность */
+.btn:focus,
+.form-control:focus,
+.form-select:focus,
+.btn-close:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .btn:focus,
+[data-theme="dark"] .form-control:focus,
+[data-theme="dark"] .form-select:focus,
+[data-theme="dark"] .btn-close:focus {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+}

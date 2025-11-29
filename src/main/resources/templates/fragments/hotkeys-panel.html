@@ -1,0 +1,94 @@
+<!-- templates/fragments/hotkeys-panel.html -->
+<div id="hotkeysPanel" class="hotkeys-panel" style="display: none;">
+    <div class="hotkeys-overlay" onclick="hideHotkeys()"></div>
+    <div class="hotkeys-content">
+        <div class="hotkeys-header">
+            <h3>🗝️ Горячие клавиши админ-панели</h3>
+            <button class="hotkeys-close" onclick="hideHotkeys()">×</button>
+        </div>
+        <div class="hotkeys-grid">
+            <!-- Навигация -->
+            <div class="hotkeys-category">
+                <h4>🌐 Навигация</h4>
+                <div class="hotkey-item">
+                    <span class="key-combo"><kbd>G</kbd> + <kbd>D</kbd></span>
+                    <span class="key-desc">Дашборд</span>
+                </div>
+                <div class="hotkey-item">
+                    <span class="key-combo"><kbd>G</kbd> + <kbd>P</kbd></span>
+                    <span class="key-desc">Товары</span>
+                </div>
+                <div class="hotkey-item">
+                    <span class="key-combo"><kbd>G</kbd> + <kbd>O</kbd></span>
+                    <span class="key-desc">Заказы</span>
+                </div>
+                <div class="hotkey-item">
+                    <span class="key-combo"><kbd>G</kbd> + <kbd>U</kbd></span>
+                    <span class="key-desc">Пользователи</span>
+                </div>
+                <div class="hotkey-item">
+                    <span class="key-combo"><kbd>G</kbd> + <kbd>C</kbd></span>
+                    <span class="key-desc">Категории</span>
+                </div>
+                <div class="hotkey-item">
+                    <span class="key-combo"><kbd>G</kbd> + <kbd>B</kbd></span>
+                    <span class="key-desc">Бренды</span>
+                </div>
+            </div>
+
+            <!-- Действия -->
+            <div class="hotkeys-category">
+                <h4>⚡ Действия</h4>
+                <div class="hotkey-item">
+                    <span class="key-combo"><kbd>C</kbd></span>
+                    <span class="key-desc">Создать новый</span>
+                </div>
+                <div class="hotkey-item">
+                    <span class="key-combo"><kbd>S</kbd></span>
+                    <span class="key-desc">Сохранить</span>
+                </div>
+                <div class="hotkey-item">
+                    <span class="key-combo"><kbd>E</kbd></span>
+                    <span class="key-desc">Редактировать</span>
+                </div>
+                <div class="hotkey-item">
+                    <span class="key-combo"><kbd>Del</kbd></span>
+                    <span class="key-desc">Удалить</span>
+                </div>
+                <div class="hotkey-item">
+                    <span class="key-combo"><kbd>F</kbd></span>
+                    <span class="key-desc">Поиск</span>
+                </div>
+            </div>
+
+            <!-- Система -->
+            <div class="hotkeys-category">
+                <h4>🔧 Система</h4>
+                <div class="hotkey-item">
+                    <span class="key-combo"><kbd>?</kbd></span>
+                    <span class="key-desc">Показать горячие клавиши</span>
+                </div>
+                <div class="hotkey-item">
+                    <span class="key-combo"><kbd>Esc</kbd></span>
+                    <span class="key-desc">Закрыть/отмена</span>
+                </div>
+                <div class="hotkey-item">
+                    <span class="key-combo"><kbd>Ctrl</kbd> + <kbd>S</kbd></span>
+                    <span class="key-desc">Быстрое сохранение</span>
+                </div>
+                <div class="hotkey-item">
+                    <span class="key-combo"><kbd>Ctrl</kbd> + <kbd>K</kbd></span>
+                    <span class="key-desc">Командная панель</span>
+                </div>
+            </div>
+        </div>
+        <div class="hotkeys-footer">
+            <small>Нажмите <kbd>?</kbd> для показа/скрытия этой панели</small>
+        </div>
+    </div>
+</div>
+
+<!-- Кнопка активации -->
+<div id="hotkeysTrigger" class="hotkeys-trigger" onclick="toggleHotkeys()" title="Горячие клавиши (?)">
+    <span>⌨️</span>
+</div>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Детальная диагностика - TARENO</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .diagnostic-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #007bff;
+        }
+        .diagnostic-header {
+            background: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .diagnostic-item {
+            padding: 8px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .diagnostic-key {
+            font-weight: bold;
+            color: #495057;
+        }
+        .diagnostic-value {
+            color: #6c757d;
+            word-break: break-all;
+        }
+        .success { color: #28a745; }
+        .error { color: #dc3545; }
+        .warning { color: #ffc107; }
+        pre {
+            background: #2d2d2d;
+            color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .nested-table {
+            width: 100%;
+            background: white;
+            border-radius: 5px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/}">
+            <i class="fas fa-crown me-2"></i>TARENO - ДИАГНОСТИКА
+        </a>
+        <div class="navbar-nav ms-auto">
+            <a class="nav-link" th:href="@{/diagnostic}">Базовая</a>
+            <a class="nav-link active" th:href="@{/diagnostic}">Детальная</a>
+            <a class="nav-link" th:href="@{/diagnostic(test='cart')}">Тест корзины</a>
+            <a class="nav-link" th:href="@{/diagnostic(test='db')}">Тест БД</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-stethoscope me-2"></i>
+                        Детальная диагностика системы
+                    </h4>
+                    <small>Время генерации: <span th:text="${currentTime}"></span></small>
+                </div>
+                <div class="card-body">
+                    <div th:if="${error}" class="alert alert-danger">
+                        <h5>Ошибка диагностики:</h5>
+                        <pre th:text="${error}"></pre>
+                        <div th:if="${stackTrace}">
+                            <h6>Stack Trace:</h6>
+                            <pre th:text="${stackTrace}"></pre>
+                        </div>
+                    </div>
+
+                    <div th:each="section : ${diagnostics}">
+                        <div class="diagnostic-section">
+                            <div class="diagnostic-header" th:text="${section.key}"></div>
+
+                            <div th:if="${section.value instanceof T(java.util.Map)}">
+                                <div th:each="item : ${section.value}">
+                                    <div class="diagnostic-item">
+                                        <span class="diagnostic-key" th:text="${item.key} + ':'"></span>
+                                        <span class="diagnostic-value" th:classappend="${#strings.startsWith(item.value, '✅')} ? 'success' :
+                                                                               ${#strings.startsWith(item.value, '❌')} ? 'error' : ''">
+                                            <span th:if="${!${item.value} instanceof T(java.util.Map) and
+                                                          !${item.value} instanceof T(java.util.List)}"
+                                                  th:text="${item.value}"></span>
+
+                                            <!-- Вложенные Map -->
+                                            <div th:if="${item.value instanceof T(java.util.Map)}" class="nested-table">
+                                                <div th:each="nestedItem : ${item.value}" class="diagnostic-item">
+                                                    <span class="diagnostic-key" th:text="${nestedItem.key} + ':'"></span>
+                                                    <span class="diagnostic-value" th:text="${nestedItem.value}"></span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Списки -->
+                                            <div th:if="${item.value instanceof T(java.util.List)}">
+                                                <ul class="list-unstyled">
+                                                    <li th:each="listItem : ${item.value}" th:text="${listItem}"></li>
+                                                </ul>
+                                            </div>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div th:unless="${section.value instanceof T(java.util.Map)}" class="diagnostic-item">
+                                <span class="diagnostic-value" th:text="${section.value}"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <h5>Быстрые действия:</h5>
+                        <div class="btn-group">
+                            <a th:href="@{/diagnostic}" class="btn btn-outline-primary">Обновить</a>
+                            <a th:href="@{/diagnostic(test='cart')}" class="btn btn-outline-success">Тест корзины</a>
+                            <a th:href="@{/diagnostic(test='db')}" class="btn btn-outline-info">Тест БД</a>
+                            <a th:href="@{/cart}" class="btn btn-outline-warning">Проверить корзину</a>
+                            <a th:href="@{/}" class="btn btn-outline-secondary">На главную</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{fragments/footer :: footer}"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

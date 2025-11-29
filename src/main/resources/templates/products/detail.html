@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru"
+      th:with="theme=${currentTheme != null ? currentTheme : 'light'}"
+      th:attr="data-theme=${currentTheme}">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${product.name + ' - TARENO'}">Детали товара</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/nav.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/detailprod.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/nav :: navbar}"></div>
+
+<div class="product-detail-container">
+    <!-- Уведомления -->
+    <div class="container">
+        <div th:if="${success}" class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+            <i class="fas fa-check-circle me-2"></i>
+            <span th:text="${success}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            <span th:text="${error}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    </div>
+
+    <!-- Хлебные крошки -->
+    <nav class="breadcrumb-nav">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/home}" class="text-decoration-none">Главная</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/catalog}" class="text-decoration-none">Каталог</a></li>
+                <li class="breadcrumb-item">
+                    <a th:href="@{/catalog(categoryId=${product.category.id})}" th:text="${product.category.name}"></a>
+                </li>
+                <li class="breadcrumb-item active" th:text="${product.name}"></li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Основной контент -->
+    <div class="container my-5">
+        <div class="row">
+            <!-- Галерея товара -->
+            <div class="col-lg-6">
+                <div class="product-gallery">
+                    <!-- Главное изображение -->
+                    <div class="main-image-container">
+                        <img th:src="${currentImage}" class="main-image" alt="Product image">
+
+                        <!-- Кнопки навигации (только если есть дополнительные изображения) -->
+                        <div th:if="${additionalImages != null && !additionalImages.isEmpty()}" class="carousel-controls">
+                            <!-- Кнопка назад -->
+                            <form th:if="${currentImageIndex > -1 || additionalImages.size() > 0}"
+                                  th:action="@{/products/{id}(id=${product.id})}" method="get" class="carousel-btn prev-btn">
+                                <input type="hidden" name="quantity" th:value="${quantity ?: 1}">
+                                <input type="hidden" name="imageIndex"
+                                       th:if="${currentImageIndex > 0}"
+                                       th:value="${currentImageIndex - 1}">
+                                <input type="hidden" name="imageIndex"
+                                       th:if="${currentImageIndex <= 0}"
+                                       th:value="${additionalImages.size() - 1}">
+                                <input type="hidden" name="imageIndex"
+                                       th:if="${currentImageIndex == -1}"
+                                       th:value="${additionalImages.size() - 1}">
+                                <button type="submit" class="btn-control">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                            </form>
+
+                            <!-- Кнопка вперед -->
+                            <form th:if="${additionalImages != null && !additionalImages.isEmpty()}"
+                                  th:action="@{/products/{id}(id=${product.id})}" method="get" class="carousel-btn next-btn">
+                                <input type="hidden" name="quantity" th:value="${quantity ?: 1}">
+                                <input type="hidden" name="imageIndex"
+                                       th:if="${currentImageIndex < additionalImages.size() - 1}"
+                                       th:value="${currentImageIndex + 1}">
+                                <input type="hidden" name="imageIndex"
+                                       th:if="${currentImageIndex >= additionalImages.size() - 1 || currentImageIndex == -1}"
+                                       th:value="0">
+                                <button type="submit" class="btn-control">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Превью изображений (главное + дополнительные) -->
+                    <div th:if="${additionalImages != null && !additionalImages.isEmpty()}" class="thumbnail-gallery">
+                        <!-- Главное изображение как первое превью -->
+                        <div class="thumbnail-item">
+                            <form th:action="@{/products/{id}(id=${product.id})}" method="get">
+                                <input type="hidden" name="imageIndex" th:value="-1">
+                                <input type="hidden" name="quantity" th:value="${quantity ?: 1}">
+                                <button type="submit" class="thumbnail-btn" th:classappend="${currentImageIndex == -1} ? 'active' : ''">
+                                    <img th:src="${product.mainImage}" class="thumbnail" alt="Main product image">
+                                </button>
+                            </form>
+                            <div class="thumbnail-label">1</div>
+                        </div>
+
+                        <!-- Дополнительные изображения -->
+                        <div th:each="img, iter : ${additionalImages}" class="thumbnail-item">
+                            <form th:action="@{/products/{id}(id=${product.id})}" method="get">
+                                <input type="hidden" name="imageIndex" th:value="${iter.index}">
+                                <input type="hidden" name="quantity" th:value="${quantity ?: 1}">
+                                <button type="submit" class="thumbnail-btn" th:classappend="${currentImageIndex == iter.index} ? 'active' : ''">
+                                    <img th:src="${img}" class="thumbnail" th:alt="${'Product image ' + (iter.index + 2)}">
+                                </button>
+                            </form>
+                            <div class="thumbnail-label" th:text="${iter.index + 2}"></div>
+                        </div>
+                    </div>
+
+                    <!-- Сообщение если нет изображений -->
+                    <div th:if="${product.mainImage == null || product.mainImage.trim().isEmpty()}" class="text-center text-muted py-5">
+                        <i class="fas fa-image fa-3x mb-3"></i>
+                        <p>Изображения товара отсутствуют</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Информация о товаре -->
+            <div class="col-lg-6">
+                <div class="product-info">
+                    <h1 class="product-title" th:text="${product.name}"></h1>
+                    <p class="product-brand" th:text="${product.brand.name}"></p>
+
+                    <!-- Цена -->
+                    <div class="price-section">
+                        <span class="current-price"
+                              th:text="'₽' + ${#numbers.formatDecimal(product.price, 0, 'COMMA', 2, 'POINT')}"></span>
+                        <span th:if="${product.originalPrice != null}"
+                              class="original-price"
+                              th:text="'₽' + ${#numbers.formatDecimal(product.originalPrice, 0, 'COMMA', 2, 'POINT')}"></span>
+                        <span th:if="${product.originalPrice != null}" class="discount-badge"
+                              th:text="'-' + ${#numbers.formatDecimal((product.originalPrice - product.price) / product.originalPrice * 100, 0, 'COMMA', 0, 'POINT')} + '%'"></span>
+                    </div>
+
+                    <!-- Наличие -->
+                    <div class="stock-status">
+                        <span th:if="${product.stockQuantity > 0}"
+                              class="badge bg-success stock-badge">
+                            <i class="fas fa-check me-1"></i>В наличии
+                        </span>
+                        <span th:if="${product.stockQuantity == 0}"
+                              class="badge bg-danger stock-badge">
+                            <i class="fas fa-times me-1"></i>Нет в наличии
+                        </span>
+                        <div th:if="${product.stockQuantity > 0}" class="stock-info">
+                            Осталось всего: <strong th:text="${product.stockQuantity}"></strong> шт.
+                        </div>
+                    </div>
+
+                    <!-- Описание -->
+                    <div class="product-description" th:text="${product.description}"></div>
+
+                    <!-- Характеристики -->
+                    <div class="product-features">
+                        <div class="feature-item">
+                            <i class="fas fa-eye"></i>
+                            <span th:text="'Просмотров: ' + ${product.views}"></span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-cube"></i>
+                            <span>Бесплатная доставка от 200 000 ₽</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Гарантия качества 14 дней</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-undo"></i>
+                            <span>Легкий возврат</span>
+                        </div>
+                    </div>
+
+                    <!-- Форма добавления в корзину -->
+                    <div class="product-form">
+                        <form th:action="@{/cart/add}" method="post">
+                            <input type="hidden" name="productId" th:value="${product.id}">
+
+                            <!-- Цвет -->
+                            <div th:if="${product.colors != null && !product.colors.empty}" class="mb-3">
+                                <label class="form-label">Цвет:</label>
+                                <select class="form-select" name="color" required>
+                                    <option th:each="color : ${product.colors}"
+                                            th:value="${color.name}"
+                                            th:text="${color.name}"></option>
+                                </select>
+                            </div>
+
+                            <!-- Размер -->
+                            <div th:if="${product.sizes != null && !product.sizes.isEmpty()}" class="mb-3">
+                                <label class="form-label">Размер:</label>
+                                <select class="form-select" name="size" required>
+                                    <option th:each="size : ${#strings.arraySplit(product.sizes, ',')}"
+                                            th:value="${size.trim()}"
+                                            th:text="${size.trim()}"></option>
+                                </select>
+                            </div>
+
+                            <!-- Количество -->
+                            <div class="mb-4">
+                                <label class="form-label">Количество:</label>
+                                <div class="quantity-control">
+                                    <!-- Кнопка уменьшения -->
+                                    <form th:action="@{/products/{id}(id=${product.id})}" method="get" class="d-inline">
+                                        <input type="hidden" name="imageIndex" th:value="${currentImageIndex}">
+                                        <input type="hidden" name="quantity" th:value="${(quantity ?: 1) > 1 ? (quantity ?: 1) - 1 : 1}">
+                                        <button type="submit" class="quantity-btn" th:disabled="${(quantity ?: 1) <= 1}">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                    </form>
+
+                                    <!-- Отображение количества -->
+                                    <span class="quantity-input" th:text="${quantity ?: 1}"></span>
+
+                                    <!-- Кнопка увеличения -->
+                                    <form th:action="@{/products/{id}(id=${product.id})}" method="get" class="d-inline">
+                                        <input type="hidden" name="imageIndex" th:value="${currentImageIndex}">
+                                        <input type="hidden" name="quantity" th:value="${(quantity ?: 1) + 1}">
+                                        <button type="submit" class="quantity-btn" th:disabled="${(quantity ?: 1) >= product.stockQuantity}">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                <input type="hidden" name="quantity" th:value="${quantity ?: 1}">
+                            </div>
+
+                            <div class="action-buttons">
+                                <button type="submit" class="btn btn-add-to-cart"
+                                        th:disabled="${product.stockQuantity == 0}">
+                                    <i class="fas fa-shopping-cart me-2"></i>
+                                    <span th:text="${product.stockQuantity == 0 ? 'Нет в наличии' : 'Добавить в корзину'}"></span>
+                                </button>
+
+                                <!-- Кнопка избранного как иконка -->
+                                <div class="favorite-section">
+                                    <form th:action="@{/api/favorites/toggle}" method="post">
+                                        <input type="hidden" name="productId" th:value="${product.id}">
+                                        <input type="hidden" name="redirectUrl" th:value="@{/products/{id}(id=${product.id})}">
+                                        <button type="submit" class="btn-favorite-icon" th:title="${isInFavorites ? 'Удалить из избранного' : 'Добавить в избранное'}">
+                                            <img th:if="${isInFavorites}" src="/img/heart2.jpg" alt="В избранном" class="favorite-icon">
+                                            <img th:unless="${isInFavorites}" src="/img/heart.jpg" alt="Добавить в избранное" class="favorite-icon">
+                                            <span class="favorite-text" th:text="${isInFavorites ? 'В избранном' : 'В избранное'}"></span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Похожие товары -->
+        <div th:if="${relatedProducts != null && !relatedProducts.empty}" class="related-products-section">
+            <h2 class="section-title">Похожие товары</h2>
+            <div class="related-products-grid">
+                <a th:each="relatedProduct : ${relatedProducts}"
+                   th:href="@{/products/{id}(id=${relatedProduct.id})}"
+                   class="product-card">
+                    <img th:src="${relatedProduct.mainImage}" class="product-card-image"
+                         th:alt="${relatedProduct.name}"
+                         onerror="this.src='/img/placeholder.jpg'">
+                    <div th:if="${relatedProduct.onSale}" class="product-card-badge">SALE</div>
+                    <div class="product-card-body">
+                        <h5 class="product-card-title" th:text="${relatedProduct.name}"></h5>
+                        <p class="product-card-brand" th:text="${relatedProduct.brand.name}"></p>
+                        <div class="product-card-price">
+                            <span class="product-card-current-price"
+                                  th:text="'₽' + ${#numbers.formatDecimal(relatedProduct.price, 0, 'COMMA', 2, 'POINT')}"></span>
+                            <span th:if="${relatedProduct.originalPrice != null}"
+                                  class="product-card-original-price"
+                                  th:text="'₽' + ${#numbers.formatDecimal(relatedProduct.originalPrice, 0, 'COMMA', 2, 'POINT')}"></span>
+                            <span th:if="${relatedProduct.originalPrice != null}" class="product-card-discount"
+                                  th:text="'-' + ${#numbers.formatDecimal((relatedProduct.originalPrice - relatedProduct.price) / relatedProduct.originalPrice * 100, 0, 'COMMA', 0, 'POINT')} + '%'"></span>
+                        </div>
+                        <div class="btn btn-view-product">
+                            Посмотреть товар
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

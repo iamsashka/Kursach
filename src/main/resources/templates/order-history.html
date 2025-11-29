@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <title>История заказов - TARENO</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/nav.css}">
+    <link rel="stylesheet" th:href="@{/css/profile.css}">
+</head>
+<body class="profile-page">
+<div th:replace="~{fragments/nav :: navbar}"></div>
+
+<main class="profile-main">
+    <div class="profile-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="profile-title">История заказов</h1>
+                    <p class="profile-subtitle">Ваши покупки в TARENO</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card profile-card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-shopping-bag me-2"></i>Все заказы</h5>
+                    </div>
+                    <div class="card-body">
+                        <div th:if="${ordersPage != null and !ordersPage.empty}">
+                            <div class="order-card mb-3" th:each="order : ${ordersPage.content}">
+                                <div class="card-body">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-3">
+                                            <h6 th:text="'Заказ #' + ${order.orderNumber}"></h6>
+                                            <small class="text-muted"
+                                                   th:text="${T(com.example.clothingstore.util.FormatUtils).formatDateWithUser(order.orderDate, user)}"></small>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <span th:text="${order.products.size()} + ' товар(а)'"></span>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <th:block th:switch="${order.status}">
+                                                <span th:case="DELIVERED" class="badge bg-success">Доставлен</span>
+                                                <span th:case="PROCESSING" class="badge bg-warning">В обработке</span>
+                                                <span th:case="CANCELLED" class="badge bg-danger">Отменен</span>
+                                                <span th:case="*" class="badge bg-secondary">Новый</span>
+                                            </th:block>
+                                        </div>
+                                        <div class="col-md-3 text-end">
+                                            <strong th:text="${T(com.example.clothingstore.util.FormatUtils).formatNumberWithUser(order.totalAmount, user)} + ' ₽'">
+                                            </strong>
+                                        </div>
+                                        <div class="col-md-2 text-end">
+                                            <!-- ИСПРАВЛЕНИЕ 1: Правильный data-bs-target -->
+                                            <button class="btn btn-sm btn-outline-primary"
+                                                    type="button"
+                                                    data-bs-toggle="collapse"
+                                                    th:attr="data-bs-target='#orderProducts' + ${order.id}">
+                                                <i class="fas fa-list me-1"></i>Товары
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Список товаров заказа -->
+                                    <!-- ИСПРАВЛЕНИЕ 2: Правильный id -->
+                                    <div class="collapse mt-3" th:id="'orderProducts' + ${order.id}">
+                                        <div class="card card-body">
+                                            <h6 class="mb-3">Товары в заказе:</h6>
+                                            <div class="row">
+                                                <div th:each="product : ${order.products}" class="col-md-6 mb-2">
+                                                    <div class="d-flex align-items-center">
+                                                        <img th:src="${product.mainImage}"
+                                                             alt="Изображение товара"
+                                                             class="product-image-small me-2">
+                                                        <div class="flex-grow-1">
+                                                            <a th:href="@{/products/{id}(id=${product.id})}"
+                                                               class="product-link text-decoration-none"
+                                                               th:text="${product.name}">
+                                                            </a>
+                                                            <div class="text-muted small">
+                                                                 <span th:text="${T(com.example.clothingstore.util.FormatUtils).formatNumberWithUser(product.price, user)} + ' ₽'">
+                                                                </span>
+                                                                <span th:if="${product.originalPrice != null and product.originalPrice.compareTo(product.price) > 0}"
+                                                                      class="text-danger ms-2">
+                                                                    <s th:text="${T(com.example.clothingstore.util.FormatUtils).formatNumberWithUser(product.originalPrice, user)} + ' ₽'">
+                                                                    </s>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Пагинация без изменений -->
+                            <div th:if="${ordersPage.totalPages > 1}">
+                                <nav>
+                                    <ul class="pagination justify-content-center">
+                                        <li class="page-item" th:classappend="${ordersPage.first} ? 'disabled'">
+                                            <a class="page-link" th:href="@{/order-history(page=0)}">Первая</a>
+                                        </li>
+                                        <li class="page-item" th:classappend="${ordersPage.first} ? 'disabled'">
+                                            <a class="page-link" th:href="@{/order-history(page=${ordersPage.number-1})}">Назад</a>
+                                        </li>
+                                        <li class="page-item" th:each="i : ${#numbers.sequence(0, ordersPage.totalPages-1)}"
+                                            th:classappend="${i == ordersPage.number} ? 'active'">
+                                            <a class="page-link" th:href="@{/order-history(page=${i})}" th:text="${i+1}"></a>
+                                        </li>
+                                        <li class="page-item" th:classappend="${ordersPage.last} ? 'disabled'">
+                                            <a class="page-link" th:href="@{/order-history(page=${ordersPage.number+1})}">Вперед</a>
+                                        </li>
+                                        <li class="page-item" th:classappend="${ordersPage.last} ? 'disabled'">
+                                            <a class="page-link" th:href="@{/order-history(page=${ordersPage.totalPages-1})}">Последняя</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <div th:unless="${ordersPage != null and !ordersPage.empty}" class="text-center py-4">
+                            <i class="fas fa-shopping-bag fa-3x text-muted mb-3"></i>
+                            <p class="text-muted">У вас пока нет заказов</p>
+                            <a th:href="@{/catalog}" class="btn btn-primary">Сделать первый заказ</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<style>
+    .product-image-small {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 4px;
+        border: 1px solid #dee2e6;
+    }
+    .product-link {
+        color: #0d6efd;
+        font-weight: 500;
+        transition: color 0.2s ease;
+    }
+    .product-link:hover {
+        color: #0a58ca;
+        text-decoration: underline;
+    }
+    .order-card {
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        transition: box-shadow 0.2s ease;
+    }
+    .order-card:hover {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .collapse .card-body {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+    }
+</style>
+</body>
+</html>

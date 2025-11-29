@@ -1,0 +1,416 @@
+/* Переменные для темы */
+:root {
+    --tareno-black: #000000;
+    --tareno-white: #ffffff;
+    --tareno-light: #f8f9fa;
+    --tareno-gray: #6c757d;
+    --tareno-dark: #212529;
+    --tareno-border: #e0e0e0;
+    --tareno-accent: #1a1a1a;
+    --tareno-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    --tareno-shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="dark"] {
+    --tareno-black: #ffffff;
+    --tareno-white: #1a1a1a;
+    --tareno-light: #2d2d2d;
+    --tareno-gray: #a0a0a0;
+    --tareno-dark: #e0e0e0;
+    --tareno-border: #404040;
+    --tareno-accent: #ffffff;
+    --tareno-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    --tareno-shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Основные стили */
+body {
+    background-color: var(--tareno-white);
+    color: var(--tareno-black);
+    transition: all 0.3s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+/* Контейнер */
+.container.mt-4 {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Заголовок */
+h1 {
+    font-weight: 300;
+    font-size: 2.2rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    color: var(--tareno-black);
+    text-align: center;
+    border-bottom: 1px solid var(--tareno-border);
+    padding-bottom: 1rem;
+}
+
+/* Сетка */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+}
+
+.col-md-8 {
+    flex: 0 0 66.666667%;
+    max-width: 66.666667%;
+    padding: 0 15px;
+}
+
+/* Карточки */
+.card {
+    border: 1px solid var(--tareno-border);
+    border-radius: 0;
+    box-shadow: var(--tareno-shadow);
+    margin-bottom: 2rem;
+    background: var(--tareno-white);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: var(--tareno-shadow-hover);
+}
+
+.card-header {
+    background: var(--tareno-white);
+    border-bottom: 1px solid var(--tareno-border);
+    padding: 1.25rem 1.5rem;
+}
+
+.card-header h5 {
+    font-weight: 400;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    margin: 0;
+    text-transform: uppercase;
+    color: var(--tareno-black);
+}
+
+.card-body {
+    padding: 1.5rem;
+    background: var(--tareno-white);
+}
+
+/* Форма */
+form {
+    width: 100%;
+}
+
+.mb-3 {
+    margin-bottom: 1.5rem;
+}
+
+.mb-4 {
+    margin-bottom: 2rem;
+}
+
+/* Радиокнопки */
+.form-check {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.form-check-input {
+    margin-right: 0.75rem;
+    width: 1.1em;
+    height: 1.1em;
+    border: 1px solid var(--tareno-border);
+}
+
+.form-check-input:checked {
+    background-color: var(--tareno-black);
+    border-color: var(--tareno-black);
+}
+
+.form-check-label {
+    font-size: 0.95rem;
+    color: var(--tareno-dark);
+    cursor: pointer;
+}
+
+.form-check-label strong {
+    color: var(--tareno-black);
+    margin-left: 0.25rem;
+}
+
+/* Поля формы */
+.form-label {
+    font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+    color: var(--tareno-dark);
+    display: block;
+}
+
+.form-control,
+.form-select {
+    border: 1px solid var(--tareno-border);
+    border-radius: 0;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    background-color: var(--tareno-white);
+    color: var(--tareno-black);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--tareno-black);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
+    outline: none;
+}
+
+/* Текстовое поле */
+textarea.form-control {
+    resize: vertical;
+    min-height: 100px;
+    font-family: inherit;
+}
+
+/* Вспомогательный текст */
+.form-text {
+    font-size: 0.85rem;
+    color: var(--tareno-gray);
+    margin-top: 0.5rem;
+    display: block;
+}
+
+/* Кнопки */
+.d-grid {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 2rem;
+}
+
+.d-md-flex {
+    display: flex;
+}
+
+.justify-content-md-end {
+    justify-content: flex-end;
+}
+
+.gap-2 {
+    gap: 1rem;
+}
+
+.me-md-2 {
+    margin-right: 0.5rem;
+}
+
+.btn {
+    border-radius: 0;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 0.75rem 2rem;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    border: 1px solid;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.btn-secondary {
+    background-color: var(--tareno-white);
+    border-color: var(--tareno-border);
+    color: var(--tareno-dark);
+}
+
+.btn-secondary:hover {
+    background-color: var(--tareno-black);
+    border-color: var(--tareno-black);
+    color: var(--tareno-white);
+    transform: translateY(-1px);
+}
+
+.btn-primary {
+    background-color: var(--tareno-black);
+    border-color: var(--tareno-black);
+    color: var(--tareno-white);
+}
+
+.btn-primary:hover {
+    background-color: var(--tareno-white);
+    border-color: var(--tareno-black);
+    color: var(--tareno-black);
+    transform: translateY(-1px);
+}
+
+.btn-lg {
+    padding: 0.875rem 2.5rem;
+    font-size: 1rem;
+}
+
+/* Анимация появления поля email */
+.mb-3[th\\:if] {
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Адаптивность */
+@media (max-width: 992px) {
+    .col-md-8 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .container.mt-4 {
+        padding: 0 10px;
+    }
+
+    .card-body {
+        padding: 1.25rem;
+    }
+
+    .card-header {
+        padding: 1rem 1.25rem;
+    }
+
+    .d-grid {
+        flex-direction: column;
+    }
+
+    .d-md-flex {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .me-md-2 {
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 576px) {
+    h1 {
+        font-size: 1.5rem;
+        text-align: left;
+        letter-spacing: 1px;
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+
+    .card-header {
+        padding: 0.875rem 1rem;
+    }
+
+    .card-header h5 {
+        font-size: 1rem;
+    }
+
+    .form-control,
+    .form-select {
+        padding: 0.625rem 0.875rem;
+    }
+
+    .btn {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.85rem;
+    }
+
+    .btn-lg {
+        padding: 0.875rem 2rem;
+    }
+}
+
+/* Улучшенная доступность */
+.btn:focus,
+.form-control:focus,
+.form-select:focus,
+.form-check-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .btn:focus,
+[data-theme="dark"] .form-control:focus,
+[data-theme="dark"] .form-select:focus,
+[data-theme="dark"] .form-check-input:focus {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+/* Стили для placeholder */
+.form-control::placeholder {
+    color: var(--tareno-gray);
+    opacity: 0.7;
+}
+
+/* Обязательные поля */
+.form-control:required,
+.form-select:required {
+    border-left: 3px solid var(--tareno-black);
+}
+
+[data-theme="dark"] .form-control:required,
+[data-theme="dark"] .form-select:required {
+    border-left-color: var(--tareno-white);
+}
+
+/* Специфичные стили для темной темы */
+[data-theme="dark"] body {
+    background-color: var(--tareno-white);
+}
+
+[data-theme="dark"] .container.mt-4 {
+    background-color: var(--tareno-white);
+}
+
+/* Стили для выпадающего списка */
+.form-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.75rem center;
+    background-repeat: no-repeat;
+    background-size: 16px 12px;
+}
+
+[data-theme="dark"] .form-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23a0a0a0' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+}
+
+/* Стили для опций select */
+.form-select option {
+    background-color: var(--tareno-white);
+    color: var(--tareno-black);
+    padding: 0.5rem;
+}

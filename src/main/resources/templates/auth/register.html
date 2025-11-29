@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:attr="data-theme=${currentTheme}">
+<head>
+    <title>Регистрация - TARENO</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/aytentification.css}">
+</head>
+<body class="auth-body">
+<div class="particles" id="particles"></div>
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-progress" style="display: none;" id="loadingProgress"></div>
+        <div class="auth-header">
+            <div class="auth-logo">
+                <i class="fas fa-tshirt"></i>
+            </div>
+            <h2>Создать аккаунт</h2>
+            <p class="text-muted">Присоединяйтесь к TARENO сегодня</p>
+        </div>
+        <div th:if="${error}" class="alert alert-danger">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            <span th:text="${error}">Ошибка регистрации</span>
+        </div>
+        <form th:action="@{/register}" method="post" class="auth-form" id="registerForm" th:object="${user}">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Имя *</label>
+                    <input type="text" th:field="*{firstName}" class="form-control"
+                           placeholder="Ваше имя" required>
+                    <div class="form-text">Ваше настоящее имя</div>
+                    <div th:if="${#fields.hasErrors('firstName')}" class="text-danger">
+                        <small th:errors="*{firstName}"></small>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Фамилия *</label>
+                    <input type="text" th:field="*{lastName}" class="form-control"
+                           placeholder="Ваша фамилия" required>
+                    <div class="form-text">Ваша настоящая фамилия</div>
+                    <div th:if="${#fields.hasErrors('lastName')}" class="text-danger">
+                        <small th:errors="*{lastName}"></small>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Имя пользователя *</label>
+                <input type="text" th:field="*{username}" class="form-control"
+                       placeholder="Придумайте имя пользователя" required>
+                <div class="form-text">От 3 до 50 символов. Только латинские буквы и цифры.</div>
+                <div th:if="${#fields.hasErrors('username')}" class="text-danger">
+                    <small th:errors="*{username}"></small>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email адрес *</label>
+                <input type="email" th:field="*{email}" class="form-control"
+                       placeholder="your@email.com" required>
+                <div class="form-text">Мы никогда не передадим ваш email третьим лицам.</div>
+                <div th:if="${#fields.hasErrors('email')}" class="text-danger">
+                    <small th:errors="*{email}"></small>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Пароль *</label>
+                <input type="password" th:field="*{password}" class="form-control"
+                       placeholder="Создайте надежный пароль" required
+                       oninput="validatePassword(this.value)">
+                <div class="form-text">
+                    <div id="passwordStrength" class="mt-2">
+                        <div class="d-flex align-items-center mb-1">
+                            <div class="progress flex-grow-1 me-2" style="height: 6px;">
+                                <div id="passwordProgress" class="progress-bar" style="width: 0%"></div>
+                            </div>
+                            <small id="passwordText" class="text-muted">Слабый</small>
+                        </div>
+                        <div id="passwordRequirements">
+                            <small class="d-block"><i class="fas fa-check text-success me-1"></i>Минимум 6 символов</small>
+                            <small class="d-block"><i class="fas fa-times text-danger me-1"></i>Содержит буквы и цифры</small>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${#fields.hasErrors('password')}" class="text-danger">
+                    <small th:errors="*{password}"></small>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Телефон</label>
+                <input type="text" th:field="*{phone}" class="form-control"
+                       placeholder="+7 (XXX) XXX-XX-XX">
+                <div class="form-text">Необязательное поле для уведомлений</div>
+                <div th:if="${#fields.hasErrors('phone')}" class="text-danger">
+                    <small th:errors="*{phone}"></small>
+                </div>
+            </div>
+
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="agreeTerms" required>
+                <label class="form-check-label" for="agreeTerms">
+                    Я принимаю <a href="#" class="auth-link">условия использования</a>
+                    и <a href="#" class="auth-link">политику конфиденциальности</a>
+                </label>
+            </div>
+
+            <button type="submit" class="btn auth-btn w-100 mb-3" id="registerBtn">
+                <i class="fas fa-user-plus me-2"></i>Создать аккаунт
+            </button>
+        </form>
+        <div class="auth-divider">
+            <span>или</span>
+        </div>
+        <div class="social-auth">
+            <div class="social-buttons-grid">
+                <a href="https://www.gosuslugi.ru/" target="_blank" class="social-btn">
+                    <i class="fas fa-passport me-2"></i>ГОСУСЛУГИ
+                </a>
+                <a href="https://yandex.ru/" target="_blank" class="social-btn">
+                    <i class="fab fa-yandex me-2"></i>ЯНДЕКС
+                </a>
+                <a href="https://mail.ru/" target="_blank" class="social-btn">
+                    <i class="fas fa-envelope me-2"></i>MAIL.RU
+                </a>
+                <a href="https://id.vk.com/" target="_blank" class="social-btn">
+                    <i class="fab fa-vk me-2"></i>VK ID
+                </a>
+            </div>
+        </div>
+        <div class="text-center">
+            <p class="mb-0">Уже есть аккаунт?
+                <a th:href="@{/login}" class="auth-link">Войти сейчас</a>
+            </p>
+        </div>
+    </div>
+</div>
+<script>
+    // Валидация пароля
+    function validatePassword(password) {
+        const progress = document.getElementById('passwordProgress');
+        const text = document.getElementById('passwordText');
+        const requirements = document.getElementById('passwordRequirements');
+
+        let strength = 0;
+        let messages = [];
+
+        // Длина пароля
+        if (password.length >= 6) {
+            strength += 25;
+            messages.push('<small class="d-block"><i class="fas fa-check text-success me-1"></i>Минимум 6 символов</small>');
+        } else {
+            messages.push('<small class="d-block"><i class="fas fa-times text-danger me-1"></i>Минимум 6 символов</small>');
+        }
+
+        // Буквы и цифры
+        if (/[a-zA-Z]/.test(password) && /[0-9]/.test(password)) {
+            strength += 25;
+            messages.push('<small class="d-block"><i class="fas fa-check text-success me-1"></i>Содержит буквы и цифры</small>');
+        } else {
+            messages.push('<small class="d-block"><i class="fas fa-times text-danger me-1"></i>Содержит буквы и цифры</small>');
+        }
+
+        // Специальные символы
+        if (/[^a-zA-Z0-9]/.test(password)) {
+            strength += 25;
+            messages.push('<small class="d-block"><i class="fas fa-check text-success me-1"></i>Содержит специальные символы</small>');
+        } else {
+            messages.push('<small class="d-block"><i class="fas fa-times text-danger me-1"></i>Содержит специальные символы</small>');
+        }
+
+        // Длина более 8 символов
+        if (password.length >= 8) {
+            strength += 25;
+            messages.push('<small class="d-block"><i class="fas fa-check text-success me-1"></i>Хорошая длина</small>');
+        } else {
+            messages.push('<small class="d-block"><i class="fas fa-times text-danger me-1"></i>Хорошая длина</small>');
+        }
+
+        // Обновление интерфейса
+        progress.style.width = strength + '%';
+        requirements.innerHTML = messages.join('');
+
+        // Цвет индикатора
+        if (strength < 50) {
+            progress.className = 'progress-bar bg-danger';
+            text.textContent = 'Слабый';
+        } else if (strength < 75) {
+            progress.className = 'progress-bar bg-warning';
+            text.textContent = 'Средний';
+        } else {
+            progress.className = 'progress-bar bg-success';
+            text.textContent = 'Надежный';
+        }
+    }
+
+    // Анимация частиц
+    function createParticles() {
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = 20;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.animationDelay = Math.random() * 6 + 's';
+            particle.style.animationDuration = (3 + Math.random() * 3) + 's';
+            particlesContainer.appendChild(particle);
+        }
+    }
+
+    // Обработка формы
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+        const btn = document.getElementById('registerBtn');
+        const progress = document.getElementById('loadingProgress');
+
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Регистрация...';
+        progress.style.display = 'block';
+    });
+
+    // Инициализация
+    document.addEventListener('DOMContentLoaded', function() {
+        createParticles();
+
+        // Автофокус на поле ввода имени
+        const firstNameField = document.querySelector('input[th\\:field="*{firstName}"]');
+        if (firstNameField) {
+            firstNameField.focus();
+        }
+    });
+</script>
+</body>
+</html>

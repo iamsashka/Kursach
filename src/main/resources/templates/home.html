@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru"
+      th:with="theme=${currentTheme != null ? currentTheme : 'light'}"
+      th:attr="data-theme=${currentTheme}">
+<head>
+    <title>TARENO - Премиальная одежда</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/home1.css}">
+    <link rel="stylesheet" th:href="@{/css/nav.css}">
+</head>
+<body>
+<div th:if="${success}" class="alert alert-success alert-dismissible fade show mb-0" role="alert" style="border-radius: 0;">
+    <div class="container">
+        <i class="fas fa-check-circle me-2"></i>
+        <span th:text="${success}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+</div>
+<div th:replace="~{fragments/nav :: navbar}"></div>
+<section class="tareno-hero">
+    <div class="container">
+        <div class="row align-items-center min-vh-50">
+            <div class="col-lg-6 col-md-12 mb-4 mb-lg-0">
+                <div class="tareno-hero-content text-center text-lg-start">
+                    <h1 class="tareno-logo">TARENO</h1>
+                    <p class="tareno-subtitle">ПРЕМИАЛЬНАЯ ОДЕЖДА</p>
+                    <p class="tareno-description">Откройте для себя мир роскошной моды. Эксклюзивные бренды, премиальное качество и неповторимый стиль для истинных ценителей.</p>
+                    <div class="tareno-hero-buttons d-flex flex-column flex-sm-row gap-2 justify-content-center justify-content-lg-start">
+                        <a class="btn btn-tareno-dark btn-lg flex-fill" th:href="@{/catalog}">
+                            КОЛЛЕКЦИЯ
+                        </a>
+                        <a class="btn btn-tareno-outline btn-lg flex-fill" th:href="@{/catalog/new-arrivals}">
+                            НОВИНКИ
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <div class="tareno-hero-image text-center">
+                    <img th:src="@{/img/products/logo/logotip.jpeg}" alt="TARENO" class="tareno-logo-image img-fluid"
+                         onerror="this.style.display='none'">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="tareno-stats">
+    <div class="container">
+        <div class="row g-3 g-md-4">
+            <div class="col-md-3 col-6">
+                <div class="tareno-stat-item">
+                    <span class="tareno-stat-number">15K+</span>
+                    <span class="tareno-stat-label">Премиум клиентов</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="tareno-stat-item">
+                    <span class="tareno-stat-number">2K+</span>
+                    <span class="tareno-stat-label">Эксклюзивных товаров</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="tareno-stat-item">
+                    <span class="tareno-stat-number">99%</span>
+                    <span class="tareno-stat-label">Довольных клиентов</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="tareno-stat-item">
+                    <span class="tareno-stat-number">24/7</span>
+                    <span class="tareno-stat-label">Персональный консьерж</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="tareno-section" th:if="${newArrivals != null and !newArrivals.isEmpty()}">
+    <div class="container">
+        <div class="tareno-section-header text-center">
+            <h2 class="tareno-section-title">Новинки сезона</h2>
+            <p class="tareno-section-subtitle">Самые свежие поступления от ведущих мировых брендов</p>
+        </div>
+        <div class="row g-3 g-md-4 justify-content-center">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-4" th:each="product : ${newArrivals}">
+                <div class="tareno-product-card h-100">
+                    <div class="tareno-product-image-container">
+                        <div class="tareno-product-image position-relative">
+                            <!-- Реальное изображение продукта -->
+                            <img th:if="${product.hasImage}"
+                                 th:src="${product.imageUrl}"
+                                 th:alt="${product.name}"
+                                 class="w-100 h-100"
+                                 onerror="handleImageError(this)">
+
+                            <!-- Заглушка если нет изображения -->
+                            <div th:unless="${product.hasImage}" class="w-100 h-100 d-flex align-items-center justify-content-center bg-light">
+                                <i class="fas fa-shopping-bag fa-2x text-muted"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tareno-product-info d-flex flex-column">
+                        <h6 class="tareno-product-name" th:text="${product.name}">Название товара</h6>
+                        <p class="tareno-product-brand text-muted mb-2" th:text="${product.brandName}">Бренд</p>
+                        <div class="tareno-product-price-container mt-auto">
+                            <span class="tareno-product-price fw-bold" th:text="${product.price}">₽0</span>
+                        </div>
+                        <a th:href="@{/products/{id}(id=${product.id})}"
+                           class="btn btn-tareno-outline w-100 mt-2">
+                            ПОДРОБНЕЕ
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tareno-section-footer text-center mt-4">
+            <a th:href="@{/catalog/new-arrivals}" class="btn btn-tareno-dark btn-lg">
+                ВСЕ НОВИНКИ
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Категории -->
+<section class="tareno-categories">
+    <div class="container">
+        <div class="tareno-section-header text-center">
+            <h2 class="tareno-section-title">Коллекции</h2>
+            <p class="tareno-section-subtitle">Выберите свою категорию стиля</p>
+        </div>
+        <div class="row g-3 g-md-4">
+            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-4">
+                <a th:href="@{/catalog/men}" class="tareno-category-link text-decoration-none">
+                    <div class="tareno-category-card h-100 text-center">
+                        <div class="tareno-category-icon mx-auto mb-3">
+                            <i class="fas fa-male"></i>
+                        </div>
+                        <h4 class="mb-2">Мужчины</h4>
+                        <p class="tareno-category-description mb-3">Эксклюзивная коллекция</p>
+                        <span class="btn btn-tareno-outline">СМОТРЕТЬ</span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-4">
+                <a th:href="@{/catalog/women}" class="tareno-category-link text-decoration-none">
+                    <div class="tareno-category-card h-100 text-center">
+                        <div class="tareno-category-icon mx-auto mb-3">
+                            <i class="fas fa-female"></i>
+                        </div>
+                        <h4 class="mb-2">Женщины</h4>
+                        <p class="tareno-category-description mb-3">Эксклюзивная коллекция</p>
+                        <span class="btn btn-tareno-outline">СМОТРЕТЬ</span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-4">
+                <a th:href="@{/catalog/teens}" class="tareno-category-link text-decoration-none">
+                    <div class="tareno-category-card h-100 text-center">
+                        <div class="tareno-category-icon mx-auto mb-3">
+                            <i class="fas fa-user-friends"></i>
+                        </div>
+                        <h4 class="mb-2">Подростки</h4>
+                        <p class="tareno-category-description mb-3">Эксклюзивная коллекция</p>
+                        <span class="btn btn-tareno-outline">СМОТРЕТЬ</span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-4">
+                <a th:href="@{/catalog/kids}" class="tareno-category-link text-decoration-none">
+                    <div class="tareno-category-card h-100 text-center">
+                        <div class="tareno-category-icon mx-auto mb-3">
+                            <i class="fas fa-child"></i>
+                        </div>
+                        <h4 class="mb-2">Дети</h4>
+                        <p class="tareno-category-description mb-3">Эксклюзивная коллекция</p>
+                        <span class="btn btn-tareno-outline">СМОТРЕТЬ</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Хиты продаж -->
+<section class="tareno-section tareno-section-alt" th:if="${bestSellers != null and !bestSellers.isEmpty()}">
+    <div class="container">
+        <div class="tareno-section-header text-center">
+            <h2 class="tareno-section-title">Хиты продаж</h2>
+            <p class="tareno-section-subtitle">Самые популярные товары среди наших клиентов</p>
+        </div>
+        <div class="row g-3 g-md-4 justify-content-center">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-4" th:each="product : ${bestSellers}">
+                <div class="tareno-product-card h-100">
+                    <div class="tareno-product-image-container">
+                        <div class="tareno-product-image position-relative">
+                            <img th:if="${product.hasImage}"
+                                 th:src="${product.imageUrl}"
+                                 th:alt="${product.name}"
+                                 class="w-100 h-100"
+                                 onerror="handleImageError(this)">
+                            <div th:unless="${product.hasImage}" class="w-100 h-100 d-flex align-items-center justify-content-center bg-light">
+                                <i class="fas fa-shopping-bag fa-2x text-muted"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tareno-product-info d-flex flex-column">
+                        <h6 class="tareno-product-name" th:text="${product.name}">Название товара</h6>
+                        <p class="tareno-product-brand text-muted mb-2" th:text="${product.brandName}">Бренд</p>
+                        <div class="tareno-product-price-container mt-auto">
+                            <span class="tareno-product-price fw-bold" th:text="${product.price}">₽0</span>
+                        </div>
+                        <a th:href="@{/products/{id}(id=${product.id})}"
+                           class="btn btn-tareno-outline w-100 mt-2">
+                            ПОДРОБНЕЕ
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tareno-section-footer text-center mt-4">
+            <a th:href="@{/catalog/bestsellers}" class="btn btn-tareno-dark btn-lg">
+                ВСЕ ХИТЫ
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Преимущества -->
+<section class="tareno-benefits">
+    <div class="container">
+        <div class="tareno-section-header text-center">
+            <h2 class="tareno-section-title">Почему выбирают TARENO</h2>
+        </div>
+        <div class="row g-4 justify-content-center">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="tareno-benefit-item text-center h-100">
+                    <div class="tareno-benefit-icon mx-auto mb-4">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h4 class="mb-3">Эксклюзивные бренды</h4>
+                    <p class="tareno-benefit-description">Только премиальные бренды и ограниченные коллекции от ведущих дизайнеров</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="tareno-benefit-item text-center h-100">
+                    <div class="tareno-benefit-icon mx-auto mb-4">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h4 class="mb-3">Гарантия подлинности</h4>
+                    <p class="tareno-benefit-description">Все товары проходят многоуровневую проверку на подлинность и качество</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="tareno-benefit-item text-center h-100">
+                    <div class="tareno-benefit-icon mx-auto mb-4">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h4 class="mb-3">Персональный консьерж</h4>
+                    <p class="tareno-benefit-description">Индивидуальный подбор и консультация профессионального стилиста</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Рассылка -->
+<section class="tareno-newsletter">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 col-md-12 mb-4 mb-lg-0 text-center text-lg-start">
+                <h3 class="tareno-newsletter-title mb-2">ЭКСКЛЮЗИВНАЯ РАССЫЛКА TARENO</h3>
+                <p class="tareno-newsletter-description mb-0">Узнавайте первыми о новых коллекциях, приватных распродажах и специальных предложениях</p>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <form th:action="@{/subscribe}" method="get" class="tareno-newsletter-form">
+                    <div class="input-group">
+                        <input type="email" name="email" class="form-control" placeholder="Введите ваш email" required>
+                        <button type="submit" class="btn btn-tareno-dark">
+                            ПОДПИСАТЬСЯ
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<div th:replace="~{fragments/footer :: footer}"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

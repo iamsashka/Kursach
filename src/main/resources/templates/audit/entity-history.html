@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:attr="data-theme=${currentTheme}">
+<head>
+    <title>История объекта - TARENO</title>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/audit.css}">
+</head>
+<body>
+<div th:replace="~{fragments/nav :: navbar}"></div>
+
+<div class="container mt-4">
+    <div class="page-header mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1 class="page-title">
+                    <i class="fas fa-history me-2"></i>История объекта
+                </h1>
+                <p class="page-subtitle">
+                    <span th:text="${entityType}"></span> #<span th:text="${entityId}"></span>
+                </p>
+            </div>
+            <a th:href="@{/audit}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-1"></i>Назад к журналу
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <i class="fas fa-list me-2"></i> Все изменения объекта
+        </div>
+        <div class="card-body">
+            <div th:each="log : ${history}" class="audit-log-item mb-4 p-3 border rounded">
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        <strong>
+                            <i class="fas fa-calendar me-1"></i>
+                            <span th:text="${#temporals.format(log.createdAt, 'dd.MM.yyyy HH:mm:ss')}"></span>
+                        </strong>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <span th:switch="${log.action}" class="badge audit-badge">
+                            <span th:case="CREATE" class="badge bg-success">
+                                <i class="fas fa-plus me-1"></i>Создание
+                            </span>
+                            <span th:case="UPDATE" class="badge bg-primary">
+                                <i class="fas fa-edit me-1"></i>Изменение
+                            </span>
+                            <span th:case="SOFT_DELETE" class="badge bg-warning">
+                                <i class="fas fa-archive me-1"></i>Архив
+                            </span>
+                            <span th:case="RESTORE" class="badge bg-info">
+                                <i class="fas fa-undo me-1"></i>Восстановление
+                            </span>
+                            <span th:case="HARD_DELETE" class="badge bg-danger">
+                                <i class="fas fa-trash me-1"></i>Удаление
+                            </span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <small class="text-muted">
+                            <i class="fas fa-user me-1"></i>
+                            <span th:text="${log.username}"></span>
+                        </small>
+                    </div>
+                    <div class="col-md-4">
+                        <small class="text-muted">
+                            <i class="fas fa-globe me-1"></i>
+                            <span th:text="${log.ipAddress} ?: 'N/A'"></span>
+                        </small>
+                    </div>
+                    <div class="col-md-4">
+                        <small class="text-muted">
+                            <i class="fas fa-desktop me-1"></i>
+                            <span th:text="${log.userAgent} ?: 'N/A'"></span>
+                        </small>
+                    </div>
+                </div>
+
+                <div th:if="${log.oldValues or log.newValues}" class="mt-3">
+                    <div class="row">
+                        <div th:if="${log.oldValues}" class="col-md-6 audit-old-values">
+                            <h6 class="text-danger">
+                                <i class="fas fa-arrow-left me-1"></i>Было:
+                            </h6>
+                            <pre class="audit-pre" th:text="${log.oldValues}"></pre>
+                        </div>
+                        <div th:if="${log.newValues}" class="col-md-6 audit-new-values">
+                            <h6 class="text-success">
+                                <i class="fas fa-arrow-right me-1"></i>Стало:
+                            </h6>
+                            <pre class="audit-pre" th:text="${log.newValues}"></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div th:if="${#lists.isEmpty(history)}" class="text-center text-muted py-5">
+                <i class="fas fa-history fa-3x mb-3"></i>
+                <h5>История изменений не найдена</h5>
+                <p>Для этого объекта нет записей в журнале аудита</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

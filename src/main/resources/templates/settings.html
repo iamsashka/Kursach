@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru"
+      th:with="theme=${currentTheme != null ? currentTheme : 'light'}"
+      th:attr="data-theme=${currentTheme}">
+<head>
+    <title>Настройки - TARENO</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/nav.css}">
+    <link rel="stylesheet" th:href="@{/css/profile.css}">
+</head>
+<body class="profile-page">
+<div th:replace="~{fragments/nav :: navbar}"></div>
+
+<main class="profile-main">
+    <div class="profile-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="profile-title">Настройки пользователя</h1>
+                    <p class="profile-subtitle">Персонализация интерфейса и параметров отображения</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <!-- Уведомления -->
+        <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle me-2"></i>
+            <span th:text="${success}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            <span th:text="${error}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <div class="row">
+            <!-- Боковое меню -->
+            <div class="col-lg-3">
+                <div class="profile-sidebar">
+                    <div class="card sidebar-card">
+                        <div class="card-body p-0">
+                            <div class="list-group list-group-flush">
+                                <a th:href="@{/profile}" class="list-group-item list-group-item-action">
+                                    <i class="fas fa-user me-2"></i>Профиль
+                                </a>
+                                <a th:href="@{/cart}" class="list-group-item list-group-item-action">
+                                    <i class="fas fa-shopping-cart me-2"></i>Корзина
+                                </a>
+                                <a th:href="@{/api/favorites/page}" class="list-group-item list-group-item-action">
+                                    <i class="fas fa-heart me-2"></i>Избранное
+                                </a>
+                                <a th:href="@{/order-history}" class="list-group-item list-group-item-action">
+                                    <i class="fas fa-history me-2"></i>История заказов
+                                </a>
+                                <a th:href="@{/settings}" class="list-group-item list-group-item-action active">
+                                    <i class="fas fa-cog me-2"></i>Настройки
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-9">
+                <form th:action="@{/settings/change-password}" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Текущий пароль</label>
+                        <input type="password" class="form-control" name="currentPassword"
+                               placeholder="Введите текущий пароль" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Новый пароль</label>
+                        <input type="password" class="form-control" name="newPassword"
+                               placeholder="Введите новый пароль" required
+                               minlength="6">
+                        <div class="form-text">Минимум 6 символов</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Подтверждение нового пароля</label>
+                        <input type="password" class="form-control" name="confirmPassword"
+                               placeholder="Повторите новый пароль" required>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-key me-2"></i>Сменить пароль
+                        </button>
+                        <a th:href="@{/forgot-password}" class="btn btn-link text-muted">
+                            <i class="fas fa-question-circle me-1"></i>Забыли пароль?
+                        </a>
+                    </div>
+                </form>
+                <form th:action="@{/settings/update}" method="post" id="settingsForm">
+                    <div class="card profile-card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-palette me-2"></i>Тема оформления</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">Цветовая тема</label>
+                                <select class="form-select" name="theme" id="themeSelect">
+                                    <option value="light" th:selected="${user.theme == 'light'}">
+                                        🌞 Светлая тема
+                                    </option>
+                                    <option value="dark" th:selected="${user.theme == 'dark'}">
+                                        🌙 Тёмная тема
+                                    </option>
+                                </select>
+                                <div class="form-text">
+                                    Влияет на внешний вид всех страниц приложения
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Форматы отображения -->
+                    <div class="card profile-card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-language me-2"></i>Форматы отображения</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Формат даты</label>
+                                        <select class="form-select" name="dateFormat">
+                                            <option value="dd.MM.yyyy" th:selected="${user.dateFormat == 'dd.MM.yyyy'}">
+                                                ДД.ММ.ГГГГ (31.12.2023)
+                                            </option>
+                                            <option value="dd/MM/yyyy" th:selected="${user.dateFormat == 'dd/MM/yyyy'}">
+                                                ДД/ММ/ГГГГ (31/12/2023)
+                                            </option>
+                                            <option value="yyyy-MM-dd" th:selected="${user.dateFormat == 'yyyy-MM-dd'}">
+                                                ГГГГ-ММ-ДД (2023-12-31)
+                                            </option>
+                                            <option value="MM/dd/yyyy" th:selected="${user.dateFormat == 'MM/dd/yyyy'}">
+                                                ММ/ДД/ГГГГ (12/31/2023)
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Формат чисел</label>
+                                        <select class="form-select" name="numberFormat">
+                                            <option value="COMMA" th:selected="${user.numberFormat == 'COMMA'}">
+                                                1,000.50 (запятая для тысяч)
+                                            </option>
+                                            <option value="SPACE" th:selected="${user.numberFormat == 'SPACE'}">
+                                                1 000.50 (пробел для тысяч)
+                                            </option>
+                                            <option value="DOT" th:selected="${user.numberFormat == 'DOT'}">
+                                                1.000,50 (точка для тысяч)
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Настройки отображения -->
+                    <div class="card profile-card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-desktop me-2"></i>Настройки отображения</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">Элементов на странице</label>
+                                <select class="form-select" name="pageSize">
+                                    <option value="5" th:selected="${user.pageSize == 5}">5 элементов</option>
+                                    <option value="10" th:selected="${user.pageSize == 10}">10 элементов</option>
+                                    <option value="20" th:selected="${user.pageSize == 20}">20 элементов</option>
+                                    <option value="50" th:selected="${user.pageSize == 50}">50 элементов</option>
+                                </select>
+                                <div class="form-text">
+                                    Количество товаров, заказов и других элементов на одной странице
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card profile-card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-filter me-2"></i>Сохранённые фильтры</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">Текущие сохраненные фильтры</label>
+                                <textarea class="form-control" name="savedFilters" rows="3"
+                                          placeholder='Фильтры будут сохранены автоматически'
+                                          th:text="${user.savedFilters}" readonly></textarea>
+                                <div class="form-text">
+                                    Фильтры сохраняются автоматически при использовании каталога
+                                </div>
+                            </div>
+
+                            <!-- Кнопки управления фильтрами -->
+                            <div class="d-flex gap-2 flex-wrap">
+                                <a th:href="@{/catalog/apply-saved-filters}" class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-play me-1"></i>Применить сохраненные фильтры
+                                </a>
+                                <a th:href="@{/catalog/clear-saved-filters}" class="btn btn-outline-danger btn-sm">
+                                    <i class="fas fa-trash me-1"></i>Очистить фильтры
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card profile-card border-danger mt-4">
+                        <div class="card-header bg-danger text-white">
+                            <h5 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i></h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row align-items-center mb-4">
+                                <div class="col-md-8">
+                                    <h6 class="text-danger mb-2">
+                                        <i class="fas fa-sign-out-alt me-2"></i>Выход из аккаунта
+                                    </h6>
+                                    <p class="text-muted small mb-0">Завершит текущую сессию. Вы сможете войти снова в любое время.</p>
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <a th:href="@{/logout}" class="btn btn-outline-danger btn-logout">
+                                        <i class="fas fa-door-open me-2"></i>Выйти
+                                    </a>
+                                </div>
+                            </div>
+
+                            <hr class="my-4 border-danger">
+
+                            <!-- Удаление аккаунта -->
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <h6 class="text-danger mb-2">
+                                        <i class="fas fa-skull-crossbones me-2"></i>Удаление аккаунта
+                                    </h6>
+                                    <p class="text-muted small mb-0">
+                                        Это действие необратимо. Все ваши данные, заказы и история будут удалены без возможности восстановления.
+                                    </p>
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <a th:href="@{/confirm-delete-account}" class="btn btn-danger btn-delete-account">
+                                        <i class="fas fa-trash-alt me-2"></i>Удалить аккаунт
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Кнопки действий -->
+                    <div class="card profile-card">
+                        <div class="card-body">
+                            <div class="d-flex gap-2 flex-wrap">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-2"></i>Сохранить настройки
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary" onclick="resetToDefaults()">
+                                    <i class="fas fa-undo me-2"></i>Сбросить к умолчаниям
+                                </button>
+                                <a th:href="@{/profile}" class="btn btn-outline-secondary ms-auto">
+                                    <i class="fas fa-arrow-left me-2"></i>Назад в профиль
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

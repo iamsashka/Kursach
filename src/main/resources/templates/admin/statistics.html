@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:with="theme=${currentTheme != null ? currentTheme : 'light'}"
+      th:attr="data-theme=${currentTheme}">
+<head>
+    <title>Аналитика - TARENO</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.min.css}">
+    <link rel="stylesheet" th:href="@{/css/statistics.css}">
+    <link rel="stylesheet" th:href="@{/css/nav.css}">
+    <script th:src="@{/webjars/chartjs/dist/chart.min.js}"></script>
+    <script th:src="@{/js/statistics-charts.js}"></script>
+</head>
+<body class="tareno-analytics-container">
+<div th:replace="~{fragments/nav :: navbar}"></div>
+
+<div class="container-fluid py-4">
+    <!-- Хедер с управлением -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="tareno-section-title mb-2">Аналитика производительности</h1>
+                    <p class="text-muted mb-0" th:text="|Период: ${startDate} - ${endDate}|"></p>
+                </div>
+                <div class="d-flex gap-2 align-items-center">
+                    <div class="dropdown">
+                        <button class="btn btn-success btn-sm dropdown-toggle" type="button"
+                                data-bs-toggle="dropdown">
+                            <i class="fas fa-download me-1"></i>Экспорт
+                        </button>
+                        <ul class="dropdown-menu export-dropdown">
+                            <li><a class="dropdown-item"
+                                   th:href="@{'/admin/statistics/export/csv?startDate=' + ${startDate} + '&endDate=' + ${endDate}}">
+                                <i class="fas fa-file-csv me-2"></i>CSV
+                            </a></li>
+                            <li><a class="dropdown-item"
+                                   th:href="@{'/admin/statistics/export/pdf?startDate=' + ${startDate} + '&endDate=' + ${endDate}}">
+                                <i class="fas fa-file-pdf me-2"></i>PDF с графиками
+                            </a></li>
+                        </ul>
+                        <a th:href="@{/admin/analytics/settings}" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-cog me-1"></i>Настройки
+                        </a>
+                    </div>
+
+                    <!-- Улучшенный dropdown для импорта -->
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            📊 Импорт данных
+                        </button>
+                        <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                            <li>
+                                <h6 class="dropdown-header">Импорт из Excel</h6>
+                                <form th:action="@{/admin/statistics/import}" method="post"
+                                      enctype="multipart/form-data" class="mt-2">
+
+                                    <!-- Показ сообщений об ошибках/успехе -->
+                                    <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <span th:text="${success}"></span>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
+                                    </div>
+                                    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        <span th:text="${error}"></span>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="excelFile" class="form-label small">Выберите Excel файл:</label>
+                                        <input type="file" name="file" class="form-control form-control-sm"
+                                               id="excelFile" accept=".xlsx,.xls" required>
+                                        <div class="form-text small">
+                                            Поддерживаются файлы .xlsx, .xls
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid gap-2">
+                                        <button type="submit" class="btn btn-primary btn-sm">
+                                            📥 Импортировать данные
+                                        </button>
+                                        <a th:href="@{/admin/statistics/import/template}"
+                                           class="btn btn-outline-secondary btn-sm">
+                                            📋 Скачать шаблон
+                                        </a>
+                                    </div>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Горячие клавиши -->
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="tareno-filter-card">
+                <div class="row g-2 align-items-center">
+                    <div class="col-md-4">
+                        <small class="text-muted">Горячие клавиши:</small>
+                        <div class="d-flex flex-wrap gap-1 mt-1">
+                            <span class="badge bg-primary">Ctrl+E</span>
+                            <span class="badge bg-primary">Ctrl+I</span>
+                            <span class="badge bg-primary">Ctrl+F</span>
+                            <span class="badge bg-primary">Ctrl+P</span>
+                            <span class="badge bg-primary">Ctrl+T</span>
+                            <span class="badge bg-primary">Ctrl+R</span>
+                            <span class="badge bg-primary">Ctrl+S</span>
+                            <span class="badge bg-primary">Ctrl+D</span>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <form th:action="@{/admin/statistics}" method="get" class="row g-2">
+                            <div class="col-auto">
+                                <input type="date" class="form-control form-control-sm" name="startDate" th:value="${startDate}">
+                            </div>
+                            <div class="col-auto">
+                                <input type="date" class="form-control form-control-sm" name="endDate" th:value="${endDate}">
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-dark btn-sm">
+                                    <i class="fas fa-filter me-1"></i>Применить фильтр
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Основные метрики KPI -->
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-4 col-lg-2">
+            <div class="tareno-metric-card text-center">
+                <div class="tareno-metric-number"
+                     th:text="${analytics?.totalUsers != null} ? ${analytics.totalUsers} : 0">0</div>
+                <div class="tareno-metric-label">Пользователи</div>
+                <div class="mt-2">
+                    <span th:if="${analytics?.userGrowthRate != null}"
+                          th:class="${analytics.userGrowthRate >= 0} ? 'tareno-growth-positive' : 'tareno-growth-negative'"
+                          th:text="|${analytics.userGrowthRate >= 0 ? '+' : ''}${#numbers.formatDecimal(analytics.userGrowthRate, 1, 1)}%|">
+                    </span>
+                    <span th:unless="${analytics?.userGrowthRate != null}" class="text-muted">N/A</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+            <div class="tareno-metric-card text-center">
+                <div class="tareno-metric-number"
+                     th:text="${analytics?.totalOrders != null} ? ${analytics.totalOrders} : 0">0</div>
+                <div class="tareno-metric-label">Заказы</div>
+                <div class="mt-2">
+                    <span th:if="${analytics?.orderGrowthRate != null}"
+                          th:class="${analytics.orderGrowthRate >= 0} ? 'tareno-growth-positive' : 'tareno-growth-negative'"
+                          th:text="|${analytics.orderGrowthRate >= 0 ? '+' : ''}${#numbers.formatDecimal(analytics.orderGrowthRate, 1, 1)}%|">
+                    </span>
+                    <span th:unless="${analytics?.orderGrowthRate != null}" class="text-muted">N/A</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+            <a th:href="@{/orders}" class="text-decoration-none">
+                <div class="tareno-metric-card text-center">
+                    <div class="tareno-metric-number"
+                         th:text="${analytics?.totalRevenue != null} ? ${#numbers.formatDecimal(analytics.totalRevenue, 1, 2)} + ' ₽' : '0 ₽'">0 ₽</div>
+                    <div class="tareno-metric-label">Выручка</div>
+                    <div class="mt-2">
+                        <span th:if="${analytics?.revenueGrowthRate != null}"
+                              th:class="${analytics.revenueGrowthRate >= 0} ? 'tareno-growth-positive' : 'tareno-growth-negative'"
+                              th:text="|${analytics.revenueGrowthRate >= 0 ? '+' : ''}${#numbers.formatDecimal(analytics.revenueGrowthRate, 1, 1)}%|">
+                        </span>
+                        <span th:unless="${analytics?.revenueGrowthRate != null}" class="text-muted">N/A</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+            <div class="tareno-metric-card text-center">
+                <div class="tareno-metric-number"
+                     th:text="${analytics?.averageOrderValue != null} ? ${#numbers.formatDecimal(analytics.averageOrderValue, 1, 2)} + ' ₽' : '0 ₽'">0 ₽</div>
+                <div class="tareno-metric-label">Средний чек</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+            <div class="tareno-metric-card text-center">
+                <div class="tareno-metric-number"
+                     th:text="${analytics?.conversionRate != null} ? |${#numbers.formatDecimal(analytics.conversionRate, 1, 1)}%| : '0%'">0%</div>
+                <div class="tareno-metric-label">Конверсия</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+            <div class="tareno-metric-card text-center">
+                <div class="tareno-metric-number"
+                     th:text="${analytics?.totalUsers != null && analytics?.totalOrders != null && analytics.totalUsers > 0} ?
+                              |${#numbers.formatDecimal((analytics.totalOrders / analytics.totalUsers * 100), 1, 1)}%| : '0%'">
+                    0%
+                </div>
+                <div class="tareno-metric-label">Активность</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Графики и визуализации -->
+    <div class="row mb-4">
+        <div class="col-lg-8">
+            <div class="tareno-chart">
+                <h5 class="mb-3">Динамика продаж</h5>
+                <canvas id="salesChart" height="250"></canvas>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="tareno-chart">
+                <h5 class="mb-3">Распределение по категориям</h5>
+                <canvas id="categoryChart" height="250"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-lg-6">
+            <div class="tareno-chart">
+                <h5 class="mb-3">Тренды роста</h5>
+                <canvas id="growthChart" height="250"></canvas>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="tareno-chart">
+                <h5 class="mb-3">Эффективность каналов</h5>
+                <canvas id="channelChart" height="250"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Сводные таблицы -->
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="tareno-data-container">
+                <h5 class="mb-3">Динамика заказов по дням</h5>
+                <div class="table-responsive">
+                    <table class="table table-sm tareno-table">
+                        <thead>
+                        <tr>
+                            <th>Дата</th>
+                            <th class="text-end">Заказы</th>
+                            <th class="text-end">Выручка</th>
+                            <th class="text-end">Изменение</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="entry : ${analytics?.dailyOrders}">
+                            <td th:text="${entry?.key}">2024-01-01</td>
+                            <td class="text-end" th:text="${entry?.value}">45</td>
+                            <td class="text-end"
+                                th:text="${entry?.value != null && analytics?.averageOrderValue != null} ?
+            ${#numbers.formatDecimal(entry.value * analytics.averageOrderValue, 1, 2)} + ' ₽' : '0 ₽'">
+                                175,781 ₽
+                            </td>
+                            <td class="text-end">
+                                <span class="tareno-growth-positive">+5.2%</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="tareno-data-container">
+                <h5 class="mb-3">Топ продаваемых товаров</h5>
+                <div class="table-responsive">
+                    <table class="table table-sm tareno-table">
+                        <thead>
+                        <tr>
+                            <th>Товар</th>
+                            <th class="text-end">Продажи</th>
+                            <th class="text-end">Выручка</th>
+                            <th class="text-end"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="entry : ${analytics?.topSellingProducts}">
+                            <td>
+                                <span class="fw-medium" th:text="${entry?.key}">Название товара</span>
+                            </td>
+                            <td class="text-end" th:text="${entry?.value}">45</td>
+                            <td class="text-end"
+                                th:text="${entry?.value != null && analytics?.averageOrderValue != null} ?
+                                        ${#numbers.formatCurrency(entry.value * analytics.averageOrderValue)} : '0 ₽'">
+                                175,781 ₽
+                            </td>
+                            <td class="text-end">
+                                <span class="badge bg-success">Топ</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{fragments/footer :: footer}"></div>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

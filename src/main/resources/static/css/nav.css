@@ -1,0 +1,126 @@
+/* Переменные для темы */
+:root {
+    --tareno-black: #000000;
+    --tareno-white: #ffffff;
+    --tareno-light: #f8f9fa;
+    --tareno-gray: #6c757d;
+    --tareno-dark: #212529;
+    --tareno-border: #dee2e6;
+    --tareno-accent: #1a1a1a;
+}
+
+[data-theme="dark"] {
+    --tareno-black: #ffffff;
+    --tareno-white: #1a1a1a;
+    --tareno-light: #2d2d2d;
+    --tareno-gray: #a0a0a0;
+    --tareno-dark: #e0e0e0;
+    --tareno-border: #404040;
+    --tareno-accent: #ffffff;
+}
+
+.navbar {
+    padding: 1rem 0;
+    transition: all 0.3s ease;
+    background-color: var(--tareno-white) !important;
+}
+
+.navbar-brand {
+    font-weight: 300;
+    transition: all 0.3s ease;
+    color: var(--tareno-black) !important;
+}
+
+.nav-link {
+    font-weight: 300;
+    transition: all 0.3s ease;
+    position: relative;
+    color: var(--tareno-black) !important;
+}
+
+.nav-link:hover {
+    color: var(--tareno-black) !important;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: 0;
+    left: 50%;
+    background-color: var(--tareno-black);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.dropdown-menu {
+    border-radius: 0;
+    min-width: 200px;
+    background-color: var(--tareno-white);
+    border: 1px solid var(--tareno-border);
+}
+
+.dropdown-item {
+    padding: 0.75rem 1.5rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    color: var(--tareno-black);
+    background-color: var(--tareno-white);
+}
+
+.dropdown-item:hover {
+    background-color: var(--tareno-light);
+    color: var(--tareno-black);
+}
+
+.navbar-toggler {
+    border: none;
+    padding: 0.25rem 0.5rem;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+/* Стили для кнопки темы */
+.theme-toggle-btn {
+    background: none !important;
+    border: none !important;
+    cursor: pointer;
+    font-weight: 300;
+    letter-spacing: 1px;
+    color: var(--tareno-black) !important;
+    padding: 8px 12px !important;
+    margin: 0 !important;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.theme-toggle-btn:hover {
+    color: var(--tareno-black) !important;
+    background-color: var(--tareno-light) !important;
+}
+
+.theme-toggle-btn:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.theme-toggle-btn i {
+    font-size: 0.9rem;
+}
+/* Бургер-меню для темной темы */
+[data-theme="dark"] .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.8)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+[data-theme="dark"] .navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.5);
+}

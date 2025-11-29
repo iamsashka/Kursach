@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<footer th:fragment="footer" class="bg-dark text-white py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <h4 class="fw-light mb-3" style="letter-spacing: 3px;">TARENO</h4>
+                <p class="text-light mb-4" style="opacity: 0.7; line-height: 1.6;">
+                    Премиальная одежда для изысканного вкуса. Эксклюзивные бренды,
+                    премиальное качество и неповторимый стиль для истинных ценителей.
+                </p>
+                <div class="d-flex">
+                    <a href="#" class="text-white me-3" style="opacity: 0.7; transition: opacity 0.3s ease;">
+                        <i class="fab fa-instagram fa-lg"></i>
+                    </a>
+                    <a href="#" class="text-white me-3" style="opacity: 0.7; transition: opacity 0.3s ease;">
+                        <i class="fab fa-telegram fa-lg"></i>
+                    </a>
+                    <a href="#" class="text-white" style="opacity: 0.7; transition: opacity 0.3s ease;">
+                        <i class="fab fa-vk fa-lg"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Блок МАГАЗИН - скрывается у админа -->
+            <div class="col-lg-2 col-md-6 mb-4 mb-md-0" sec:authorize="!hasRole('ADMIN')">
+                <h5 class="fw-light mb-3" style="letter-spacing: 1px;">МАГАЗИН</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <a th:href="@{/catalog}" class="text-light" style="text-decoration: none; opacity: 0.7; transition: opacity 0.3s ease; letter-spacing: 0.5px;">
+                            КАТАЛОГ
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a th:href="@{/catalog/new-arrivals}" class="text-light" style="text-decoration: none; opacity: 0.7; transition: opacity 0.3s ease; letter-spacing: 0.5px;">
+                            НОВИНКИ
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a th:href="@{/catalog/bestsellers}" class="text-light" style="text-decoration: none; opacity: 0.7; transition: opacity 0.3s ease; letter-spacing: 0.5px;">
+                            ХИТЫ ПРОДАЖ
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a th:href="@{/catalog/sale}" class="text-light" style="text-decoration: none; opacity: 0.7; transition: opacity 0.3s ease; letter-spacing: 0.5px;">
+                            РАСПРОДАЖА
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Блок ПАНЕЛЬ УПРАВЛЕНИЯ - показывается только админу -->
+            <div class="col-lg-2 col-md-6 mb-4 mb-md-0" sec:authorize="hasRole('ADMIN')">
+                <h5 class="fw-light mb-3" style="letter-spacing: 1px;">ПАНЕЛЬ УПРАВЛЕНИЯ</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <a th:href="@{/products}" class="text-light" style="text-decoration: none; opacity: 0.7; transition: opacity 0.3s ease; letter-spacing: 0.5px;">
+                            ТОВАРЫ
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a th:href="@{/orders}" class="text-light" style="text-decoration: none; opacity: 0.7; transition: opacity 0.3s ease; letter-spacing: 0.5px;">
+                            ЗАКАЗЫ
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a th:href="@{/customers}" class="text-light" style="text-decoration: none; opacity: 0.7; transition: opacity 0.3s ease; letter-spacing: 0.5px;">
+                            ПОЛЬЗОВАТЕЛИ
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a th:href="@{admin/statistics}" class="text-light" style="text-decoration: none; opacity: 0.7; transition: opacity 0.3s ease; letter-spacing: 0.5px;">
+                            АНАЛИТИКА
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+                <h5 class="fw-light mb-3" style="letter-spacing: 1px;">ИНФОРМАЦИЯ</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <a href="#" class="text-light" style="text-decoration: none; opacity: 0.7; transition: opacity 0.3s ease; letter-spacing: 0.5px;">
+                            ДОСТАВКА
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-light" style="text-decoration: none; opacity: 0.7; transition: opacity 0.3s ease; letter-spacing: 0.5px;">
+                            ОПЛАТА
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-light" style="text-decoration: none; opacity: 0.7; transition: opacity 0.3s ease; letter-spacing: 0.5px;">
+                            ВОЗВРАТ
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-light" style="text-decoration: none; opacity: 0.7; transition: opacity 0.3s ease; letter-spacing: 0.5px;">
+                            РАЗМЕРЫ
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+                <h5 class="fw-light mb-3" style="letter-spacing: 1px;">ПОМОЩЬ</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <a href="#" class="text-light" style="text-decoration: none; opacity: 0.7; transition: opacity 0.3s ease; letter-spacing: 0.5px;">
+                            КОНТАКТЫ
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-light" style="text-decoration: none; opacity: 0.7; transition: opacity 0.3s ease; letter-spacing: 0.5px;">
+                            О НАС
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-light" style="text-decoration: none; opacity: 0.7; transition: opacity 0.3s ease; letter-spacing: 0.5px;">
+                            FAQ
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-light" style="text-decoration: none; opacity: 0.7; transition: opacity 0.3s ease; letter-spacing: 0.5px;">
+                            КОНФИДЕНЦИАЛЬНОСТЬ
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-2 col-md-6">
+                <h5 class="fw-light mb-3" style="letter-spacing: 1px;">КОНТАКТЫ</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2" style="opacity: 0.7; letter-spacing: 0.5px;">
+                        +7 (ХХХ) ХХХ-ХХ-ХХ
+                    </li>
+                    <li class="mb-2" style="opacity: 0.7; letter-spacing: 0.5px;">
+                        info@tareno.ru
+                    </li>
+                    <li class="mb-2" style="opacity: 0.7; letter-spacing: 0.5px;">
+                        Москва, ул. Пушкина, 1
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <hr class="my-5" style="border-color: rgba(255,255,255,0.1);">
+        <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start">
+                <p class="mb-0" style="opacity: 0.7; letter-spacing: 0.5px;">
+                    &copy; 2024 TARENO. Все права защищены.
+                </p>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+                <div style="opacity: 0.7;">
+                    <span style="letter-spacing: 0.5px;">Принимаем к оплате:</span>
+                    <i class="fab fa-cc-visa ms-2"></i>
+                    <i class="fab fa-cc-mastercard ms-2"></i>
+                    <i class="fab fa-cc-mir ms-2"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    footer a:hover {
+        opacity: 1 !important;
+    }
+
+    footer h5 {
+        font-size: 0.9rem;
+    }
+
+    footer ul li {
+        font-size: 0.85rem;
+    }
+</style>
+</body>
+</html>
