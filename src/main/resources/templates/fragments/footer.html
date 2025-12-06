@@ -23,8 +23,6 @@
                     </a>
                 </div>
             </div>
-
-            <!-- Блок МАГАЗИН - скрывается у админа -->
             <div class="col-lg-2 col-md-6 mb-4 mb-md-0" sec:authorize="!hasRole('ADMIN')">
                 <h5 class="fw-light mb-3" style="letter-spacing: 1px;">МАГАЗИН</h5>
                 <ul class="list-unstyled">
@@ -50,8 +48,6 @@
                     </li>
                 </ul>
             </div>
-
-            <!-- Блок ПАНЕЛЬ УПРАВЛЕНИЯ - показывается только админу -->
             <div class="col-lg-2 col-md-6 mb-4 mb-md-0" sec:authorize="hasRole('ADMIN')">
                 <h5 class="fw-light mb-3" style="letter-spacing: 1px;">ПАНЕЛЬ УПРАВЛЕНИЯ</h5>
                 <ul class="list-unstyled">

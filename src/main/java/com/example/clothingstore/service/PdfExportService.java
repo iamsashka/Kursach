@@ -86,7 +86,6 @@ public class PdfExportService {
     }
 
     private void addCharts(Document document, AnalyticsDTO analytics) throws Exception {
-        // График 1: Динамика заказов
         Paragraph chart1Title = new Paragraph("ДИНАМИКА ЗАКАЗОВ",
                 FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14, Color.DARK_GRAY));
         chart1Title.setSpacingBefore(20);
@@ -102,7 +101,6 @@ public class PdfExportService {
 
         addChartToDocument(document, lineChart, 500, 300);
 
-        // График 2: Распределение по категориям
         Paragraph chart2Title = new Paragraph("ВЫРУЧКА ПО КАТЕГОРИЯМ",
                 FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14, Color.DARK_GRAY));
         chart2Title.setSpacingBefore(20);

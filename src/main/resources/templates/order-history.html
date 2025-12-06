@@ -11,7 +11,6 @@
 </head>
 <body class="profile-page">
 <div th:replace="~{fragments/nav :: navbar}"></div>
-
 <main class="profile-main">
     <div class="profile-header">
         <div class="container">
@@ -57,7 +56,6 @@
                                             </strong>
                                         </div>
                                         <div class="col-md-2 text-end">
-                                            <!-- ИСПРАВЛЕНИЕ 1: Правильный data-bs-target -->
                                             <button class="btn btn-sm btn-outline-primary"
                                                     type="button"
                                                     data-bs-toggle="collapse"
@@ -66,9 +64,6 @@
                                             </button>
                                         </div>
                                     </div>
-
-                                    <!-- Список товаров заказа -->
-                                    <!-- ИСПРАВЛЕНИЕ 2: Правильный id -->
                                     <div class="collapse mt-3" th:id="'orderProducts' + ${order.id}">
                                         <div class="card card-body">
                                             <h6 class="mb-3">Товары в заказе:</h6>
@@ -100,8 +95,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Пагинация без изменений -->
                             <div th:if="${ordersPage.totalPages > 1}">
                                 <nav>
                                     <ul class="pagination justify-content-center">

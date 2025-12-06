@@ -36,7 +36,6 @@
 </div>
 
 <div class="container">
-    <!-- Статистика -->
     <div class="row mb-4">
         <div class="col-md-3">
             <div class="stat-card">
@@ -83,8 +82,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Поиск и фильтры -->
     <div class="card mb-4">
         <div class="card-body">
             <form th:action="@{/customers}" method="get" class="row g-3 align-items-end">
@@ -122,8 +119,6 @@
             </form>
         </div>
     </div>
-
-    <!-- Таблица клиентов -->
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="card-title mb-0">
@@ -282,8 +277,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Предупреждение о неактивных клиентах -->
     <div th:if="${#lists.size(inactiveCustomers) > 0}" class="alert alert-warning mt-4">
         <h6><i class="fas fa-clock me-2"></i>Неактивные клиенты</h6>
         <p class="mb-2">Следующие клиенты не активны более 30 дней:</p>
@@ -296,8 +289,6 @@
             </li>
         </ul>
     </div>
-
-    <!-- Пагинация -->
     <div th:if="${customerPage.totalPages > 1}" class="d-flex justify-content-between align-items-center mt-4">
         <div class="text-muted">
             Показано <span th:text="${customerPage.number * customerPage.size + 1}">1</span>-<span

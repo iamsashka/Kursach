@@ -1,4 +1,3 @@
-/* Переменные для темы */
 :root {
     --tareno-black: #000000;
     --tareno-white: #ffffff;
@@ -19,7 +18,6 @@
     --tareno-accent: #ffffff;
 }
 
-/* Minimalist TARENO Styles */
 body {
     font-family: 'Helvetica Neue', Arial, sans-serif;
     color: var(--tareno-black);
@@ -28,7 +26,6 @@ body {
     font-weight: 300;
 }
 
-/* Hero Section */
 .tareno-hero {
     background-color: var(--tareno-white);
     color: var(--tareno-black);
@@ -113,7 +110,6 @@ body {
     filter: grayscale(100%);
 }
 
-/* Stats Section */
 .tareno-stats {
     padding: 70px 0;
     background-color: var(--tareno-white);
@@ -140,7 +136,6 @@ body {
     letter-spacing: 1.5px;
 }
 
-/* Product Sections */
 .tareno-section {
     padding: 100px 0;
     background-color: var(--tareno-white);
@@ -176,7 +171,6 @@ body {
     margin-top: 70px;
 }
 
-/* Product Cards */
 .tareno-product-card {
     background: var(--tareno-white);
     border-radius: 0;
@@ -328,7 +322,6 @@ body {
     transition: all 0.3s ease;
 }
 
-/* Categories Section */
 .tareno-categories {
     padding: 100px 0;
     background-color: var(--tareno-white);
@@ -448,7 +441,6 @@ body {
     color: var(--tareno-black);
 }
 
-/* Benefits Section */
 .tareno-benefits {
     padding: 100px 0;
     background-color: var(--tareno-light);
@@ -570,7 +562,6 @@ body {
     color: var(--tareno-black);
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .tareno-logo {
         font-size: 3rem;

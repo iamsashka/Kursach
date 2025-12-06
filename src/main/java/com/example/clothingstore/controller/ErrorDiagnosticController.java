@@ -138,11 +138,8 @@ public class ErrorDiagnosticController {
     private Map<String, Object> getDatabaseInfo() {
         Map<String, Object> info = new LinkedHashMap<>();
         try {
-            // Проверка подключения к БД
             Integer dbCheck = jdbcTemplate.queryForObject("SELECT 1", Integer.class);
             info.put("Подключение к БД", dbCheck != null ? "✅ Успешно" : "❌ Ошибка");
-
-            // Количество записей в таблицах
             info.put("Пользователи", jdbcTemplate.queryForObject("SELECT COUNT(*) FROM users", Integer.class));
             info.put("Товары", jdbcTemplate.queryForObject("SELECT COUNT(*) FROM product", Integer.class));
             info.put("Элементы корзины", jdbcTemplate.queryForObject("SELECT COUNT(*) FROM cart_item", Integer.class));
@@ -194,7 +191,6 @@ public class ErrorDiagnosticController {
                         itemInfo.put("Наличие", product.getStockQuantity() + " шт.");
                         itemInfo.put("Бренд", product.getBrand() != null ? product.getBrand().getName() : "Не указан");
 
-                        // Проверка целостности данных
                         Optional<Product> dbProduct = productRepository.findById(product.getId());
                         itemInfo.put("В БД", dbProduct.isPresent() ? "✅ Найден" : "❌ Отсутствует");
 
@@ -237,7 +233,6 @@ public class ErrorDiagnosticController {
         info.put("Remote Port", request.getRemotePort());
         info.put("Locale", request.getLocale().toString());
 
-        // Заголовки
         List<String> headers = Collections.list(request.getHeaderNames()).stream()
                 .map(name -> name + ": " + request.getHeader(name))
                 .collect(Collectors.toList());
@@ -263,11 +258,9 @@ public class ErrorDiagnosticController {
                 if (userOpt.isPresent()) {
                     User user = userOpt.get();
 
-                    // Тест: получение корзины
                     List<CartItem> cartItems = cartItemRepository.findByUser(user);
                     info.put("Тест получения корзины", "✅ Успешно - " + cartItems.size() + " элементов");
 
-                    // Тест: проверка целостности данных
                     int validItems = 0;
                     int invalidItems = 0;
                     for (CartItem item : cartItems) {
@@ -295,7 +288,6 @@ public class ErrorDiagnosticController {
     private Map<String, Object> testDatabaseOperations() {
         Map<String, Object> info = new LinkedHashMap<>();
         try {
-            // Тест основных таблиц
             info.put("Тест users", jdbcTemplate.queryForObject("SELECT COUNT(*) FROM users", Integer.class) + " записей");
             info.put("Тест product", jdbcTemplate.queryForObject("SELECT COUNT(*) FROM product", Integer.class) + " записей");
             info.put("Тест cart_item", jdbcTemplate.queryForObject("SELECT COUNT(*) FROM cart_item", Integer.class) + " записей");

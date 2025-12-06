@@ -1,6 +1,3 @@
-/* Apple-style CSS для страницы архива заказов */
-
-/* Переменные для темы Apple */
 :root {
     --apple-white: #ffffff;
     --apple-black: #000000;
@@ -30,7 +27,6 @@
     --apple-shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.5);
 }
 
-/* Основные стили */
 body {
     background-color: var(--apple-light-gray);
     color: var(--apple-black);
@@ -44,14 +40,12 @@ body {
     min-height: 100vh;
 }
 
-/* Контейнер */
 .container {
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 1.5rem;
 }
 
-/* Заголовок страницы */
 .page-header {
     background: linear-gradient(135deg, var(--apple-white) 0%, var(--apple-light-gray) 100%);
     border-bottom: 1px solid var(--apple-border);
@@ -93,7 +87,6 @@ body {
     margin: 0;
 }
 
-/* Кнопки Apple-стиль */
 .btn {
     border-radius: var(--apple-radius-small);
     font-weight: 500;
@@ -168,7 +161,6 @@ body {
     font-size: 0.85rem;
 }
 
-/* Карточки статистики */
 .stats-card {
     border-radius: var(--apple-radius);
     padding: 1.75rem;
@@ -222,7 +214,6 @@ body {
     font-weight: 500;
 }
 
-/* Основная карточка с архивными заказами */
 .card {
     border: 1px solid var(--apple-border);
     border-radius: var(--apple-radius);
@@ -254,7 +245,6 @@ body {
     padding: 0;
 }
 
-/* Таблица в стиле Apple */
 .table {
     margin-bottom: 0;
     border-collapse: separate;
@@ -298,7 +288,6 @@ body {
     background-color: rgba(142, 142, 147, 0.05);
 }
 
-/* Бейджи статусов */
 .badge {
     border-radius: 100px;
     padding: 0.5rem 0.9rem;
@@ -338,7 +327,6 @@ body {
     color: white;
 }
 
-/* Информация о клиенте и товарах */
 .customer-info {
     max-width: 200px;
 }
@@ -360,14 +348,12 @@ body {
     font-size: 0.85rem;
 }
 
-/* Кнопки действий */
 .action-buttons {
     display: flex;
     gap: 0.5rem;
     justify-content: center;
 }
 
-/* Пагинация */
 .pagination {
     margin: 3rem 0 2rem;
     display: flex;
@@ -410,7 +396,6 @@ body {
     cursor: not-allowed;
 }
 
-/* Футер */
 footer {
     background: var(--apple-white);
     border-top: 1px solid var(--apple-border);
@@ -450,7 +435,6 @@ footer p {
     color: var(--apple-blue);
 }
 
-/* Состояние пустого архива */
 .empty-state {
     padding: 4rem 2rem;
     text-align: center;
@@ -472,7 +456,6 @@ footer p {
     color: var(--apple-gray);
 }
 
-/* Alert сообщения */
 .alert {
     border-radius: var(--apple-radius);
     border: none;
@@ -496,9 +479,6 @@ footer p {
     padding: 1rem;
 }
 
-/* Адаптивный дизайн */
-
-/* Планшеты и небольшие экраны (992px и меньше) */
 @media (max-width: 992px) {
     .page-header {
         padding: 3rem 0 2rem;
@@ -527,7 +507,6 @@ footer p {
     }
 }
 
-/* Мобильные устройства (768px и меньше) */
 @media (max-width: 768px) {
     .page-header {
         padding: 2.5rem 0 1.5rem;
@@ -605,7 +584,6 @@ footer p {
     }
 }
 
-/* Очень маленькие экраны (576px и меньше) */
 @media (max-width: 576px) {
     .page-header {
         padding: 2rem 0 1.25rem;
@@ -672,7 +650,6 @@ footer p {
         display: flex;
     }
 
-    /* Скрываем некоторые столбцы таблицы на очень маленьких экранах */
     .table th:nth-child(2),
     .table td:nth-child(2),
     .table th:nth-child(3),
@@ -681,7 +658,6 @@ footer p {
     }
 }
 
-/* Улучшенная доступность */
 .btn:focus,
 .form-control:focus,
 .form-select:focus,
@@ -690,19 +666,16 @@ footer p {
     box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.3);
 }
 
-/* Плавная прокрутка */
 html {
     scroll-behavior: smooth;
 }
 
-/* Улучшенная читаемость для длинных текстов */
 .customer-info,
 .products-list {
     max-width: 200px;
     overflow: hidden;
 }
 
-/* Анимации */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -726,7 +699,6 @@ html {
     animation-delay: 0.1s;
 }
 
-/* Утилитарные классы */
 .text-end {
     text-align: right;
 }
@@ -751,7 +723,6 @@ html {
     margin-right: 0.25rem;
 }
 
-/* Стили для строк и колонок */
 .row {
     display: flex;
     flex-wrap: wrap;
@@ -790,7 +761,6 @@ html {
     max-width: 100%;
 }
 
-/* Выравнивание элементов */
 .align-items-center {
     align-items: center;
 }
@@ -803,7 +773,6 @@ html {
     display: flex;
 }
 
-/* Адаптивность для колонок */
 @media (max-width: 768px) {
     .col-md-8, .col-md-4, .col-md-6, .col-md-3 {
         flex: 0 0 100%;

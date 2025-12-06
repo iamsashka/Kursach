@@ -49,7 +49,6 @@
 </div>
 
 <div class="container">
-    <!-- Статистика -->
     <div class="row mb-4">
         <div class="col-md-3">
             <div class="stats-card">
@@ -76,8 +75,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Фильтры и поиск -->
     <div class="card mb-4">
         <div class="card-header d-flex align-items-center">
             <i class="fas fa-filter me-2"></i> Фильтры и поиск
@@ -121,8 +118,6 @@
             </form>
         </div>
     </div>
-
-    <!-- Таблица заказов -->
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <span><i class="fas fa-list me-2"></i> Список заказов</span>
@@ -182,7 +177,6 @@
                                 </select>
                             </form>
                         </td>
-                        <!-- ДЕЙСТВИЯ - ТОЛЬКО КНОПКИ -->
                         <td>
                             <div class="action-buttons">
                                 <a th:href="@{/orders/edit/{id}(id=${order.id})}" class="btn btn-warning btn-sm" title="Редактировать заказ">
@@ -200,8 +194,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Пагинация -->
     <nav th:if="${orderPage.totalPages > 1}" class="mt-4">
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${orderPage.first} ? 'disabled' : ''">

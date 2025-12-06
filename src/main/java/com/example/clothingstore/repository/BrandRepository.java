@@ -11,16 +11,12 @@ import java.util.Optional;
 
 public interface BrandRepository extends JpaRepository<Brand, Long> {
 
-    // Найти все неудаленные бренды
     List<Brand> findByDeletedFalse();
 
-    // Проверить существование бренда по имени (только неудаленные)
     boolean existsByNameAndDeletedFalse(String name);
 
-    // Найти бренд по имени (только неудаленные)
     Optional<Brand> findByNameAndDeletedFalse(String name);
 
-    // Поиск брендов по названию (без учета регистра) среди неудаленных
     @Query("SELECT b FROM Brand b WHERE LOWER(b.name) LIKE LOWER(CONCAT('%', :query, '%')) AND b.deleted = false")
     List<Brand> findByNameContainingIgnoreCaseAndDeletedFalse(@Param("query") String query);
 
@@ -34,10 +30,8 @@ public interface BrandRepository extends JpaRepository<Brand, Long> {
     long countArchivedBrands();
 
     Page<Brand> findByDeletedTrue(Pageable pageable);
-    // Для админки - найти все бренды включая удаленные
     @Query("SELECT b FROM Brand b")
     List<Brand> findAllIncludingDeleted();
-    // Пагинация
     Page<Brand> findByDeletedFalse(Pageable pageable);
 
     @Query("SELECT b FROM Brand b WHERE " +

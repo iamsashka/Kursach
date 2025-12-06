@@ -76,7 +76,6 @@ public class AuthRestController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String jwt = jwtTokenProvider.generateToken(authentication);
 
-            // ФИКС: Используем Optional правильно
             User user = userService.findByEmail(loginRequest.getEmail())
                     .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
 
@@ -87,7 +86,6 @@ public class AuthRestController {
             response.put("username", user.getUsername());
             response.put("email", user.getEmail());
 
-            // ФИКС: Получаем роли из authentication
             response.put("roles", authentication.getAuthorities().stream()
                     .map(GrantedAuthority::getAuthority)
                     .collect(Collectors.toList()));
@@ -149,7 +147,6 @@ public class AuthRestController {
             user.setLastName(registerRequest.getLastName());
             user.setEnabled(true);
 
-            // ФИКС: Используем метод registerUser с указанием роли
             User registeredUser = userService.registerUser(user, Role.ROLE_CUSTOMER);
 
             Map<String, Object> response = new HashMap<>();

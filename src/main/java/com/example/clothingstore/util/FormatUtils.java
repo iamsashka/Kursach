@@ -21,7 +21,7 @@ public class FormatUtils {
             case "MM/dd/yyyy":
                 formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
                 break;
-            default: // "dd.MM.yyyy"
+            default:
                 formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
                 break;
         }
@@ -40,7 +40,7 @@ public class FormatUtils {
             case "DOT":
                 formatted = String.format("%,.2f", number).replace(",", "X").replace(".", ",").replace("X", ".");
                 break;
-            default: // "COMMA"
+            default:
                 formatted = String.format("%,.2f", number);
                 break;
         }
@@ -48,7 +48,6 @@ public class FormatUtils {
         return formatted;
     }
 
-    // Метод для использования в Thymeleaf
     public static String formatDateWithUser(LocalDateTime dateTime, User user) {
         return formatDate(dateTime, user != null ? user.getDateFormat() : null);
     }

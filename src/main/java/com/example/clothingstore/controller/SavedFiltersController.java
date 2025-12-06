@@ -24,9 +24,6 @@ public class SavedFiltersController {
         this.userService = userService;
         this.objectMapper = new ObjectMapper();
     }
-
-    // Автоматическое сохранение фильтров при каждом использовании каталога
-    // Этот метод нужно добавить в ваш CatalogController
     public void saveCurrentFilters(Authentication authentication,
                                    Map<String, Object> currentFilters) {
         if (authentication != null && authentication.isAuthenticated()) {
@@ -42,8 +39,6 @@ public class SavedFiltersController {
             }
         }
     }
-
-    // Применение сохраненных фильтров
     @GetMapping("/apply-saved-filters")
     public String applySavedFilters(Authentication authentication,
                                     RedirectAttributes redirectAttributes) {
@@ -59,7 +54,6 @@ public class SavedFiltersController {
                         user.get().getSavedFilters(), Map.class
                 );
 
-                // Формируем URL с параметрами фильтров
                 StringBuilder url = new StringBuilder("redirect:/catalog?");
 
                 if (filters.containsKey("search")) {
@@ -90,7 +84,6 @@ public class SavedFiltersController {
         }
     }
 
-    // Очистка сохраненных фильтров
     @GetMapping("/clear-saved-filters")
     public String clearSavedFilters(Authentication authentication,
                                     RedirectAttributes redirectAttributes) {

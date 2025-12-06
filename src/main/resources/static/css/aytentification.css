@@ -1,4 +1,3 @@
-/* Переменные для темы */
 :root {
     --tareno-black: #000000;
     --tareno-white: #ffffff;
@@ -307,8 +306,6 @@ body {
     letter-spacing: 0.8px;
     margin: 0;
 }
-
-/* Социальные кнопки - базовая сетка 2x2 */
 .social-buttons-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -343,7 +340,6 @@ body {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Брейкпоинт 1: Планшеты и маленькие десктопы (768px и меньше) */
 @media (max-width: 768px) {
     .social-buttons-grid {
         gap: 0.6rem;
@@ -360,7 +356,6 @@ body {
     }
 }
 
-/* Брейкпоинт 2: Мобильные телефоны (576px и меньше) */
 @media (max-width: 576px) {
     .social-buttons-grid {
         grid-template-columns: 1fr;
@@ -379,7 +374,6 @@ body {
     }
 }
 
-/* Брейкпоинт 3: Очень маленькие экраны (380px и меньше) */
 @media (max-width: 380px) {
     .social-buttons-grid {
         gap: 0.4rem;
@@ -396,7 +390,6 @@ body {
         margin-right: 0.4rem;
     }
 
-    /* Скрываем текст на очень маленьких экранах, оставляем только иконки */
     @media (max-width: 320px) {
         .social-btn span {
             display: none;
@@ -413,7 +406,6 @@ body {
         }
     }
 }
-/* Анимации */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -429,7 +421,6 @@ body {
     animation: fadeIn 0.6s ease-out;
 }
 
-/* Адаптивность */
 @media (max-width: 768px) {
     body {
         padding: 1.5rem 1rem;
@@ -499,7 +490,6 @@ body {
     }
 }
 
-/* Стили для страницы регистрации с большим количеством полей */
 .registration-form .form-group {
     margin-bottom: 1.5rem;
 }
@@ -512,7 +502,6 @@ body {
     max-width: 520px;
 }
 
-/* Улучшенный фокус для доступности */
 .form-control:focus,
 .form-check-input:focus,
 .auth-btn:focus,
@@ -525,7 +514,6 @@ body {
     box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
 }
 
-/* Плавная прокрутка */
 html {
     scroll-behavior: smooth;
 }

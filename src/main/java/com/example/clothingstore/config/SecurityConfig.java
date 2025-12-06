@@ -52,7 +52,6 @@ public class SecurityConfig {
                                 "/css/**", "/js/**", "/img/**", "/images/**", "/favicon.ico", "/error"
                         ).permitAll()
                         .requestMatchers(HttpMethod.POST, "/toggle-theme").permitAll()
-                        // ✅ Публичные страницы
                         .requestMatchers(
                                 "/", "/home", "/home/**",
                                 "/catalog/**", "/products/**",
@@ -60,14 +59,10 @@ public class SecurityConfig {
                                 "/subscribe", "/toggle-theme",
                                 "/access-denied"
                         ).permitAll()
-
-                        // ✅ Swagger/OpenAPI документация
                         .requestMatchers(
                                 "/swagger-ui/**", "/v3/api-docs/**",
                                 "/api-docs/**", "/swagger-ui.html"
                         ).permitAll()
-
-                        // ✅ Public API endpoints
                         .requestMatchers(
                                 "/api/auth/**",
                                 "/api/health",
@@ -81,29 +76,21 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/audit/**", "/api/audit/**"
                         ).hasAnyRole("ADMIN", "MANAGER")
-
-                        // ✅ RBAC - Администратор
                         .requestMatchers(
                                 "/admin/**", "/api/admin/**",
                                 "/users/**", "/api/users/**"
                         ).hasRole("ADMIN")
-
-                        // ✅ RBAC - Менеджер
                         .requestMatchers(
                                 "/manager/**", "/api/manager/**",
                                 "/analytics/**", "/api/analytics/**",
                                 "/orders/manage/**", "/api/orders/manage/**"
                         ).hasAnyRole("MANAGER", "ADMIN")
-
-                        // ✅ RBAC - Покупатель
                         .requestMatchers(
                                 "/profile/**", "/api/profile/**",
                                 "/cart/**", "/api/cart/**",
                                 "/favorites/**", "/api/favorites/**",
                                 "/orders/**", "/api/orders/**", "/order-history/**","/checkout/**","/settings/**"
                         ).hasAnyRole("CUSTOMER", "MANAGER", "ADMIN")
-
-                        // ✅ Защищенные API
                         .requestMatchers(
                                 "/api/products/**", "/api/brands/**",
                                 "/api/categories/**", "/api/orders/**"
@@ -112,14 +99,11 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // ✅ Сессии для веб-интерфейса
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 )
                 .authenticationProvider(authenticationProvider())
-
-                // ✅ JWT фильтр ТОЛЬКО для API endpoints
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
 
-                // ✅ Form-based аутентификация для веб-интерфейса
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
@@ -165,7 +149,6 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        // ✅ Безопасное хэширование паролей (требование 3.3)
         return new BCryptPasswordEncoder(12);
     }
 

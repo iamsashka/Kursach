@@ -26,7 +26,6 @@ public class Favorite {
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    // Добавляем поля для характеристик
     private String size;
     private String color;
 

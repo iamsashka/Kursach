@@ -35,7 +35,6 @@
 </div>
 
 <div class="container">
-    <!-- Уведомления -->
     <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
         <i class="fas fa-exclamation-circle me-2"></i>
         <span th:text="${error}"></span>
@@ -51,8 +50,6 @@
             <form th:action="${order.id != null} ? @{/orders/update/{id}(id=${order.id})} : @{/orders/create}"
                   method="post"
                   th:object="${order}">
-
-                <!-- Основная информация -->
                 <div class="row mb-4">
                     <div class="col-md-6">
                         <h5 class="border-bottom pb-2">Основная информация</h5>
@@ -116,8 +113,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Товары в заказе -->
                 <div class="row mb-4">
                     <div class="col-12">
                         <h5 class="border-bottom pb-2">Товары в заказе *</h5>
@@ -141,8 +136,6 @@
                                        placeholder="Кол-во">
                             </div>
                         </div>
-
-                        <!-- Список выбранных товаров -->
                         <div th:if="${order.products != null and !order.products.empty}" class="mt-3">
                             <h6>Выбранные товары:</h6>
                             <div class="table-responsive">
@@ -166,8 +159,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Кнопки действий -->
                 <div class="row">
                     <div class="col-12">
                         <div class="d-flex justify-content-between">

@@ -31,14 +31,11 @@ public class SettingsController {
     @GetMapping("/settings")
     public String getSettings(Model model, Authentication authentication, HttpServletRequest request) {
         try {
-            // Получаем текущего пользователя
             User currentUser = userService.findByEmail(authentication.getName())
                     .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
 
-            // Передаем пользователя в модель
             model.addAttribute("user", currentUser);
 
-            // Передаем текущую тему для навигации
             String currentTheme = themeService.getCurrentTheme(request);
             model.addAttribute("currentTheme", currentTheme);
 
@@ -47,7 +44,6 @@ public class SettingsController {
         } catch (Exception e) {
             model.addAttribute("error", "Ошибка загрузки настроек: " + e.getMessage());
 
-            // Создаем временного пользователя для отображения формы
             User tempUser = new User();
             tempUser.setTheme("light");
             tempUser.setDateFormat("dd.MM.yyyy");
@@ -55,8 +51,6 @@ public class SettingsController {
             tempUser.setPageSize(10);
             tempUser.setSavedFilters("{}");
             model.addAttribute("user", tempUser);
-
-            // Передаем тему по умолчанию
             model.addAttribute("currentTheme", "light");
 
             return "settings";
@@ -74,7 +68,6 @@ public class SettingsController {
             User currentUser = userService.findByEmail(authentication.getName())
                     .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
 
-            // Валидация
             if (!passwordEncoder.matches(currentPassword, currentUser.getPassword())) {
                 redirectAttributes.addFlashAttribute("error", "Текущий пароль неверен");
                 return "redirect:/settings";
@@ -90,7 +83,6 @@ public class SettingsController {
                 return "redirect:/settings";
             }
 
-            // Обновляем пароль
             currentUser.setPassword(passwordEncoder.encode(newPassword));
             userService.save(currentUser);
 
@@ -124,7 +116,6 @@ public class SettingsController {
             User currentUser = userService.findByEmail(authentication.getName())
                     .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
 
-            // Сохраняем настройки
             currentUser.setTheme(theme);
             currentUser.setDateFormat(dateFormat);
             currentUser.setNumberFormat(numberFormat);
@@ -132,13 +123,10 @@ public class SettingsController {
             currentUser.setSavedFilters(savedFilters);
 
             userService.save(currentUser);
-
-            // Обновляем тему в сессии
             themeService.setTheme(request, theme);
 
             redirectAttributes.addFlashAttribute("success", "Настройки успешно сохранены!");
 
-            // ДОБАВЛЯЕМ: Перенаправляем на каталог для применения новых настроек
             return "redirect:/catalog?settingsApplied=true";
 
         } catch (Exception e) {
@@ -146,7 +134,6 @@ public class SettingsController {
             return "redirect:/settings";
         }
     }
-    // Страница подтверждения удаления аккаунта
     @GetMapping("/confirm-delete-account")
     public String confirmDeleteAccount(Model model, Authentication authentication, HttpServletRequest request) {
         try {
@@ -155,7 +142,6 @@ public class SettingsController {
 
             model.addAttribute("user", currentUser);
 
-            // Передаем текущую тему для навигации
             String currentTheme = themeService.getCurrentTheme(request);
             model.addAttribute("currentTheme", currentTheme);
 
@@ -166,7 +152,6 @@ public class SettingsController {
         }
     }
 
-    // Обработка удаления аккаунта
     @PostMapping("/delete-account")
     public String deleteAccount(
             @RequestParam String password,
@@ -181,7 +166,6 @@ public class SettingsController {
             User currentUser = userService.findByEmail(authentication.getName())
                     .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
 
-            // Проверка всех подтверждений
             if (confirm1 == null || confirm2 == null || confirm3 == null) {
                 redirectAttributes.addFlashAttribute("error", "Необходимо подтвердить все условия удаления аккаунта");
                 return "redirect:/confirm-delete-account";
@@ -193,7 +177,6 @@ public class SettingsController {
                 return "redirect:/confirm-delete-account";
             }
 
-            // Мягкое удаление аккаунта (установка флага deleted)
             currentUser.setDeleted(true);
             currentUser.setEnabled(false);
             userService.save(currentUser);
@@ -210,9 +193,6 @@ public class SettingsController {
             return "redirect:/confirm-delete-account";
         }
     }
-
-    // Выход из аккаунта (Spring Security уже обрабатывает /logout по умолчанию)
-    // Этот метод для кастомного выхода если нужно
     @PostMapping("/custom-logout")
     public String customLogout(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         try {

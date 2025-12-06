@@ -11,14 +11,11 @@
     <link rel="stylesheet" th:href="@{/css/nav.css}">
 </head>
 <body>
-<!-- Сообщение об успешной регистрации -->
 <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
     <i class="fas fa-check-circle me-2"></i>
     <span th:text="${success}"></span>
     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
 </div>
-
-<!-- Информация о вошедшем администраторе -->
 <div th:if="${isAdmin}" class="alert alert-info mb-0 text-center">
     <i class="fas fa-user-shield me-2"></i>
     Вы вошли как администратор: <strong th:text="${userEmail}"></strong>

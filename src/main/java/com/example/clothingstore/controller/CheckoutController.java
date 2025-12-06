@@ -68,10 +68,9 @@ public class CheckoutController {
 
             orderService.createOrderFromCart(user, orderRequest, receiptEmail);
 
-            // УБРАЛ finalTotal - ВЫЧИСЛЯЕМ ТОЛЬКО СУММУ ТОВАРОВ
             List<CartItem> cartItems = cartService.getCartItems(user);
             double subtotal = calculateSubtotal(cartItems);
-            metricsService.addRevenue(subtotal); // ← ПЕРЕДАЕМ ТОЛЬКО СУММУ ТОВАРОВ
+            metricsService.addRevenue(subtotal);
 
             redirectAttributes.addFlashAttribute("success",
                     "Заказ успешно создан! Чек отправлен на " + receiptEmail);

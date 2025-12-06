@@ -46,7 +46,6 @@ public class AdminController {
         try {
             AnalyticsDTO analytics = analyticsService.getDashboardAnalytics(startDate, endDate);
 
-            // Гарантируем, что все поля не null
             if (analytics.getTotalUsers() == null) analytics.setTotalUsers(0L);
             if (analytics.getTotalOrders() == null) analytics.setTotalOrders(0L);
             if (analytics.getTotalRevenue() == null) analytics.setTotalRevenue(BigDecimal.ZERO);
@@ -56,13 +55,11 @@ public class AdminController {
             if (analytics.getTopSellingProducts() == null) analytics.setTopSellingProducts(new HashMap<>());
             if (analytics.getRevenueByCategory() == null) analytics.setRevenueByCategory(new HashMap<>());
 
-            // Подготаваем данные для графиков
             prepareChartData(model, analytics);
 
             model.addAttribute("analytics", analytics);
 
         } catch (Exception e) {
-            // Создаем пустой объект если сервис падает
             AnalyticsDTO emptyAnalytics = new AnalyticsDTO();
             emptyAnalytics.setTotalUsers(0L);
             emptyAnalytics.setTotalOrders(0L);
@@ -80,24 +77,22 @@ public class AdminController {
 
         model.addAttribute("startDate", startDate);
         model.addAttribute("endDate", endDate);
+        model.addAttribute("includeHotkeys", true);
 
         return "admin/statistics";
     }
 
     private void prepareChartData(Model model, AnalyticsDTO analytics) {
-        // 1. Данные для графика выручки по категориям
         Map<String, BigDecimal> revenueByCategory = analytics.getRevenueByCategory();
         List<String> categoryLabels = new ArrayList<>();
         List<BigDecimal> categoryData = new ArrayList<>();
 
         if (revenueByCategory != null && !revenueByCategory.isEmpty()) {
-            // Используем традиционный for-loop вместо лямбды
             for (Map.Entry<String, BigDecimal> entry : revenueByCategory.entrySet()) {
                 categoryLabels.add(entry.getKey());
                 categoryData.add(entry.getValue());
             }
         } else {
-            // Демо-данные если нет реальных
             categoryLabels = Arrays.asList("Одежда", "Обувь", "Аксессуары", "Электроника", "Книги");
             categoryData = Arrays.asList(
                     new BigDecimal("150000"),
@@ -111,19 +106,16 @@ public class AdminController {
         model.addAttribute("categoryLabels", categoryLabels);
         model.addAttribute("categoryData", categoryData);
 
-        // Преобразуем BigDecimal в Double для JavaScript
         List<Double> categoryDataNumbers = categoryData.stream()
                 .map(BigDecimal::doubleValue)
                 .collect(Collectors.toList());
         model.addAttribute("categoryDataNumbers", categoryDataNumbers);
 
-        // 2. Данные для графика динамики заказов
         Map<String, Long> dailyOrders = analytics.getDailyOrders();
         List<String> dailyLabels = new ArrayList<>();
         List<Long> dailyData = new ArrayList<>();
 
         if (dailyOrders != null && !dailyOrders.isEmpty()) {
-            // Используем традиционный подход
             List<Map.Entry<String, Long>> sortedEntries = new ArrayList<>(dailyOrders.entrySet());
             sortedEntries.sort(Map.Entry.comparingByKey());
 
@@ -132,21 +124,17 @@ public class AdminController {
                 dailyData.add(entry.getValue());
             }
         } else {
-            // Демо-данные если нет реальных
             dailyLabels = Arrays.asList("2025-11-01", "2025-11-02", "2025-11-03", "2025-11-04", "2025-11-05");
             dailyData = Arrays.asList(5L, 8L, 12L, 7L, 15L);
         }
 
         model.addAttribute("dailyLabels", dailyLabels);
         model.addAttribute("dailyData", dailyData);
-
-        // 3. Данные для графика топ товаров
         Map<String, Long> topProducts = analytics.getTopSellingProducts();
         List<String> productLabels = new ArrayList<>();
         List<Long> productData = new ArrayList<>();
 
         if (topProducts != null && !topProducts.isEmpty()) {
-            // Используем традиционный подход
             List<Map.Entry<String, Long>> sortedEntries = new ArrayList<>(topProducts.entrySet());
             sortedEntries.sort(Map.Entry.<String, Long>comparingByValue().reversed());
 
@@ -156,7 +144,6 @@ public class AdminController {
                 productData.add(entry.getValue());
             }
         } else {
-            // Демо-данные если нет реальных
             productLabels = Arrays.asList("Футболка", "Джинсы", "Кроссовки", "Рюкзак", "Часы");
             productData = Arrays.asList(25L, 18L, 12L, 8L, 5L);
         }
@@ -164,7 +151,6 @@ public class AdminController {
         model.addAttribute("productLabels", productLabels);
         model.addAttribute("productData", productData);
 
-        // 4. Данные для графика каналов (фиксированные)
         model.addAttribute("channelLabels", Arrays.asList("Сайт", "Мобильное приложение", "Соцсети"));
         model.addAttribute("channelData", Arrays.asList(60, 30, 10));
 
@@ -200,7 +186,6 @@ public class AdminController {
                 redirectAttributes.addFlashAttribute("success",
                         "Импорт завершен! " + result.getSummary());
 
-                // Добавляем детальную информацию по листам
                 StringBuilder detailMessage = new StringBuilder();
                 Map<String, SheetResult> sheetResults = result.getSheetResults();
                 for (Map.Entry<String, SheetResult> entry : sheetResults.entrySet()) {
@@ -212,7 +197,6 @@ public class AdminController {
                 redirectAttributes.addFlashAttribute("error",
                         "Ошибка импорта: " + result.getMessage());
 
-                // Показываем первые 5 ошибок
                 List<String> allErrors = new ArrayList<>();
                 Map<String, SheetResult> sheetResults = result.getSheetResults();
                 for (SheetResult sheetResult : sheetResults.values()) {

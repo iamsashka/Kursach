@@ -56,7 +56,6 @@ public class CartApiController {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
 
-        // Проверяем наличие товара
         if (product.getStockQuantity() < quantity) {
             throw new RuntimeException("Not enough stock available");
         }
@@ -64,17 +63,14 @@ public class CartApiController {
         String finalSize = (size != null && !size.trim().isEmpty()) ? size : "M";
         String finalColor = (color != null && !color.trim().isEmpty()) ? color : "Black";
 
-        // Ищем существующий элемент корзины
         Optional<CartItem> existingCartItem = cartItemRepository.findByUserAndProductAndSizeAndColor(
                 user, product, finalSize, finalColor);
 
         if (existingCartItem.isPresent()) {
-            // Обновляем количество
             CartItem cartItem = existingCartItem.get();
             cartItem.setQuantity(cartItem.getQuantity() + quantity);
             cartItemRepository.save(cartItem);
         } else {
-            // Создаем новый элемент
             CartItem cartItem = new CartItem();
             cartItem.setUser(user);
             cartItem.setProduct(product);
@@ -101,7 +97,6 @@ public class CartApiController {
         CartItem cartItem = cartItemRepository.findById(itemId)
                 .orElseThrow(() -> new RuntimeException("Cart item not found"));
 
-        // Проверяем, что элемент принадлежит пользователю
         if (!cartItem.getUser().getId().equals(user.getId())) {
             throw new RuntimeException("Access denied");
         }

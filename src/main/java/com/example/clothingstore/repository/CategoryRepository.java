@@ -26,7 +26,6 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
             "LOWER(c.description) LIKE LOWER(CONCAT('%', :search, '%'))")
     Page<Category> searchCategories(@Param("search") String search, Pageable pageable);
 
-    // Методы без пагинации для экспорта
     List<Category> findByDeletedTrue();
 
     @Query("SELECT c FROM Category c WHERE " +
@@ -34,7 +33,6 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
             "LOWER(c.description) LIKE LOWER(CONCAT('%', :search, '%'))")
     List<Category> searchCategories(@Param("search") String search);
 
-    // Статистика
     long countByDeletedFalse();
     long countByDeletedTrue();
 

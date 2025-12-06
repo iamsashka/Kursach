@@ -35,7 +35,6 @@
 </div>
 
 <div class="container">
-    <!-- Статистика архива -->
     <div class="row mb-4">
         <div class="col-md-4">
             <div class="stats-card bg-secondary">
@@ -56,8 +55,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Таблица архивных заказов -->
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center bg-light">
             <span><i class="fas fa-archive me-2"></i> Архивные заказы</span>
@@ -147,8 +144,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Пагинация -->
     <nav th:if="${archivedOrders.totalPages > 1}" class="mt-4">
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${archivedOrders.first} ? 'disabled' : ''">

@@ -57,28 +57,21 @@ public class AuditService {
         }
         return request.getRemoteAddr();
     }
-
-    // Методы для получения логов
     public Page<AuditLog> getAllLogs(Pageable pageable) {
         return auditLogRepository.findAllByOrderByCreatedAtDesc(pageable);
     }
-
     public Page<AuditLog> getLogsByEntityType(String entityType, Pageable pageable) {
         return auditLogRepository.findByEntityTypeOrderByCreatedAtDesc(entityType, pageable);
     }
-
     public Page<AuditLog> getLogsByAction(String action, Pageable pageable) {
         return auditLogRepository.findByActionOrderByCreatedAtDesc(action, pageable);
     }
-
     public Page<AuditLog> getLogsByUsername(String username, Pageable pageable) {
         return auditLogRepository.findByUsernameOrderByCreatedAtDesc(username, pageable);
     }
-
     public List<AuditLog> getEntityHistory(String entityType, Long entityId) {
         return auditLogRepository.findByEntityTypeAndEntityIdOrderByCreatedAtDesc(entityType, entityId);
     }
-
     public Page<AuditLog> getLogsByDateRange(LocalDateTime startDate, LocalDateTime endDate, Pageable pageable) {
         return auditLogRepository.findByDateRange(startDate, endDate, pageable);
     }
@@ -91,4 +84,5 @@ public class AuditService {
     public List<String> getAvailableActions() {
         return auditLogRepository.findDistinctActions();
     }
+
 }

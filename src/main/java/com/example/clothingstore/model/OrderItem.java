@@ -26,7 +26,6 @@ public class OrderItem {
     private String size;
     private String color;
 
-    // Constructors, Getters, Setters
     public OrderItem() {}
 
     public OrderItem(Order order, Product product, Integer quantity, String size, String color) {
@@ -42,7 +41,6 @@ public class OrderItem {
         return unitPrice.multiply(BigDecimal.valueOf(quantity));
     }
 
-    // Getters and Setters...
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public Order getOrder() { return order; }

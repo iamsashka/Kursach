@@ -128,7 +128,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("SELECT p FROM Product p WHERE p.id IN :ids AND p.deleted = false")
     List<Product> findByIdInAndDeletedFalse(@Param("ids") List<Long> ids);
-    // В ProductRepository добавьте:
     @Query("SELECT p FROM Product p WHERE p.id = :id")
     Optional<Product> findByIdIgnoreDeleted(@Param("id") Long id);
     @Modifying

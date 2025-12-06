@@ -13,7 +13,6 @@ public class ThemeService {
     private static final String THEME_ATTRIBUTE = "currentTheme";
     private static final String DEFAULT_THEME = "light";
 
-    // Допустимые темы - легко расширяемо
     private static final String[] ALLOWED_THEMES = {"light", "dark"};
 
     public String getCurrentTheme(HttpServletRequest request) {
@@ -34,7 +33,6 @@ public class ThemeService {
     public void setTheme(HttpServletRequest request, String theme) {
         if (!StringUtils.hasText(theme)) return;
 
-        // Проверяем что тема допустимая
         boolean isValidTheme = false;
         for (String allowedTheme : ALLOWED_THEMES) {
             if (allowedTheme.equals(theme)) {
@@ -61,7 +59,6 @@ public class ThemeService {
         );
     }
 
-    // Дополнительный метод для проверки
     public boolean isDarkTheme(HttpServletRequest request) {
         return "dark".equals(getCurrentTheme(request));
     }

@@ -102,16 +102,12 @@
                                             <span th:if="${!${item.value} instanceof T(java.util.Map) and
                                                           !${item.value} instanceof T(java.util.List)}"
                                                   th:text="${item.value}"></span>
-
-                                            <!-- Вложенные Map -->
                                             <div th:if="${item.value instanceof T(java.util.Map)}" class="nested-table">
                                                 <div th:each="nestedItem : ${item.value}" class="diagnostic-item">
                                                     <span class="diagnostic-key" th:text="${nestedItem.key} + ':'"></span>
                                                     <span class="diagnostic-value" th:text="${nestedItem.value}"></span>
                                                 </div>
                                             </div>
-
-                                            <!-- Списки -->
                                             <div th:if="${item.value instanceof T(java.util.List)}">
                                                 <ul class="list-unstyled">
                                                     <li th:each="listItem : ${item.value}" th:text="${listItem}"></li>

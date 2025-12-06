@@ -52,7 +52,6 @@ public class BrandController {
             brandPage = brandService.getAllBrands(pageable);
         }
 
-        // Добавлено передача brandPage вместо brands
         model.addAttribute("brandPage", brandPage);
         model.addAttribute("brand", new Brand());
         model.addAttribute("search", search);

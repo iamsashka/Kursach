@@ -34,38 +34,30 @@ public class TransactionalOrderService {
             throw new RuntimeException("Корзина пуста");
         }
 
-        // Создаем заказ
         Order order = new Order();
         order.setUser(user);
         order.setStatus(OrderStatus.PROCESSING);
 
-        // ВАЖНО: Устанавливаем адрес доставки из формы
         order.setShippingAddress(orderRequest.getShippingAddress());
 
-        // Проверяем, что адрес установлен
         if (orderRequest.getShippingAddress() == null || orderRequest.getShippingAddress().trim().isEmpty()) {
             throw new RuntimeException("Адрес доставки обязателен");
         }
 
-        // ДОБАВЛЯЕМ ТОВАРЫ В ЗАКАЗ
         List<Product> products = cartItems.stream()
                 .map(CartItem::getProduct)
                 .collect(Collectors.toList());
         order.setProducts(products);
 
-        // Расчет суммы
         BigDecimal totalAmount = cartItems.stream()
                 .map(item -> item.getProduct().getPrice().multiply(BigDecimal.valueOf(item.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         order.setTotalAmount(totalAmount);
 
-        // Генерация номера заказа
         order.setOrderNumber("ORD-" + System.currentTimeMillis());
 
-        // Сохраняем заказ
         Order savedOrder = orderRepository.save(order);
 
-        // Создаем OrderItems
         List<OrderItem> orderItems = cartItems.stream()
                 .map(cartItem -> new OrderItem(
                         savedOrder,
@@ -78,7 +70,6 @@ public class TransactionalOrderService {
 
         orderItemRepository.saveAll(orderItems);
 
-        // Очищаем корзину
         cartService.clearCart(user);
 
         System.out.println("Отправляем чек на: " + receiptEmail);
@@ -91,29 +82,24 @@ public class TransactionalOrderService {
             User user = userService.findByEmail(userEmail)
                     .orElseThrow(() -> new BusinessException("Пользователь не найден"));
 
-            // Создаем заказ
             Order order = new Order();
             order.setUser(user);
             order.setOrderNumber("ORD-" + System.currentTimeMillis());
             order.setStatus(OrderStatus.PENDING);
             order.setOrderDate(LocalDateTime.now());
 
-            // Рассчитываем общую сумму
             BigDecimal totalAmount = BigDecimal.ZERO;
             List<Product> products = new ArrayList<>();
 
             for (OrderRequest.OrderItemRequest item : request.getItems()) {
                 Product product = productService.getProductById(item.getProductId());
 
-                // Проверяем доступность
                 if (!productService.isProductAvailable(product.getId(), item.getQuantity())) {
                     throw new BusinessException("Товар '" + product.getName() + "' недоступен в количестве " + item.getQuantity());
                 }
 
-                // Обновляем остатки
                 productService.updateStockQuantity(product.getId(), item.getQuantity());
 
-                // Добавляем к общей сумме
                 totalAmount = totalAmount.add(product.getPrice().multiply(BigDecimal.valueOf(item.getQuantity())));
                 products.add(product);
             }

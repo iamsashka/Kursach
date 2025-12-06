@@ -15,7 +15,6 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
 
-            <!-- Навигация для АДМИНА -->
             <ul class="navbar-nav me-auto" sec:authorize="hasRole('ADMIN')">
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/admin}" style="letter-spacing: 1px;">ПАНЕЛЬ УПРАВЛЕНИЯ</a>
@@ -31,7 +30,6 @@
                 </li>
             </ul>
 
-            <!-- Навигация для ПОКУПАТЕЛЕЙ -->
             <ul class="navbar-nav me-auto" sec:authorize="!hasRole('ADMIN')">
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/catalog}" style="letter-spacing: 1px;">КАТАЛОГ</a>
@@ -45,15 +43,12 @@
             </ul>
 
             <ul class="navbar-nav ms-auto">
-                <!-- Кнопка переключения темы -->
                 <li class="nav-item">
                     <a th:href="@{/toggle-theme}" class="nav-link theme-toggle-btn">
                         <i th:class="${currentTheme == 'dark' ? 'fas fa-sun' : 'fas fa-moon'}"></i>
                         <span th:text="${currentTheme == 'dark' ? 'СВЕТЛАЯ' : 'ТЕМНАЯ'}">ТЕМА</span>
                     </a>
                 </li>
-
-                <!-- Для неавторизованных пользователей -->
                 <li class="nav-item" sec:authorize="!isAuthenticated()">
                     <a class="nav-link" th:href="@{/login}" style="letter-spacing: 1px;">
                         ВОЙТИ
@@ -65,7 +60,6 @@
                     </a>
                 </li>
 
-                <!-- Для авторизованных пользователей -->
                 <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false" style="letter-spacing: 1px;">
@@ -73,7 +67,6 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-                        <!-- Для ПОКУПАТЕЛЕЙ -->
                         <div sec:authorize="!hasRole('ADMIN')">
                             <li>
                                 <a class="dropdown-item" th:href="@{/profile}">
@@ -103,8 +96,6 @@
                         </li>
                     </ul>
                 </li>
-
-                <!-- Корзина ТОЛЬКО для покупателей -->
                 <li class="nav-item" sec:authorize="isAuthenticated() and !hasRole('ADMIN')">
                     <a class="nav-link position-relative" th:href="@{/cart}">
                         <i class="fas fa-shopping-bag"></i>

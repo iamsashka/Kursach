@@ -32,10 +32,7 @@ public class FavoritesController {
     private final UserService userService;
     private final ProductService productService;
     private final MetricsService metricsService;
-    /**
-     * Обработка добавления в избранное через HTML форму
-     * БЕЗ выбора размера и цвета - просто добавляем товар
-     */
+
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String addToFavoritesForm(@RequestParam Long productId,
                                      HttpServletRequest request,
@@ -67,7 +64,6 @@ public class FavoritesController {
         String referer = request.getHeader("Referer");
         return "redirect:" + (referer != null ? referer : "/catalog");
     }
-    // ========== API ENDPOINTS (JSON) ==========
 
     @PostMapping("/{productId}")
     public ResponseEntity<?> addToFavorites(@PathVariable Long productId) {
@@ -151,19 +147,15 @@ public class FavoritesController {
 
             Product product = productService.getProductById(productId);
 
-            // Проверяем, есть ли уже в избранном
             boolean isCurrentlyFavorite = favoriteService.isProductInFavorites(user, productId);
 
             if (isCurrentlyFavorite) {
-                // Удаляем из избранного
                 favoriteService.removeFromFavorites(user, productId);
                 redirectAttributes.addFlashAttribute("success", "Товар удален из избранного");
             } else {
-                // Проверяем лимит избранного
                 long favoritesCount = favoriteService.getUserFavoritesCount(user);
 
                 if (favoritesCount >= 100) {
-                    // Получаем самый старый товар в избранном
                     Favorite oldestFavorite = favoriteService.getOldestFavorite(user);
 
                     if (oldestFavorite != null) {
@@ -178,7 +170,6 @@ public class FavoritesController {
 
                     return "redirect:" + redirectUrl;
                 } else {
-                    // Добавляем в избранное
                     favoriteService.addToFavorites(user, product);
                     redirectAttributes.addFlashAttribute("success", "Товар добавлен в избранное");
                 }
@@ -208,11 +199,7 @@ public class FavoritesController {
             String email = authentication.getName();
             User user = userService.findByEmail(email)
                     .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
-
-            // Удаляем самый старый товар
             favoriteService.removeFavoriteById(oldestFavoriteId);
-
-            // Добавляем новый товар
             Product newProduct = productService.getProductById(newProductId);
             favoriteService.addToFavorites(user, newProduct);
 
@@ -302,12 +289,6 @@ public class FavoritesController {
             return ResponseEntity.ok(createCheckResponse(false));
         }
     }
-
-    // ========== THYMELEAF PAGES ==========
-
-    /**
-     * Страница избранных товаров
-     */
     @GetMapping("/page")
     public String favoritesPage(Model model) {
         try {
@@ -323,8 +304,6 @@ public class FavoritesController {
                     .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
 
             List<Favorite> favorites = favoriteService.getUserFavorites(user);
-
-            // Убедитесь, что все продукты и их свойства загружены
             model.addAttribute("favorites", favorites != null ? favorites : Collections.emptyList());
             model.addAttribute("title", "Мои избранные товары");
             model.addAttribute("currentPage", "/api/favorites/page");
@@ -337,10 +316,6 @@ public class FavoritesController {
             return "favorites";
         }
     }
-
-    /**
-     * Добавление в избранное с редиректом (для Thymeleaf форм)
-     */
     @PostMapping("/add-redirect")
     public String addToFavoritesRedirect(@RequestParam Long productId,
                                          RedirectAttributes redirectAttributes) {
@@ -368,9 +343,6 @@ public class FavoritesController {
         return "redirect:/catalog";
     }
 
-    /**
-     * Удаление из избранного с редиректом (для Thymeleaf форм)
-     */
     @PostMapping("/remove-redirect")
     public String removeFromFavoritesRedirect(@RequestParam Long productId,
                                               RedirectAttributes redirectAttributes) {

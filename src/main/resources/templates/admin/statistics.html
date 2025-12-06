@@ -17,7 +17,6 @@
 <div th:replace="~{fragments/nav :: navbar}"></div>
 
 <div class="container-fluid py-4">
-    <!-- Хедер с управлением -->
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
@@ -45,8 +44,6 @@
                             <i class="fas fa-cog me-1"></i>Настройки
                         </a>
                     </div>
-
-                    <!-- Улучшенный dropdown для импорта -->
                     <div class="dropdown">
                         <button class="btn btn-outline-secondary dropdown-toggle" type="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
@@ -57,8 +54,6 @@
                                 <h6 class="dropdown-header">Импорт из Excel</h6>
                                 <form th:action="@{/admin/statistics/import}" method="post"
                                       enctype="multipart/form-data" class="mt-2">
-
-                                    <!-- Показ сообщений об ошибках/успехе -->
                                     <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
                                         <span th:text="${success}"></span>
                                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
@@ -76,7 +71,6 @@
                                             Поддерживаются файлы .xlsx, .xls
                                         </div>
                                     </div>
-
                                     <div class="d-grid gap-2">
                                         <button type="submit" class="btn btn-primary btn-sm">
                                             📥 Импортировать данные
@@ -94,8 +88,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Горячие клавиши -->
     <div class="row mb-3">
         <div class="col-12">
             <div class="tareno-filter-card">
@@ -132,8 +124,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Основные метрики KPI -->
     <div class="row g-3 mb-4">
         <div class="col-6 col-md-4 col-lg-2">
             <div class="tareno-metric-card text-center">
@@ -204,8 +194,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Графики и визуализации -->
     <div class="row mb-4">
         <div class="col-lg-8">
             <div class="tareno-chart">
@@ -220,7 +208,6 @@
             </div>
         </div>
     </div>
-
     <div class="row mb-4">
         <div class="col-lg-6">
             <div class="tareno-chart">
@@ -235,8 +222,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Сводные таблицы -->
     <div class="row">
         <div class="col-lg-6">
             <div class="tareno-data-container">

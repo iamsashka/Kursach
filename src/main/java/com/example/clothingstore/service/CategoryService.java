@@ -57,9 +57,6 @@ public class CategoryService {
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }
-    // === ДОБАВИТЬ В CategoryService.java ===
-
-    // Пагинация
     public Page<Category> getAllCategories(Pageable pageable) {
         return categoryRepository.findAll(pageable);
     }
@@ -75,8 +72,6 @@ public class CategoryService {
     public Page<Category> searchCategories(String search, Pageable pageable) {
         return categoryRepository.searchCategories(search, pageable);
     }
-
-    // Без пагинации для экспорта
     public List<Category> getActiveCategories() {
         return categoryRepository.findByDeletedFalse();
     }
@@ -89,7 +84,6 @@ public class CategoryService {
         return categoryRepository.searchCategories(search);
     }
 
-    // Статистика
     public long getTotalCategoriesCount() {
         return categoryRepository.count();
     }
@@ -103,29 +97,25 @@ public class CategoryService {
     }
 
     public long getTotalProductsCount() {
-        return 0L; // Заглушка
+        return 0L;
     }
 
-    // Восстановление
     public void restoreCategory(Long id) {
         Category category = getCategoryById(id);
         category.setDeleted(false);
         categoryRepository.save(category);
     }
 
-    // Экспорт Excel
     public void exportToExcel(List<Category> categories, HttpServletResponse response) throws IOException {
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Categories");
 
-            // Заголовки
             Row headerRow = sheet.createRow(0);
             headerRow.createCell(0).setCellValue("ID");
             headerRow.createCell(1).setCellValue("Название");
             headerRow.createCell(2).setCellValue("Описание");
             headerRow.createCell(3).setCellValue("Статус");
 
-            // Данные
             int rowNum = 1;
             for (Category category : categories) {
                 Row row = sheet.createRow(rowNum++);
@@ -139,7 +129,6 @@ public class CategoryService {
         }
     }
 
-    // Экспорт PDF
     public void exportToPdf(List<Category> categories, HttpServletResponse response) throws IOException {
         StringBuilder content = new StringBuilder();
         content.append("Категории\n\n");

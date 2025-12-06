@@ -166,7 +166,6 @@ public class OrderController {
             List<Product> products = productService.findByIds(productIds);
             order.setProducts(products);
 
-            // Считаем все с учетом количестваааа
             BigDecimal totalAmount = BigDecimal.ZERO;
             for (int i = 0; i < products.size(); i++) {
                 Product product = products.get(i);
@@ -175,13 +174,11 @@ public class OrderController {
             }
             order.setTotalAmount(totalAmount);
 
-            // Генерим номерок заказа
             if (order.getOrderNumber() == null || order.getOrderNumber().isBlank()) {
                 order.setOrderNumber("ORD-" + System.currentTimeMillis());
             }
 
             orderService.saveOrder(order);
-            //Метрика номер 3333
             metricsService.addRevenue(totalAmount.doubleValue());
             return "redirect:/orders?success=Order+created+successfully";
 
@@ -235,12 +232,10 @@ public class OrderController {
             List<Product> products = productService.findByIds(productIds);
             existingOrder.setProducts(products);
 
-            // Update fields
             existingOrder.setOrderNumber(order.getOrderNumber());
             existingOrder.setShippingAddress(order.getShippingAddress());
             existingOrder.setStatus(order.getStatus());
 
-            // Recalculate total amount
             BigDecimal totalAmount = products.stream()
                     .map(Product::getPrice)
                     .reduce(BigDecimal.ZERO, BigDecimal::add);

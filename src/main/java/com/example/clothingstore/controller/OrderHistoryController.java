@@ -35,18 +35,14 @@ public class OrderHistoryController {
             Model model) {
 
         try {
-            // Получаем текущего пользователя
             User currentUser = userService.findByEmail(authentication.getName())
                     .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
 
-            // Передаем пользователя в модель для использования его настроек
             model.addAttribute("user", currentUser);
 
-            // Передаем текущую тему для навигации
             String currentTheme = themeService.getCurrentTheme(request);
             model.addAttribute("currentTheme", currentTheme);
 
-            // Получаем заказы пользователя с пагинацией
             Pageable pageable = PageRequest.of(page, 10, Sort.by("orderDate").descending());
             var ordersPage = orderService.getUserOrdersPage(currentUser.getId(), pageable);
 

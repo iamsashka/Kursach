@@ -1,4 +1,3 @@
-/* Черно-белая тема для категорий */
 :root {
     --tareno-black: #000000;
     --tareno-white: #ffffff;
@@ -25,7 +24,6 @@
     --category-color: #17a2b8;
 }
 
-/* Основные стили */
 body {
     background-color: var(--tareno-white);
     color: var(--tareno-black);
@@ -38,7 +36,6 @@ body {
     padding: 0 15px;
 }
 
-/* Заголовок страницы */
 .page-header {
     background: var(--tareno-white);
     border-bottom: 2px solid var(--tareno-black);
@@ -64,7 +61,6 @@ body {
     margin: 0;
 }
 
-/* Карточки статистики */
 .stat-card {
     background: var(--tareno-white);
     border: 2px solid var(--tareno-black);
@@ -110,7 +106,6 @@ body {
     letter-spacing: 0.5px;
 }
 
-/* Карточки */
 .card {
     border: 2px solid var(--tareno-black);
     margin-bottom: 1.5rem;
@@ -138,7 +133,6 @@ body {
     background: var(--tareno-white);
 }
 
-/* Кнопки */
 .btn {
     border: 2px solid var(--tareno-black);
     border-radius: 0;
@@ -158,7 +152,6 @@ body {
     height: auto;
 }
 
-/* Success кнопка */
 .btn-success {
     background: var(--tareno-black);
     color: var(--tareno-white);
@@ -171,7 +164,6 @@ body {
     border-color: var(--tareno-black);
 }
 
-/* Outline Success кнопка */
 .btn-outline-success {
     background: var(--tareno-white);
     color: var(--tareno-black);
@@ -184,7 +176,6 @@ body {
     border-color: var(--tareno-black);
 }
 
-/* Outline Primary кнопка */
 .btn-outline-primary {
     background: var(--tareno-white);
     color: var(--tareno-black);
@@ -197,7 +188,6 @@ body {
     border-color: var(--tareno-black);
 }
 
-/* Outline Warning кнопка */
 .btn-outline-warning {
     background: var(--tareno-white);
     color: var(--tareno-black);
@@ -210,7 +200,6 @@ body {
     border-color: var(--tareno-black);
 }
 
-/* Outline Danger кнопка */
 .btn-outline-danger {
     background: var(--tareno-white);
     color: var(--tareno-black);
@@ -223,7 +212,6 @@ body {
     border-color: var(--tareno-black);
 }
 
-/* Small кнопки */
 .btn-sm {
     padding: 0.375rem 0.75rem;
     font-size: 0.8rem;
@@ -233,7 +221,6 @@ body {
     border-width: 1px;
 }
 
-/* Вторичная кнопка */
 .btn-secondary {
     background: var(--tareno-white);
     color: var(--tareno-black);
@@ -258,7 +245,6 @@ body {
     border-color: var(--tareno-black);
 }
 
-/* Primary кнопка */
 .btn-primary {
     background: var(--tareno-black);
     color: var(--tareno-white);
@@ -270,8 +256,6 @@ body {
     color: var(--tareno-black);
     border-color: var(--tareno-black);
 }
-
-/* Группа кнопок */
 .btn-group {
     border: 1px solid var(--tareno-black);
     display: inline-flex;
@@ -289,8 +273,6 @@ body {
 .btn-group .btn:last-child {
     border-right: none;
 }
-
-/* Таблица */
 .table-responsive {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -328,7 +310,6 @@ body {
     background-color: rgba(255, 255, 255, 0.05);
 }
 
-/* Бейджи */
 .badge {
     font-size: 0.75rem;
     font-weight: 700;
@@ -357,7 +338,6 @@ body {
     border-color: var(--tareno-black) !important;
 }
 
-/* Модальное окно */
 .modal-content {
     border: 2px solid var(--tareno-black);
     border-radius: 0;
@@ -397,7 +377,6 @@ body {
     filter: invert(0);
 }
 
-/* Формы */
 .form-control {
     border: 2px solid var(--tareno-black);
     border-radius: 0;
@@ -437,7 +416,6 @@ body {
     color: var(--tareno-white) !important;
 }
 
-/* Утилиты */
 .text-muted {
     color: var(--tareno-gray) !important;
 }
@@ -454,7 +432,6 @@ body {
     text-align: center;
 }
 
-/* Empty state */
 .text-center.text-muted {
     padding: 3rem 2rem;
 }
@@ -469,7 +446,6 @@ body {
     color: var(--tareno-gray);
 }
 
-/* Пагинация */
 .pagination {
     margin-bottom: 0;
 }
@@ -499,7 +475,6 @@ body {
     border-color: var(--tareno-border);
 }
 
-/* Input group */
 .input-group-text {
     background: var(--tareno-black);
     color: var(--tareno-white);
@@ -507,7 +482,6 @@ body {
     border-radius: 0;
 }
 
-/* Анимации */
 .table-responsive {
     animation: fadeInUp 0.5s ease-out;
 }
@@ -523,7 +497,6 @@ body {
     }
 }
 
-/* Контейнеры кнопок в заголовке */
 .header-buttons-container {
     display: flex;
     flex-direction: column;
@@ -541,9 +514,6 @@ body {
     gap: 8px;
 }
 
-/* Адаптивность */
-
-/* Tablet (768px - 991px) */
 @media (max-width: 991px) and (min-width: 768px) {
     .stat-card {
         padding: 1rem;
@@ -570,7 +540,6 @@ body {
     }
 }
 
-/* Small (до 767px) */
 @media (max-width: 767px) {
     .page-header .row {
         flex-direction: column;
@@ -625,14 +594,12 @@ body {
         flex-wrap: wrap;
     }
 
-    /* Скрываем колонку описания на маленьких экранах */
     .table th:nth-child(3),
     .table td:nth-child(3) {
         display: none;
     }
 }
 
-/* Улучшенная доступность */
 .btn:focus,
 .form-control:focus,
 .btn-close:focus {
@@ -645,7 +612,6 @@ body {
 [data-theme="dark"] .btn-close:focus {
     box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
 }
-/* Стили для архива категорий */
 .alert-warning {
     background: var(--tareno-white);
     border: 2px solid var(--tareno-black);
@@ -682,7 +648,6 @@ body {
     margin-bottom: 0.5rem;
 }
 
-/* Адаптивность для архива */
 @media (max-width: 767px) {
     .btn-group {
         flex-direction: column;
@@ -696,7 +661,6 @@ body {
         justify-content: center;
     }
 
-    /* Скрываем колонку описания на маленьких экранах */
     .table th:nth-child(3),
     .table td:nth-child(3) {
         display: none;

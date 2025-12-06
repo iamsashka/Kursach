@@ -1,4 +1,3 @@
-/* Черно-белая тема */
 :root {
     --tareno-black: #000000;
     --tareno-white: #ffffff;
@@ -23,7 +22,6 @@
     --tareno-shadow-hover: 0 4px 15px rgba(255, 255, 255, 0.15);
 }
 
-/* Основные стили */
 body {
     background-color: var(--tareno-white);
     color: var(--tareno-black);
@@ -36,7 +34,6 @@ body {
     padding: 0 15px;
 }
 
-/* Заголовок страницы */
 .page-header {
     background: var(--tareno-white);
     border-bottom: 2px solid var(--tareno-black);
@@ -59,7 +56,6 @@ body {
     margin: 0;
 }
 
-/* Карточки статистики */
 .stats-card {
     background: var(--tareno-white);
     border: 2px solid var(--tareno-black);
@@ -90,7 +86,6 @@ body {
     letter-spacing: 1px;
 }
 
-/* Карточки */
 .card {
     border: 2px solid var(--tareno-black);
     margin-bottom: 1.5rem;
@@ -111,7 +106,6 @@ body {
     background: var(--tareno-white);
 }
 
-/* Единый размер кнопок */
 .btn {
     border: 2px solid var(--tareno-black);
     border-radius: 0;
@@ -131,7 +125,6 @@ body {
     letter-spacing: 0.5px;
 }
 
-/* Primary кнопка */
 .btn-primary {
     background: var(--tareno-black);
     color: var(--tareno-white);
@@ -142,7 +135,6 @@ body {
     color: var(--tareno-black);
 }
 
-/* Success кнопка */
 .btn-success {
     background: var(--tareno-black);
     color: var(--tareno-white);
@@ -153,7 +145,6 @@ body {
     color: var(--tareno-black);
 }
 
-/* Outline Secondary кнопка */
 .btn-outline-secondary {
     background: var(--tareno-white);
     color: var(--tareno-black);
@@ -164,7 +155,6 @@ body {
     color: var(--tareno-white);
 }
 
-/* Warning кнопка */
 .btn-warning {
     background: var(--tareno-black);
     color: var(--tareno-white);
@@ -175,7 +165,6 @@ body {
     color: var(--tareno-black);
 }
 
-/* Danger кнопка */
 .btn-danger {
     background: var(--tareno-black);
     color: var(--tareno-white);
@@ -186,7 +175,6 @@ body {
     color: var(--tareno-black);
 }
 
-/* Small кнопки - одинакового размера */
 .btn-sm {
     padding: 0.6rem 1rem;
     font-size: 0.8rem;
@@ -196,7 +184,6 @@ body {
     border-width: 1px;
 }
 
-/* Формы */
 .form-control,
 .form-select {
     border: 2px solid var(--tareno-black);
@@ -227,7 +214,6 @@ body {
     border-left: none;
 }
 
-/* Стили для группы кнопок экспорта */
 .export-buttons {
     display: flex;
     gap: 0;
@@ -248,7 +234,6 @@ body {
     border-right: none;
 }
 
-/* Стили для кнопок создания заказа и архива */
 .action-row {
     display: flex;
     gap: 0.5rem;
@@ -274,7 +259,6 @@ body {
     padding: 0.5rem 1rem;
 }
 
-/* Кнопка создания заказа */
 .action-row .btn-success {
     background: var(--tareno-black);
     color: var(--tareno-white);
@@ -286,7 +270,6 @@ body {
     color: var(--tareno-black);
 }
 
-/* Кнопка архива */
 .action-row .btn-outline-secondary {
     background: var(--tareno-white);
     color: var(--tareno-black);
@@ -298,7 +281,6 @@ body {
     color: var(--tareno-white);
 }
 
-/* Header buttons layout */
 .header-buttons-container {
     display: flex;
     flex-direction: column;
@@ -312,7 +294,6 @@ body {
     justify-content: flex-end;
 }
 
-/* АДАПТИВНАЯ ТАБЛИЦА */
 .table-responsive {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -347,7 +328,6 @@ body {
     overflow: hidden;
 }
 
-/* АДАПТИВНЫЕ КОЛОНКИ - Desktop (1200px+) */
 .table th:nth-child(1),
 .table td:nth-child(1) {
     width: 10%;
@@ -398,7 +378,6 @@ body {
     background-color: rgba(255, 255, 255, 0.05);
 }
 
-/* Форма статуса в таблице */
 .status-form {
     margin: 0;
 }
@@ -412,7 +391,6 @@ body {
     padding: 0.5rem;
 }
 
-/* Бейджи */
 .badge {
     font-size: 0.75rem;
     font-weight: 700;
@@ -457,7 +435,6 @@ body {
     border-color: var(--tareno-black) !important;
 }
 
-/* Action buttons */
 .action-buttons {
     display: flex;
     align-items: center;
@@ -477,7 +454,6 @@ body {
     flex-shrink: 0;
 }
 
-/* Пагинация */
 .pagination {
     margin: 2rem 0;
     justify-content: center;
@@ -513,7 +489,6 @@ body {
     opacity: 0.5;
 }
 
-/* Empty state */
 .empty-state {
     padding: 3rem 2rem;
     text-align: center;
@@ -534,7 +509,6 @@ body {
     color: var(--tareno-gray);
 }
 
-/* Customer info */
 .customer-info {
     line-height: 1.4;
 }
@@ -543,7 +517,6 @@ body {
     font-size: 0.85rem;
 }
 
-/* Products list */
 .products-list {
     line-height: 1.4;
 }
@@ -552,9 +525,6 @@ body {
     font-size: 0.85rem;
 }
 
-/* АДАПТИВНОСТЬ ДЛЯ ТАБЛИЦЫ И КНОПОК */
-
-/* Desktop (992px - 1199px) */
 @media (max-width: 1199px) and (min-width: 992px) {
     .table th:nth-child(1),
     .table td:nth-child(1) { width: 11%; min-width: 90px; }
@@ -588,14 +558,11 @@ body {
         font-size: 0.75rem;
     }
 
-    /* Кнопки экспорта для Desktop */
     .export-buttons .btn-sm {
         min-width: 70px;
         font-size: 0.8rem;
         padding: 0.5rem 0.6rem;
     }
-
-    /* Кнопки создания заказа и архива для Desktop */
     .action-row .btn {
         min-width: 130px;
         font-size: 0.75rem;
@@ -603,7 +570,6 @@ body {
     }
 }
 
-/* Tablet (768px - 991px) */
 @media (max-width: 991px) and (min-width: 768px) {
     .table th:nth-child(1),
     .table td:nth-child(1) { width: 12%; min-width: 80px; }
@@ -653,8 +619,6 @@ body {
         height: 35px;
         font-size: 0.7rem;
     }
-
-    /* Кнопки экспорта для Tablet */
     .header-buttons-container {
         align-items: center;
     }
@@ -677,16 +641,12 @@ body {
         min-width: 70px;
         font-size: 0.75rem;
     }
-
-    /* Кнопки создания заказа и архива для Tablet */
     .action-row .btn {
         min-width: 120px;
         font-size: 0.75rem;
         padding: 0.5rem 0.7rem;
     }
 }
-
-/* Small (до 767px) */
 @media (max-width: 767px) {
     .table th:nth-child(1),
     .table td:nth-child(1) { width: 14%; min-width: 70px; }
@@ -745,7 +705,6 @@ body {
         font-size: 0.65rem;
     }
 
-    /* Кнопки экспорта для Small */
     .page-header .row {
         flex-direction: column;
         text-align: center;
@@ -779,7 +738,6 @@ body {
         padding: 0.4rem 0.5rem;
     }
 
-    /* Компактные кнопки - скрываем текст */
     .export-buttons .btn span {
         display: none;
     }
@@ -794,7 +752,6 @@ body {
         font-size: 0.8rem;
     }
 
-    /* Кнопки создания заказа и архива для Small */
     .action-row .btn {
         min-width: 140px;
         font-size: 0.75rem;
@@ -802,8 +759,6 @@ body {
         flex: 1;
         max-width: 160px;
     }
-
-    /* На очень маленьких экранах делаем кнопки компактнее */
     @media (max-width: 400px) {
         .action-row .btn {
             min-width: 120px;
@@ -815,8 +770,6 @@ body {
             margin-right: 0.3rem !important;
         }
     }
-
-    /* Скрываем колонки суммы и даты на маленьких экранах */
     .table th:nth-child(4),
     .table td:nth-child(4),
     .table th:nth-child(5),
@@ -825,7 +778,6 @@ body {
     }
 }
 
-/* Улучшенная доступность */
 .btn:focus,
 .form-control:focus,
 .form-select:focus,
@@ -841,7 +793,6 @@ body {
     box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
 }
 
-/* Утилиты */
 .text-muted {
     color: var(--tareno-gray) !important;
 }
@@ -859,7 +810,6 @@ body {
     color: var(--tareno-white) !important;
 }
 
-/* Анимация появления таблицы */
 .table-responsive {
     animation: fadeInUp 0.5s ease-out;
 }
@@ -875,12 +825,9 @@ body {
     }
 }
 
-/* Гарантия что кнопки не будут перекрывать друг друга */
 .d-flex.gap-2 {
     gap: 0.5rem !important;
 }
-
-/* Убедимся что контейнеры не переполняются */
 .container {
     overflow-x: hidden;
 }

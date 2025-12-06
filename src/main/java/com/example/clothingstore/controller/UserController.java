@@ -68,13 +68,13 @@ public class UserController {
     public String showEditForm(@PathVariable Long id, Model model) {
         User user = userService.findById(id);
         model.addAttribute("user", user);
-        return "admin/users/form"; // Исправлено на admin/users/form
+        return "admin/users/form";
     }
 
     @PostMapping("/update/{id}")
     public String updateUser(@PathVariable Long id, @Valid @ModelAttribute User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "admin/users/form"; // Исправлено на admin/users/form
+            return "admin/users/form";
         }
         user.setId(id);
         userService.saveUser(user);
@@ -105,7 +105,6 @@ public class UserController {
         return "redirect:/users";
     }
 
-    // Новые методы для работы с клиентами (пользователями с ролью CUSTOMER)
     @GetMapping("/customers")
     public String listCustomers(Model model,
                                 @RequestParam(defaultValue = "0") int page,
@@ -128,6 +127,6 @@ public class UserController {
         model.addAttribute("search", search);
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("sortDir", sortDir);
-        return "users/customers"; // Оставляем как есть, если этот шаблон в другой папке
+        return "users/customers";
     }
 }

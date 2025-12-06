@@ -22,7 +22,6 @@
 </div>
 
 <div class="container py-5">
-    <!-- Уведомления -->
     <div th:if="${success}" class="alert alert-success alert-dismissible fade show mb-4">
         <i class="fas fa-check-circle me-2"></i><span th:text="${success}"></span>
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
@@ -34,7 +33,6 @@
     </div>
 
     <div class="row">
-        <!-- Товары в корзине -->
         <div class="col-lg-8">
             <div class="card shadow-sm">
                 <div class="card-header bg-white">
@@ -59,7 +57,6 @@
                 </div>
 
                 <div class="card-body p-0">
-                    <!-- Сообщение если корзина пуста -->
                     <div th:if="${cartItems == null or cartItems.empty}" class="text-center py-5">
                         <i class="fas fa-shopping-cart fa-4x text-muted mb-4"></i>
                         <h4 class="text-muted mb-3">Корзина пуста</h4>
@@ -68,12 +65,9 @@
                             <i class="fas fa-bag-shopping me-2"></i>ПЕРЕЙТИ В КАТАЛОГ
                         </a>
                     </div>
-
-                    <!-- Список товаров -->
                     <div th:each="item : ${cartItems}" th:if="${cartItems != null and not cartItems.empty}"
                          class="cart-item border-bottom p-4">
                         <div class="row align-items-center">
-                            <!-- Изображение -->
                             <div class="col-2">
                                 <div class="cart-item-image">
                                     <img th:if="${item?.product?.images != null and not item.product.images.empty}"
@@ -86,8 +80,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Информация о товаре -->
                             <div class="col-4">
                                 <h6 class="cart-item-name">
                                     <a th:href="@{/products/{id}(id=${item?.product?.id})}" class="text-decoration-none text-dark">
@@ -103,8 +95,6 @@
                                           th:text="${item.color}"></span>
                                 </div>
                             </div>
-
-                            <!-- Управление количеством -->
                             <div class="col-3">
                                 <div class="quantity-controls">
                                     <form th:action="@{/cart/update}" method="post" class="d-inline">
@@ -131,8 +121,6 @@
                                     В наличии: <span th:text="${item.product.stockQuantity}">0</span> шт.
                                 </div>
                             </div>
-
-                            <!-- Цена -->
                             <div class="col-2 text-end">
                                 <div class="cart-item-price">
                                     <span th:text="|₽${#numbers.formatDecimal(item.product.price * item.quantity, 0, 'COMMA', 2, 'POINT')}|">₽0</span>
@@ -142,8 +130,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Удаление -->
                             <div class="col-1 text-end">
                                 <form th:action="@{/cart/remove}" method="post" class="d-inline">
                                     <input type="hidden" name="itemId" th:value="${item?.id}">
@@ -168,8 +154,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Боковая панель с итогами -->
         <div class="col-lg-4 mt-4 mt-lg-0">
             <div class="card shadow-sm sticky-top" style="top: 20px;">
                 <div class="card-header bg-white">
@@ -205,8 +189,6 @@
                             <i class="fas fa-credit-card me-2"></i>ПЕРЕЙТИ К ОФОРМЛЕНИЮ
                         </button>
                     </form>
-
-                    <!-- Промокод -->
                     <div class="mt-4">
                         <h6 class="mb-3"><i class="fas fa-tag me-2"></i>ПРОМОКОД</h6>
                         <form th:action="@{/cart/apply-promo}" method="post">

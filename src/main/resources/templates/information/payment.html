@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Оплата - TARENO</title>
+    <th:block th:insert="~{fragments/head :: head}"></th:block>
+</head>
+<body>
+<th:block th:insert="~{fragments/header :: header}"></th:block>
+
+<main class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <nav aria-label="breadcrumb" class="mb-4">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/}">Главная</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/information}">Информация</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Оплата</li>
+                    </ol>
+                </nav>
+
+                <h1 class="mb-4 fw-light" style="letter-spacing: 1px;">ОПЛАТА</h1>
+
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body p-4 text-center">
+                                <div class="mb-3">
+                                    <i class="fas fa-credit-card fa-3x text-primary"></i>
+                                </div>
+                                <h5 class="fw-light mb-3">Банковской картой</h5>
+                                <p>Оплата онлайн через защищенный шлюз. Принимаем Visa, MasterCard, МИР</p>
+                                <div class="mt-3">
+                                    <i class="fab fa-cc-visa fa-2x me-2"></i>
+                                    <i class="fab fa-cc-mastercard fa-2x me-2"></i>
+                                    <i class="fab fa-cc-mir fa-2x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body p-4 text-center">
+                                <div class="mb-3">
+                                    <i class="fas fa-money-bill-wave fa-3x text-success"></i>
+                                </div>
+                                <h5 class="fw-light mb-3">Наличными</h5>
+                                <p>Оплата наличными курьеру при получении заказа или в пункте самовывоза</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body p-4 text-center">
+                                <div class="mb-3">
+                                    <i class="fas fa-mobile-alt fa-3x text-info"></i>
+                                </div>
+                                <h5 class="fw-light mb-3">Электронные кошельки</h5>
+                                <p>Оплата через Яндекс.Деньги, Qiwi, WebMoney и другие платежные системы</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body p-4 text-center">
+                                <div class="mb-3">
+                                    <i class="fas fa-building fa-3x text-warning"></i>
+                                </div>
+                                <h5 class="fw-light mb-3">Безналичный расчет</h5>
+                                <p>Для юридических лиц. Выставляем счет с НДС. Отправляем оригиналы документов</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h5 class="fw-light mb-3">Безопасность оплаты</h5>
+                        <div class="alert alert-success border-0 bg-light">
+                            <i class="fas fa-shield-alt me-2"></i>
+                            <strong>Все платежи защищены</strong> по стандарту PCI DSS
+                        </div>
+                        <p>Мы используем современные технологии шифрования для защиты ваших платежных данных. Все транзакции проходят через защищенные шлюзы.</p>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h5 class="fw-light mb-3">Часто задаваемые вопросы</h5>
+                        <div class="accordion" id="paymentFAQ">
+                            <div class="accordion-item border-0 mb-2">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                        Нужно ли предоплачивать заказ?
+                                    </button>
+                                </h2>
+                                <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#paymentFAQ">
+                                    <div class="accordion-body">
+                                        Для большинства способов оплаты требуется предоплата. При оплате наличными курьеру - оплата при получении.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item border-0 mb-2">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                        Возврат денежных средств
+                                    </button>
+                                </h2>
+                                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#paymentFAQ">
+                                    <div class="accordion-body">
+                                        Возврат денежных средств осуществляется на ту же карту, с которой была произведена оплата, в течение 3-10 рабочих дней.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<th:block th:insert="~{fragments/footer :: footer}"></th:block>
+</body>
+</html>

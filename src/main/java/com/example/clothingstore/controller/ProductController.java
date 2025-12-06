@@ -58,7 +58,6 @@ public class ProductController {
         productService.save(product);
         List<Product> related = productService.getRelatedProducts(product);
 
-        // Собираем дополнительные изображения
         List<String> additionalImages = new ArrayList<>();
         List<ProductImage> productImages = product.getImages();
         if (productImages != null && !productImages.isEmpty()) {
@@ -69,7 +68,6 @@ public class ProductController {
             }
         }
 
-        // Определяем текущее изображение
         String currentImage = product.getMainImage();
         int currentIndex = -1;
 
@@ -78,7 +76,6 @@ public class ProductController {
             currentIndex = imageIndex;
         }
 
-        // Проверяем избранное
         boolean isInFavorites = false;
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated() &&
@@ -90,11 +87,8 @@ public class ProductController {
                     isInFavorites = favoriteService.isProductInFavorites(user, product.getId());
                 }
             } catch (Exception e) {
-                // Игнорируем ошибки при проверке избранного
             }
         }
-
-        // Если передан параметр favorite, используем его
         if (favorite != null) {
             isInFavorites = favorite;
         }
@@ -127,7 +121,6 @@ public class ProductController {
             @RequestParam(required = false) Double maxPrice,
             Model model) {
 
-        // Обработка пустых строк как null
         String processedSearch = (search != null && !search.trim().isEmpty()) ? search : null;
         Long processedCategoryId = (categoryId != null && categoryId > 0) ? categoryId : null;
         Long processedBrandId = (brandId != null && brandId > 0) ? brandId : null;
@@ -209,25 +202,19 @@ public class ProductController {
 
         System.out.println("=== ARCHIVE DEBUG START ===");
 
-        // Убираем сортировку по updatedAt, используем сортировку по ID или имени
         Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
-
-        // Используем productService вместо productRepository
         Page<Product> archivedProducts = productService.getArchivedProducts(pageable);
 
-        // Диагностика
         System.out.println("Total archived products: " + archivedProducts.getTotalElements());
         System.out.println("Current page: " + page + ", size: " + size);
         System.out.println("Total pages: " + archivedProducts.getTotalPages());
 
-        // Выведем информацию о каждом товаре в архиве
         archivedProducts.getContent().forEach(product -> {
             System.out.println("Archived product - ID: " + product.getId() +
                     ", Name: " + product.getName() +
                     ", Deleted: " + product.isDeleted());
         });
 
-        // Получаем статистику через сервис
         long totalProductsCount = productService.getTotalProductsCount();
         long activeProductsCount = productService.getActiveProductsCount();
         long archivedProductsCount = productService.getArchivedProductsCount();
@@ -317,7 +304,6 @@ public class ProductController {
 
             productService.softDeleteProduct(id);
 
-            // Проверим через сервис
             Product afterDelete = productService.getProductByIdIgnoreDeleted(id);
             System.out.println("AFTER - ID: " + afterDelete.getId() + ", Name: " + afterDelete.getName() + ", Deleted: " + afterDelete.isDeleted());
 
@@ -349,7 +335,6 @@ public class ProductController {
         StringBuilder result = new StringBuilder();
         result.append("=== ARCHIVED PRODUCTS DEBUG ===\n");
 
-        // Получим все удаленные товары без пагинации
         List<Product> allArchived = productService.getAllArchivedProducts();
         result.append("Total archived products: ").append(allArchived.size()).append("\n\n");
 

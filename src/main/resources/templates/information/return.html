@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Возврат - TARENO</title>
+    <th:block th:insert="~{fragments/head :: head}"></th:block>
+</head>
+<body>
+<th:block th:insert="~{fragments/header :: header}"></th:block>
+
+<main class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <nav aria-label="breadcrumb" class="mb-4">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/}">Главная</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/information}">Информация</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Возврат</li>
+                    </ol>
+                </nav>
+
+                <h1 class="mb-4 fw-light" style="letter-spacing: 1px;">ВОЗВРАТ ТОВАРА</h1>
+
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h5 class="fw-light mb-3">Условия возврата</h5>
+                        <p>Согласно законодательству РФ, вы имеете право вернуть товар в течение 7 дней с момента получения, при условии сохранения его товарного вида.</p>
+
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <div class="p-3 border rounded mb-3">
+                                    <h6 class="fw-bold text-success">Можно вернуть</h6>
+                                    <ul class="mb-0">
+                                        <li>Товар ненадлежащего качества</li>
+                                        <li>Товар не подошел по размеру</li>
+                                        <li>Товар не подошел по цвету</li>
+                                        <li>Товар не подошел по фасону</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 border rounded mb-3">
+                                    <h6 class="fw-bold text-danger">Нельзя вернуть</h6>
+                                    <ul class="mb-0">
+                                        <li>Белье и чулочно-носочные изделия</li>
+                                        <li>Товары с нарушенными бирками</li>
+                                        <li>Товары с признаками использования</li>
+                                        <li>Уцененные товары</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h5 class="fw-light mb-3">Процесс возврата</h5>
+                        <div class="steps">
+                            <div class="step mb-4">
+                                <div class="step-number d-inline-flex align-items-center justify-content-center rounded-circle bg-primary text-white mb-2" style="width: 40px; height: 40px;">1</div>
+                                <h6 class="fw-bold">Подача заявления</h6>
+                                <p>Напишите на почту <strong>returns@tareno.ru</strong> или позвоните по телефону <strong>+7 (XXX) XXX-XX-XX</strong></p>
+                            </div>
+                            <div class="step mb-4">
+                                <div class="step-number d-inline-flex align-items-center justify-content-center rounded-circle bg-primary text-white mb-2" style="width: 40px; height: 40px;">2</div>
+                                <h6 class="fw-bold">Подготовка товара</h6>
+                                <p>Сохраните все бирки, упаковку и документы. Товар должен быть в оригинальном виде.</p>
+                            </div>
+                            <div class="step mb-4">
+                                <div class="step-number d-inline-flex align-items-center justify-content-center rounded-circle bg-primary text-white mb-2" style="width: 40px; height: 40px;">3</div>
+                                <h6 class="fw-bold">Отправка товара</h6>
+                                <p>Отправьте товар удобным способом: курьером или через пункт выдачи.</p>
+                            </div>
+                            <div class="step">
+                                <div class="step-number d-inline-flex align-items-center justify-content-center rounded-circle bg-primary text-white mb-2" style="width: 40px; height: 40px;">4</div>
+                                <h6 class="fw-bold">Получение денег</h6>
+                                <p>После проверки товара мы вернем деньги на вашу карту в течение 3-10 рабочих дней.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h5 class="fw-light mb-3">Стоимость возврата</h5>
+                        <table class="table table-borderless">
+                            <thead>
+                            <tr>
+                                <th>Причина возврата</th>
+                                <th>Кто оплачивает доставку</th>
+                                <th>Срок возврата денег</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Брак или ошибка магазина</td>
+                                <td class="text-success">Магазин</td>
+                                <td>3-5 рабочих дней</td>
+                            </tr>
+                            <tr>
+                                <td>Не подошел размер/цвет</td>
+                                <td class="text-warning">Покупатель</td>
+                                <td>5-10 рабочих дней</td>
+                            </tr>
+                            <tr>
+                                <td>Нарушение условий возврата</td>
+                                <td class="text-danger">Возврат невозможен</td>
+                                <td>-</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<th:block th:insert="~{fragments/footer :: footer}"></th:block>
+</body>
+</html>

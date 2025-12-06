@@ -179,7 +179,6 @@ public class OrderService {
     public long countOrdersByStatus(OrderStatus status) {
         return orderRepository.countByStatus(status);
     }
-    // Методы для экспорта без пагинации
     public List<Order> getAllOrdersWithDetails() {
         List<Order> orders = orderRepository.findAllWithDetails();
         initializeOrdersDetails(orders);
@@ -197,13 +196,10 @@ public class OrderService {
         initializeOrdersDetails(orders);
         return orders;
     }
-
-    // Методы экспорта
     public void exportToExcel(List<Order> orders, HttpServletResponse response) throws IOException {
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Заказы");
 
-            // Заголовки
             org.apache.poi.ss.usermodel.Row headerRow = sheet.createRow(0);
             String[] headers = {"№ заказа", "Клиент", "Email", "Товары", "Сумма", "Дата", "Статус", "Адрес"};
 
@@ -220,7 +216,6 @@ public class OrderService {
                 cell.setCellStyle(headerStyle);
             }
 
-            // Данные
             int rowNum = 1;
             for (Order order : orders) {
                 org.apache.poi.ss.usermodel.Row row = sheet.createRow(rowNum++);
@@ -240,8 +235,6 @@ public class OrderService {
                 row.createCell(6).setCellValue(order.getStatus().getDisplayName());
                 row.createCell(7).setCellValue(order.getShippingAddress() != null ? order.getShippingAddress() : "");
             }
-
-            // Авто-размер колонок
             for (int i = 0; i < headers.length; i++) {
                 sheet.autoSizeColumn(i);
             }
@@ -256,19 +249,16 @@ public class OrderService {
             PdfWriter.getInstance(document, response.getOutputStream());
             document.open();
 
-            // Заголовок
             Font titleFont = new Font(Font.HELVETICA, 16, Font.BOLD);
             Paragraph title = new Paragraph("Отчет по заказам - " + LocalDate.now(), titleFont);
             title.setAlignment(Element.ALIGN_CENTER);
             title.setSpacingAfter(20);
             document.add(title);
 
-            // Таблица
             PdfPTable table = new PdfPTable(8);
             table.setWidthPercentage(100);
             table.setSpacingBefore(10);
 
-            // Заголовки таблицы
             String[] headers = {"№ заказа", "Клиент", "Email", "Товары", "Сумма", "Дата", "Статус", "Адрес"};
             Font headerFont = new Font(Font.HELVETICA, 10, Font.BOLD);
 
@@ -280,7 +270,6 @@ public class OrderService {
                 table.addCell(headerCell);
             }
 
-            // Данные
             Font dataFont = new Font(Font.HELVETICA, 8, Font.NORMAL);
 
             for (Order order : orders) {

@@ -30,7 +30,6 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
     public User save(User user) {
-        // Логирование изменений настроек для аудита
         if (user.getId() != null) {
             User existingUser = userRepository.findById(user.getId()).orElse(null);
             if (existingUser != null) {
@@ -65,7 +64,6 @@ public class UserService {
         User existingUser = userRepository.findById(user.getId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // Копируем только профильные поля, пароль не трогаем
         existingUser.setUsername(user.getUsername());
         existingUser.setFirstName(user.getFirstName());
         existingUser.setLastName(user.getLastName());
@@ -78,7 +76,6 @@ public class UserService {
     }
     public User saveUser(User user) {
         if (user.getId() == null) {
-            // Новый пользователь
             if (user.getPassword() != null) {
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
             }
@@ -86,16 +83,12 @@ public class UserService {
             user.setEnabled(true);
             user.setDeleted(false);
         } else {
-            // Обновление существующего пользователя
             User existingUser = findById(user.getId());
 
-            // ИСПРАВЛЕНИЕ: проверяем не является ли пароль уже захешированным
             if (user.getPassword() == null || user.getPassword().isEmpty() ||
                     user.getPassword().startsWith("$2a$")) {
-                // Сохраняем старый пароль
                 user.setPassword(existingUser.getPassword());
             } else {
-                // Шифруем новый пароль (только если это plain text пароль)
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
             }
             user.setCreatedAt(existingUser.getCreatedAt());
@@ -131,8 +124,6 @@ public class UserService {
     public void hardDeleteUser(Long id) {
         userRepository.deleteById(id);
     }
-
-    // МЕТОД РЕГИСТРАЦИИ ПОЛЬЗОВАТЕЛЯ С РОЛЬЮ
     public User registerUser(User user, Role role) {
         System.out.println("=== DEBUG: UserService.registerUser called ===");
         if (user.getEmail() == null || user.getEmail().isBlank()) {
@@ -164,13 +155,11 @@ public class UserService {
         return savedUser;
     }
 
-    // ДОБАВЬ ЭТОТ МЕТОД - он отсутствует и вызывает ошибку компиляции
     public User registerCustomer(User user) {
         System.out.println("=== DEBUG: UserService.registerCustomer called ===");
         System.out.println("=== DEBUG: User email: " + user.getEmail() + " ===");
         System.out.println("=== DEBUG: User username: " + user.getUsername() + " ===");
 
-        // Используем существующий метод registerUser с ролью CUSTOMER
         return registerUser(user, Role.ROLE_CUSTOMER);
     }
 
@@ -260,7 +249,6 @@ public class UserService {
         LocalDateTime cutoffDate = LocalDateTime.now().minusDays(30);
         return userRepository.findRecentlyActiveCustomers(cutoffDate, pageable);
     }
-    // Для обычной фильтрации
     public Page<User> getAllActiveCustomers(Pageable pageable) {
         return userRepository.findByDeletedFalseAndEnabledTrue(pageable);
     }

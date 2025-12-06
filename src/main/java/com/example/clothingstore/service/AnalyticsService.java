@@ -38,7 +38,6 @@ public class AnalyticsService {
             LocalDateTime startDateTime = startDate.atStartOfDay();
             LocalDateTime endDateTime = endDate.atTime(23, 59, 59);
 
-            // Предыдущий период для сравнения
             LocalDate previousStartDate = startDate.minusMonths(1);
             LocalDate previousEndDate = endDate.minusMonths(1);
             LocalDateTime previousStartDateTime = previousStartDate.atStartOfDay();
@@ -219,7 +218,6 @@ public class AnalyticsService {
         csv.append(String.format("Конверсия,%.1f%%,-\n",
                 analytics.getConversionRate()));
 
-        // Выручка по категориям
         csv.append("\nВыручка по категориям:\n");
         analytics.getRevenueByCategory().forEach((category, revenue) ->
                 csv.append(String.format("%s,%.2f\n", category, revenue))

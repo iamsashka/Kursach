@@ -11,18 +11,17 @@
 }
 
 [data-theme="dark"] {
-    --tareno-black: #ffffff;        /* Белый текст в темной теме */
-    --tareno-white: #1a1a1a;        /* Темный фон в темной теме */
-    --tareno-light: #2d2d2d;        /* Темный фон для элементов */
-    --tareno-gray: #a0a0a0;         /* Серый текст в темной теме */
-    --tareno-dark: #e0e0e0;         /* Светлый текст в темной теме */
-    --tareno-border: #404040;       /* Темные границы */
-    --tareno-accent: #ffffff;       /* Акцентный цвет */
+    --tareno-black: #ffffff;
+    --tareno-white: #1a1a1a;
+    --tareno-light: #2d2d2d;
+    --tareno-gray: #a0a0a0;
+    --tareno-dark: #e0e0e0;
+    --tareno-border: #404040;
+    --tareno-accent: #ffffff;
     --tareno-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
     --tareno-shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.4);
 }
 
-/* Базовые стили */
 body {
     padding-top: 80px;
     background-color: var(--tareno-white);
@@ -39,7 +38,6 @@ body {
     width: 100%;
 }
 
-/* Хедер страницы */
 .page-header {
     background: var(--tareno-white) !important;
     border-bottom: 1px solid var(--tareno-border);
@@ -61,7 +59,6 @@ body {
     letter-spacing: 1px;
 }
 
-/* Основной контейнер */
 .container.py-5 {
     position: relative;
     z-index: 1010;
@@ -69,7 +66,6 @@ body {
     background-color: var(--tareno-white);
 }
 
-/* Карточки */
 .card {
     border: 1px solid var(--tareno-border);
     border-radius: 0;
@@ -103,7 +99,6 @@ body {
     z-index: 1030;
 }
 
-/* Элементы корзины */
 .cart-item {
     border-bottom: 1px solid var(--tareno-border);
     padding: 1.5rem;
@@ -189,7 +184,6 @@ body {
     letter-spacing: 0.5px;
 }
 
-/* Управление количеством */
 .quantity-controls {
     display: flex;
     align-items: center;
@@ -248,7 +242,6 @@ body {
     font-size: 0.9rem;
 }
 
-/* Кнопки */
 .btn {
     border-radius: 0;
     font-weight: 500;
@@ -321,7 +314,6 @@ body {
     color: var(--tareno-white) !important;
 }
 
-/* Итоги заказа */
 .summary-item {
     font-size: 0.9rem;
     color: var(--tareno-black);
@@ -344,7 +336,6 @@ body {
     color: var(--tareno-black) !important;
 }
 
-/* Формы */
 .form-control {
     border: 1px solid var(--tareno-border);
     border-radius: 0;
@@ -366,7 +357,6 @@ body {
     color: var(--tareno-black);
 }
 
-/* Иконки */
 .fa-shopping-cart,
 .fa-receipt,
 .fa-tag,
@@ -378,7 +368,6 @@ body {
     color: var(--tareno-black);
 }
 
-/* Стили для иконок в кнопках при наведении */
 .btn-outline-danger:hover .fa-trash,
 .btn-outline-secondary:hover .fa-minus,
 .btn-outline-secondary:hover .fa-plus,
@@ -387,7 +376,6 @@ body {
     color: var(--tareno-white) !important;
 }
 
-/* Специфичные стили для темной темы при наведении */
 [data-theme="dark"] .btn-outline-danger:hover .fa-trash,
 [data-theme="dark"] .btn-outline-secondary:hover .fa-minus,
 [data-theme="dark"] .btn-outline-secondary:hover .fa-plus,
@@ -396,7 +384,6 @@ body {
     color: var(--tareno-white) !important;
 }
 
-/* Обеспечиваем правильные цвета в обычном состоянии для темной темы */
 [data-theme="dark"] .fa-trash,
 [data-theme="dark"] .fa-minus,
 [data-theme="dark"] .fa-plus,
@@ -419,7 +406,6 @@ body {
     letter-spacing: 1px;
 }
 
-/* Уведомления */
 .alert {
     border-radius: 0;
     border: 1px solid var(--tareno-border);
@@ -439,14 +425,11 @@ body {
     border-color: var(--tareno-border);
 }
 
-/* Фокус состояния */
 .btn:focus,
 .form-control:focus {
     outline: none;
     box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
 }
-
-/* Анимации */
 @keyframes slideIn {
     from {
         opacity: 0;
@@ -462,7 +445,6 @@ body {
     animation: slideIn 0.3s ease-out;
 }
 
-/* Специфичные переопределения для темной темы */
 [data-theme="dark"] .bg-light {
     background-color: var(--tareno-white) !important;
 }
@@ -513,7 +495,6 @@ body {
     border-color: var(--tareno-black);
 }
 
-/* Адаптивность */
 @media (max-width: 992px) {
     .navbar.sticky-top {
         position: relative;

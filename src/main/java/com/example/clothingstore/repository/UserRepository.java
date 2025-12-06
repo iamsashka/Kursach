@@ -16,7 +16,6 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    // Существующие методы
     Optional<User> findByEmail(String email);
     Optional<User> findByUsername(String username);
     Optional<User> findByEmailAndDeletedFalse(String email);
@@ -46,7 +45,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "LOWER(u.username) LIKE LOWER(CONCAT('%', :search, '%')))")
     Page<User> searchCustomers(@Param("search") String search, @Param("role") Role role, Pageable pageable);
 
-    // НОВЫЙ МЕТОД ДЛЯ АНАЛИТИКИ:
     @Query("SELECT COUNT(u) FROM User u WHERE u.createdAt BETWEEN :start AND :end AND u.deleted = false")
     Long countByCreatedAtBetween(@Param("start") LocalDateTime start,
                                  @Param("end") LocalDateTime end);

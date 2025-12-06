@@ -102,7 +102,6 @@ public class CatalogController {
         List<String> availableSizes = productService.getAvailableSizes();
         List<String> availableCountries = productService.getAvailableCountries();
 
-        // Находим выбранные категорию и бренд для отображения в фильтрах
         Category selectedCategory = null;
         Brand selectedBrand = null;
 
@@ -147,7 +146,6 @@ public class CatalogController {
         model.addAttribute("tag", tag);
         model.addAttribute("search", search);
 
-        // Добавляем найденные объекты для безопасного отображения
         model.addAttribute("selectedCategory", selectedCategory);
         model.addAttribute("selectedBrand", selectedBrand);
 
@@ -271,7 +269,6 @@ public class CatalogController {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", productPage.getTotalPages());
 
-        // Добавляем пустые значения для безопасности
         model.addAttribute("selectedCategory", null);
         model.addAttribute("selectedBrand", null);
     }
@@ -292,7 +289,6 @@ public class CatalogController {
             try {
                 Optional<User> user = userService.findByEmail(authentication.getName());
                 if (user.isPresent()) {
-                    // Сохраняем только если есть активные фильтры
                     boolean hasActiveFilters = currentFilters.entrySet().stream()
                             .anyMatch(entry -> entry.getValue() != null &&
                                     !entry.getKey().equals("savedAt"));
@@ -312,13 +308,11 @@ public class CatalogController {
         System.out.println("=== DEBUG: determinePageSize ===");
         System.out.println("sizeFromUrl: " + sizeFromUrl);
 
-        // Приоритет 1: параметр из URL (если не равен значению по умолчанию)
-        if (sizeFromUrl != 12) { // 12 - значение по умолчанию
+        if (sizeFromUrl != 12) {
             System.out.println("Using size from URL: " + sizeFromUrl);
             return sizeFromUrl;
         }
 
-        // Приоритет 2: настройка пользователя
         if (authentication != null && authentication.isAuthenticated()) {
             try {
                 Optional<User> user = userService.findByEmail(authentication.getName());
@@ -335,7 +329,6 @@ public class CatalogController {
             System.out.println("User not authenticated");
         }
 
-        // Приоритет 3: значение по умолчанию
         System.out.println("Using default: " + sizeFromUrl);
         return sizeFromUrl;
     }

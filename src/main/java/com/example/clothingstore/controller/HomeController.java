@@ -32,10 +32,9 @@ public class HomeController {
     @GetMapping({"/", "/index"})
     public String home(Authentication authentication,
                        @RequestParam(value = "registered", required = false) String registered,
-                       HttpServletRequest request, // ✅ Добавляем request
+                       HttpServletRequest request,
                        Model model) {
 
-        // ✅ ДОБАВЛЯЕМ ТЕМУ И ПАРАМЕТРЫ СТРАНИЦЫ
         String currentTheme = themeService.getCurrentTheme(request);
         model.addAttribute("currentTheme", currentTheme != null ? currentTheme : "light");
         model.addAttribute("currentPage", "/index");
@@ -54,11 +53,10 @@ public class HomeController {
                     .anyMatch(role -> role.equals("ROLE_MANAGER"));
 
             if (isAdmin || isManager) {
-                // ✅ Добавляем атрибуты для админской панели
                 model.addAttribute("isAdmin", true);
                 model.addAttribute("userEmail", authentication.getName());
                 model.addAttribute("pageTitle", "Админ панель TARENO");
-                return "index"; // Возвращаем index.html для админов
+                return "index";
             } else {
                 return "redirect:/home";
             }
@@ -76,7 +74,6 @@ public class HomeController {
         logger.info("=== Loading home page for user: {} ===",
                 authentication != null ? authentication.getName() : "anonymous");
 
-        // Добавляем текущую тему в модель с значением по умолчанию
         String currentTheme = themeService.getCurrentTheme(request);
         model.addAttribute("currentTheme", currentTheme != null ? currentTheme : "light");
         model.addAttribute("currentPage", "/home");
@@ -89,12 +86,10 @@ public class HomeController {
                 model.addAttribute("success", "Вы успешно подписались на рассылку!");
             }
 
-            // ФИКС: Добавляем обязательные атрибуты для безопасности
             model.addAttribute("title", "TARENO - Премиальная одежда");
             model.addAttribute("success", model.containsAttribute("success") ? model.getAttribute("success") : null);
             model.addAttribute("error", null);
 
-            // Безопасная загрузка данных
             List<SafeProduct> safeNewArrivals = getSafeProducts("newArrivals", 8);
             List<SafeProduct> safeBestSellers = getSafeProducts("bestSellers", 8);
             List<SafeProduct> safeSaleProducts = getSafeProducts("saleProducts", 8);
@@ -157,7 +152,6 @@ public class HomeController {
         return safeProducts;
     }
 
-    // Вспомогательный класс для безопасного отображения продуктов
     public static class SafeProduct {
         private Long id;
         private String name;
@@ -174,7 +168,6 @@ public class HomeController {
             this.name = safeString(product.getName(), "Товар");
             this.brandName = safeString(product.getBrand() != null ? product.getBrand().getName() : null, "Бренд");
 
-            // Обработка цен и скидок
             if (product.getPrice() != null) {
                 this.price = "₽" + String.format("%,.0f", product.getPrice().doubleValue());
             } else {
@@ -189,8 +182,6 @@ public class HomeController {
                 this.originalPrice = "";
                 this.discountPercent = "";
             }
-
-            // Получаем реальное изображение продукта
             String mainImage = product.getMainImage();
             this.hasImage = mainImage != null && !mainImage.trim().isEmpty();
             this.imageUrl = this.hasImage ? mainImage : "";
@@ -200,7 +191,6 @@ public class HomeController {
             return value != null && !value.trim().isEmpty() ? value : defaultValue;
         }
 
-        // Getters
         public Long getId() { return id; }
         public String getName() { return name; }
         public String getBrandName() { return brandName; }
@@ -217,7 +207,6 @@ public class HomeController {
                                         HttpServletRequest request,
                                         Model model) {
         logger.info("New subscriber: {}", email);
-        // Добавляем тему для redirect страницы
         model.addAttribute("currentTheme", themeService.getCurrentTheme(request));
         return "redirect:/home?subscribed=true";
     }

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Доставка - TARENO</title>
+    <th:block th:insert="~{fragments/head :: head}"></th:block>
+</head>
+<body>
+<th:block th:insert="~{fragments/header :: header}"></th:block>
+
+<main class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <nav aria-label="breadcrumb" class="mb-4">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/}">Главная</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/information}">Информация</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Доставка</li>
+                    </ol>
+                </nav>
+
+                <h1 class="mb-4 fw-light" style="letter-spacing: 1px;">ДОСТАВКА</h1>
+
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h5 class="fw-light mb-3">Способы доставки</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="p-3 border rounded">
+                                    <h6 class="fw-bold">Курьерская доставка</h6>
+                                    <p class="mb-2">По Москве: <strong>300 ₽</strong></p>
+                                    <p class="mb-2">По России: <strong>от 500 ₽</strong></p>
+                                    <p class="mb-0 text-muted small">Срок: 1-3 дня</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="p-3 border rounded">
+                                    <h6 class="fw-bold">Самовывоз</h6>
+                                    <p class="mb-2">Бесплатно</p>
+                                    <p class="mb-2">Москва, ул. Пушкина, 1</p>
+                                    <p class="mb-0 text-muted small">Пн-Пт: 10:00-20:00</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="p-3 border rounded">
+                                    <h6 class="fw-bold">Почта России</h6>
+                                    <p class="mb-2">По тарифам почты</p>
+                                    <p class="mb-2">Бесплатно от 2000 ₽</p>
+                                    <p class="mb-0 text-muted small">Срок: 5-14 дней</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="p-3 border rounded">
+                                    <h6 class="fw-bold">Экспресс-доставка</h6>
+                                    <p class="mb-2">По Москве: <strong>1000 ₽</strong></p>
+                                    <p class="mb-2">Доставка в день заказа</p>
+                                    <p class="mb-0 text-muted small">В течение 2-4 часов</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h5 class="fw-light mb-3">Бесплатная доставка</h5>
+                        <div class="alert alert-info border-0 bg-light">
+                            <i class="fas fa-shipping-fast me-2"></i>
+                            <strong>Бесплатная доставка</strong> при заказе от 2000 ₽ по Москве
+                        </div>
+                        <p>Мы ценим наших клиентов и предлагаем бесплатную доставку при заказе на сумму от 2000 рублей в пределах Москвы.</p>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h5 class="fw-light mb-3">Сроки доставки</h5>
+                        <table class="table table-borderless">
+                            <thead>
+                            <tr>
+                                <th>Регион</th>
+                                <th>Срок доставки</th>
+                                <th>Стоимость</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Москва</td>
+                                <td>1-2 рабочих дня</td>
+                                <td>300 ₽ (бесплатно от 2000 ₽)</td>
+                            </tr>
+                            <tr>
+                                <td>Московская область</td>
+                                <td>2-3 рабочих дня</td>
+                                <td>400 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>Санкт-Петербург</td>
+                                <td>3-4 рабочих дня</td>
+                                <td>500 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>Другие города РФ</td>
+                                <td>5-14 рабочих дней</td>
+                                <td>от 600 ₽</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h5 class="fw-light mb-3">Как отследить заказ</h5>
+                        <p>После отправки заказа вам на email придет трек-номер для отслеживания. Вы можете:</p>
+                        <ul>
+                            <li>Отслеживать статус в личном кабинете</li>
+                            <li>Использовать трек-номер на сайте транспортной компании</li>
+                            <li>Связаться с нашей службой поддержки</li>
+                        </ul>
+                        <p class="mb-0">По всем вопросам доставки обращайтесь: <strong>+7 (XXX) XXX-XX-XX</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<th:block th:insert="~{fragments/footer :: footer}"></th:block>
+</body>
+</html>

@@ -85,8 +85,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Фильтры и поиск -->
     <div class="card mb-4">
         <div class="card-header d-flex align-items-center">
             <i class="fas fa-filter me-2"></i> Фильтры и поиск
@@ -127,8 +125,6 @@
             </form>
         </div>
     </div>
-
-    <!-- Таблица брендов -->
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <span><i class="fas fa-list me-2"></i> Список брендов</span>
@@ -149,7 +145,6 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <!-- ИСПРАВЛЕНО: используем brandPage.content вместо brands -->
                     <tr th:each="brand : ${brandPage.content}" th:classappend="${brand.deleted} ? 'table-secondary' : ''">
                         <td th:text="${brand.id}">1</td>
                         <td>
@@ -185,7 +180,6 @@
                             </div>
                         </td>
                     </tr>
-                    <!-- ИСПРАВЛЕНО: используем brandPage.content вместо brands -->
                     <tr th:if="${#lists.isEmpty(brandPage.content)}">
                         <td colspan="5" class="text-center text-muted py-4">
                             <i class="fas fa-inbox fa-2x mb-3"></i>
@@ -197,8 +191,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Пагинация -->
     <nav th:if="${brandPage.totalPages > 1}" class="mt-4">
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${brandPage.first} ? 'disabled' : ''">

@@ -1,4 +1,3 @@
-/* Переменные для темы */
 :root {
     --tareno-black: #000000;
     --tareno-white: #ffffff;
@@ -23,7 +22,6 @@
     --tareno-shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.4);
 }
 
-/* Гармоничные стили для кнопок */
 .btn {
     border-radius: 2px;
     font-weight: 500;
@@ -52,7 +50,6 @@
     left: 100%;
 }
 
-/* Основные кнопки */
 .btn-success {
     background: linear-gradient(135deg, var(--tareno-black) 0%, #2d2d2d 100%);
     border-color: var(--tareno-black);
@@ -81,8 +78,6 @@
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(0,0,0,0.15);
 }
-
-/* Кнопки действий в таблице */
 .btn-group .btn {
     padding: 0.5rem 0.75rem;
     border-radius: 2px;
@@ -132,7 +127,6 @@
     color: var(--tareno-white);
 }
 
-/* Стили для бейджей */
 .badge {
     border-radius: 2px;
     font-weight: 600;
@@ -173,7 +167,6 @@
     border: none;
 }
 
-/* Стили для выбора роли */
 .role-select-container {
     margin-top: 0.5rem;
 }
@@ -213,7 +206,6 @@
     padding: 0.5rem;
 }
 
-/* Стили для иконок в кнопках */
 .btn i {
     font-size: 0.8rem;
     transition: transform 0.3s ease;
@@ -223,7 +215,6 @@
     transform: translateX(2px);
 }
 
-/* Стили для страницы клиентов */
 .stat-card {
     background: var(--tareno-white);
     border: 1px solid var(--tareno-border);
@@ -259,7 +250,6 @@
     letter-spacing: 1px;
 }
 
-/* Аватар клиента */
 .customer-avatar {
     width: 50px;
     height: 50px;
@@ -276,7 +266,6 @@
     color: var(--tareno-gray);
 }
 
-/* Таблица клиентов */
 .table {
     margin-bottom: 0;
 }
@@ -303,26 +292,22 @@
     background-color: var(--tareno-light);
 }
 
-/* Основной фон страницы */
 body {
     background-color: var(--tareno-white);
     color: var(--tareno-black);
     transition: all 0.3s ease;
 }
 
-/* Контейнер */
 .container.mt-4 {
     background-color: var(--tareno-white);
     min-height: calc(100vh - 200px);
 }
 
-/* Колонки */
 .col-md-3,
 .col-md-9 {
     background-color: var(--tareno-white) !important;
 }
 
-/* Общие стили */
 .page-header {
     background: var(--tareno-white);
     border-bottom: 1px solid var(--tareno-border);
@@ -350,7 +335,6 @@ body {
     max-width: 1400px;
 }
 
-/* Карточка */
 .card {
     border: 1px solid var(--tareno-border);
     border-radius: 0;
@@ -378,8 +362,6 @@ body {
     padding: 1.5rem;
     background: var(--tareno-white);
 }
-
-/* Формы */
 .form-label {
     font-weight: 500;
     font-size: 0.8rem;
@@ -408,12 +390,10 @@ body {
     color: var(--tareno-black);
 }
 
-/* Состояние удаленного клиента */
 .table-secondary {
     background-color: var(--tareno-light) !important;
 }
 
-/* Анимации для кнопок */
 @keyframes buttonPulse {
     0% {
         box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2);
@@ -430,7 +410,6 @@ body {
     animation: buttonPulse 2s infinite;
 }
 
-/* Стили для disabled кнопок */
 .btn:disabled {
     opacity: 0.6;
     cursor: not-allowed;
@@ -442,7 +421,6 @@ body {
     box-shadow: none !important;
 }
 
-/* Стили для группы кнопок в таблице */
 .action-buttons {
     display: flex;
     gap: 0.25rem;
@@ -463,12 +441,10 @@ body {
     font-size: 0.75rem;
 }
 
-/* Стили для кнопок в хедере */
 .page-header .btn {
     margin-bottom: 0.5rem;
 }
 
-/* Адаптивность для кнопок */
 @media (max-width: 768px) {
     .btn {
         padding: 0.625rem 1.25rem;
@@ -512,7 +488,6 @@ body {
     }
 }
 
-/* Адаптивность - Брейкпоинт 1: Планшеты (992px и меньше) */
 @media (max-width: 992px) {
     .page-header {
         padding: 2rem 0 1.5rem;
@@ -544,7 +519,6 @@ body {
     }
 }
 
-/* Адаптивность - Брейкпоинт 2: Мобильные (768px и меньше) */
 @media (max-width: 768px) {
     .container {
         padding: 0 1rem;
@@ -580,7 +554,6 @@ body {
         font-size: 1.5rem;
     }
 
-    /* Адаптация таблицы для мобильных */
     .table thead {
         display: none;
     }
@@ -614,10 +587,9 @@ body {
         color: var(--tareno-dark);
     }
 
-    /* Скрываем некоторые колонки на мобильных */
-    .table tbody td:nth-child(1), /* ID */
-    .table tbody td:nth-child(6), /* Дата регистрации */
-    .table tbody td:nth-child(7) { /* Последняя активность */
+    .table tbody td:nth-child(1),
+    .table tbody td:nth-child(6),
+    .table tbody td:nth-child(7) {
         display: none;
     }
 
@@ -631,7 +603,6 @@ body {
     }
 }
 
-/* Адаптивность - Брейкпоинт 3: Маленькие мобильные (576px и меньше) */
 @media (max-width: 576px) {
     .page-header {
         padding: 1rem 0;
@@ -661,7 +632,6 @@ body {
         font-size: 0.8rem;
     }
 
-    /* Упрощаем информацию о клиенте */
     .table tbody td[data-label="Клиент"] .d-flex {
         flex-direction: column;
         text-align: center;
@@ -681,12 +651,10 @@ body {
         text-align: center;
     }
 
-    /* Упрощаем контактную информацию */
     .table tbody td[data-label="Контактная информация"] div {
         text-align: center;
     }
 
-    /* Пагинация для мобильных */
     .pagination {
         flex-wrap: wrap;
         justify-content: center;
@@ -697,7 +665,6 @@ body {
     }
 }
 
-/* Темная тема для кнопок */
 [data-theme="dark"] .btn-outline-warning {
     border-color: var(--tareno-white);
     color: var(--tareno-white);
@@ -730,7 +697,6 @@ body {
     border-color: var(--tareno-white);
 }
 
-/* Стили для фокуса с клавиатуры */
 .btn:focus-visible {
     outline: 2px solid var(--tareno-black);
     outline-offset: 2px;
@@ -740,13 +706,11 @@ body {
     outline-color: var(--tareno-white);
 }
 
-/* Стили для активных состояний */
 .btn:active {
     transform: translateY(0) !important;
     transition: transform 0.1s ease;
 }
 
-/* Стили для loading состояний */
 .btn-loading {
     position: relative;
     color: transparent !important;
@@ -771,7 +735,6 @@ body {
     100% { transform: rotate(360deg); }
 }
 
-/* Улучшенная доступность */
 .btn:focus,
 .form-control:focus,
 .form-select:focus {
@@ -779,19 +742,16 @@ body {
     box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
 }
 
-/* Плавная прокрутка */
 html {
     scroll-behavior: smooth;
 }
 
-/* Консистентные отступы */
 .mb-2 { margin-bottom: 0.75rem !important; }
 .mb-3 { margin-bottom: 1.25rem !important; }
 .mb-4 { margin-bottom: 2rem !important; }
 .mt-4 { margin-top: 2rem !important; }
 .mt-5 { margin-top: 3rem !important; }
 
-/* Специфичные стили для темной темы */
 [data-theme="dark"] body {
     background-color: var(--tareno-white);
 }
@@ -805,7 +765,6 @@ html {
     background-color: var(--tareno-white) !important;
 }
 
-/* Анимации */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -825,13 +784,11 @@ html {
     animation: fadeInUp 0.3s ease-out;
 }
 
-/* Стили для состояний загрузки */
 .loading-state {
     opacity: 0.6;
     pointer-events: none;
 }
 
-/* Предупреждение о неактивных клиентах */
 .alert {
     border-radius: 2px;
     border: 1px solid;
@@ -848,7 +805,6 @@ html {
     color: var(--tareno-white);
 }
 
-/* Стили для пустого состояния */
 .text-center.py-4 {
     padding: 3rem 1rem;
 }
@@ -858,13 +814,11 @@ html {
     color: var(--tareno-gray);
 }
 
-/* Плавные переходы */
 .stat-card,
 .table tbody tr,
 .btn {
     transition: all 0.3s ease;
 }
-/* Адаптивность - Брейкпоинт 1: Планшеты (992px и меньше) */
 @media (max-width: 992px) {
     .page-header {
         padding: 2rem 0 1.5rem;
@@ -913,7 +867,6 @@ html {
         padding: 0.4rem 0.6rem;
     }
 
-    /* Адаптация поиска и фильтров */
     .search-filter-card .row {
         gap: 1rem;
     }
@@ -929,12 +882,10 @@ html {
         flex: 1 1 100%;
     }
 
-    /* Адаптация карточек */
     .card-body {
         padding: 1.25rem;
     }
 
-    /* Адаптация пагинации */
     .pagination {
         flex-wrap: wrap;
         justify-content: center;
@@ -945,7 +896,6 @@ html {
     }
 }
 
-/* Адаптивность - Брейкпоинт 2: Мобильные (768px и меньше) */
 @media (max-width: 768px) {
     .container {
         padding: 0 1rem;
@@ -998,7 +948,6 @@ html {
         font-size: 0.8rem;
     }
 
-    /* Адаптация таблицы для мобильных - карточный вид */
     .table thead {
         display: none;
     }
@@ -1035,14 +984,12 @@ html {
         color: var(--tareno-dark);
     }
 
-    /* Скрываем менее важные колонки на мобильных */
-    .table tbody td:nth-child(1), /* ID */
-    .table tbody td:nth-child(6), /* Дата регистрации */
-    .table tbody td:nth-child(7) { /* Последняя активность */
+    .table tbody td:nth-child(1),
+    .table tbody td:nth-child(6),
+    .table tbody td:nth-child(7) {
         display: none;
     }
 
-    /* Адаптация аватара клиента */
     .customer-avatar {
         width: 40px;
         height: 40px;
@@ -1053,7 +1000,6 @@ html {
         font-size: 1rem;
     }
 
-    /* Адаптация информации о клиенте */
     .table tbody td[data-label="Клиент"] .d-flex {
         flex-direction: row;
         align-items: center;
@@ -1064,7 +1010,6 @@ html {
         margin-bottom: 0;
     }
 
-    /* Адаптация контактной информации */
     .table tbody td[data-label="Контактная информация"] div {
         text-align: left;
         font-size: 0.8rem;
@@ -1074,7 +1019,6 @@ html {
         margin-bottom: 0.5rem !important;
     }
 
-    /* Адаптация ролей и статусов */
     .table tbody td[data-label="Роль"] .badge {
         font-size: 0.65rem;
         padding: 0.3rem 0.5rem;
@@ -1085,7 +1029,6 @@ html {
         padding: 0.3rem 0.5rem;
     }
 
-    /* Адаптация выбора роли */
     .role-select-form {
         min-width: 120px;
     }
@@ -1095,7 +1038,6 @@ html {
         padding: 0.25rem 0.5rem;
     }
 
-    /* Адаптация кнопок действий */
     .action-buttons {
         flex-direction: row;
         justify-content: center;
@@ -1113,7 +1055,6 @@ html {
         font-size: 0.7rem;
     }
 
-    /* Адаптация поиска и фильтров */
     .search-filter-card .row {
         flex-direction: column;
         gap: 0.75rem;
@@ -1142,7 +1083,6 @@ html {
         width: 100%;
     }
 
-    /* Адаптация карточек */
     .card {
         margin-bottom: 1.5rem;
     }
@@ -1155,7 +1095,6 @@ html {
         padding: 1rem;
     }
 
-    /* Адаптация пагинации */
     .pagination {
         margin: 2rem 0 1rem;
     }
@@ -1164,15 +1103,12 @@ html {
         padding: 0.5rem 0.75rem;
         font-size: 0.8rem;
     }
-
-    /* Адаптация уведомлений */
     .alert {
         padding: 0.75rem 1rem;
         font-size: 0.8rem;
     }
 }
 
-/* Адаптивность - Брейкпоинт 3: Маленькие мобильные (576px и меньше) */
 @media (max-width: 576px) {
     .container {
         padding: 0 0.75rem;
@@ -1215,7 +1151,6 @@ html {
         font-size: 0.75rem;
     }
 
-    /* Улучшенная адаптация таблицы для очень маленьких экранов */
     .table tbody td {
         padding-left: 50%;
         padding: 0.5rem 0.25rem 0.5rem 50%;
@@ -1227,7 +1162,6 @@ html {
         font-size: 0.65rem;
     }
 
-    /* Упрощаем информацию о клиенте */
     .table tbody td[data-label="Клиент"] .d-flex {
         flex-direction: column;
         text-align: center;
@@ -1242,17 +1176,15 @@ html {
         font-size: 0.7rem;
     }
 
-    /* Упрощаем контактную информацию */
     .table tbody td[data-label="Контактная информация"] div {
         text-align: center;
         font-size: 0.75rem;
     }
 
     .table tbody td[data-label="Контактная информация"] .text-muted {
-        display: none; /* Скрываем дополнительные подписи */
+        display: none;
     }
 
-    /* Упрощаем роли и статусы */
     .table tbody td[data-label="Роль"],
     .table tbody td[data-label="Статус"] {
         text-align: center;
@@ -1269,7 +1201,6 @@ html {
         padding: 0.25rem 0.4rem;
     }
 
-    /* Упрощаем выбор роли */
     .role-select-container {
         text-align: center;
     }
@@ -1284,7 +1215,6 @@ html {
         padding: 0.2rem 0.4rem;
     }
 
-    /* Упрощаем кнопки действий */
     .action-buttons {
         flex-direction: column;
         gap: 0.25rem;
@@ -1302,7 +1232,6 @@ html {
         margin-right: 0.25rem;
     }
 
-    /* Адаптация поиска и фильтров для очень маленьких экранов */
     .search-filter-card .form-control,
     .search-filter-card .form-select {
         font-size: 0.8rem;
@@ -1314,7 +1243,6 @@ html {
         padding: 0.625rem 1rem;
     }
 
-    /* Адаптация карточек */
     .card-header {
         padding: 0.875rem 1rem;
     }
@@ -1327,7 +1255,6 @@ html {
         padding: 0.875rem;
     }
 
-    /* Адаптация пагинации */
     .pagination {
         margin: 1.5rem 0 0.5rem;
     }
@@ -1345,7 +1272,6 @@ html {
         margin-bottom: 0.5rem;
     }
 
-    /* Адаптация уведомлений */
     .alert {
         padding: 0.625rem 0.875rem;
         font-size: 0.75rem;
@@ -1355,7 +1281,6 @@ html {
         font-size: 0.7rem;
     }
 
-    /* Скрываем дополнительные элементы на очень маленьких экранах */
     .table tbody td[data-label="Контактная информация"] .mt-1 {
         display: none;
     }
@@ -1365,7 +1290,6 @@ html {
     }
 }
 
-/* Дополнительные адаптивные утилиты */
 .mobile-only {
     display: none !important;
 }
@@ -1384,7 +1308,6 @@ html {
     }
 }
 
-/* Адаптация для landscape ориентации на мобильных */
 @media (max-width: 768px) and (orientation: landscape) {
     .page-header {
         padding: 1rem 0;
@@ -1399,7 +1322,6 @@ html {
     }
 }
 
-/* Адаптация для очень высоких экранов */
 @media (min-height: 1000px) and (max-width: 768px) {
     .table tbody tr {
         margin-bottom: 1.5rem;
@@ -1410,7 +1332,6 @@ html {
     }
 }
 
-/* Поддержка touch устройств */
 @media (hover: none) and (pointer: coarse) {
     .btn:hover {
         transform: none;
@@ -1426,7 +1347,6 @@ html {
         background-color: var(--tareno-white);
     }
 
-    /* Увеличиваем область клика для touch устройств */
     .btn {
         min-height: 44px;
         display: flex;
@@ -1447,7 +1367,6 @@ html {
     }
 }
 
-/* Адаптация для печати */
 @media print {
     .btn,
     .action-buttons,

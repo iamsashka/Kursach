@@ -140,7 +140,6 @@ public class CustomerController {
             customer.setPostalCode(postalCode);
             customer.setEnabled(enabled);
 
-            // Устанавливаем роль
             Role userRole = Role.valueOf(role);
             customer.getRoles().add(userRole);
 

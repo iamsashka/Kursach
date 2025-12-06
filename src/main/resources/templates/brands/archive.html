@@ -41,7 +41,6 @@
 </div>
 
 <div class="container">
-    <!-- Статистика архива -->
     <div class="row mb-4">
         <div class="col-md-4">
             <div class="stat-card archive-stat">
@@ -77,8 +76,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Информация об архиве -->
     <div class="alert alert-archive mb-4">
         <div class="d-flex align-items-center">
             <i class="fas fa-info-circle me-3 fs-4"></i>
@@ -88,8 +85,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Таблица архива -->
     <div class="card archive-card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <span><i class="fas fa-trash-alt me-2"></i> Удаленные бренды</span>
@@ -156,8 +151,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Пагинация для архива -->
     <nav th:if="${totalPages > 1}" class="mt-4">
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled' : ''">
@@ -187,8 +180,6 @@
             </li>
         </ul>
     </nav>
-
-    <!-- Предупреждение об удалении -->
     <div class="alert alert-warning mt-4">
         <div class="d-flex align-items-center">
             <i class="fas fa-exclamation-triangle me-3"></i>

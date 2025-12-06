@@ -1,5 +1,3 @@
--- data.sql
--- Хранимые процедуры для PostgreSQL
 
 -- Процедура 1: Расчет выручки за период
 CREATE OR REPLACE FUNCTION calculate_revenue_by_period(

@@ -19,7 +19,6 @@ public class FavoriteService {
 
     @Transactional
     public Favorite addToFavorites(User user, Product product) {
-        // Проверяем, не добавлен ли уже товар в избранное
         Optional<Favorite> existingFavorite = favoriteRepository.findByUserAndProduct(user, product);
 
         if (existingFavorite.isPresent()) {
@@ -53,6 +52,7 @@ public class FavoriteService {
     public void removeFavoriteById(Long favoriteId) {
         favoriteRepository.deleteById(favoriteId);
     }
+
     public List<Favorite> getUserFavorites(User user) {
         return favoriteRepository.findByUserOrderByCreatedAtDesc(user);
     }

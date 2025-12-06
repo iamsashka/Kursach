@@ -1,4 +1,4 @@
-package com.example.clothingstore.controller.api;
+package com.example.clothingstore.controller.rest;
 
 import com.example.clothingstore.model.Brand;
 import com.example.clothingstore.service.BrandService;

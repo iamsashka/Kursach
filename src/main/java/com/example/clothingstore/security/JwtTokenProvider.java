@@ -22,16 +22,13 @@ public class JwtTokenProvider {
     @Value("${app.jwt.secret:defaultSecretKeyForDevelopmentUseOnlyChangeInProduction}")
     private String jwtSecret;
 
-    @Value("${app.jwt.expiration:86400000}") // 24 часа по умолчанию
+    @Value("${app.jwt.expiration:86400000}")
     private long jwtExpiration;
 
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(jwtSecret.getBytes());
     }
 
-    /**
-     * ✅ Генерация JWT токена (требование 3.3 - безопасная аутентификация)
-     */
     public String generateToken(Authentication authentication) {
         String username = authentication.getName();
         String roles = authentication.getAuthorities().stream()
@@ -49,10 +46,6 @@ public class JwtTokenProvider {
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
-
-    /**
-     * ✅ Извлечение username из токена
-     */
     public String getUsernameFromToken(String token) {
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(getSigningKey())
@@ -61,10 +54,6 @@ public class JwtTokenProvider {
                 .getBody();
         return claims.getSubject();
     }
-
-    /**
-     * ✅ Валидация токена с обработкой исключений (требование 3.2)
-     */
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder()
@@ -88,9 +77,6 @@ public class JwtTokenProvider {
         return false;
     }
 
-    /**
-     * ✅ Получение ролей из токена (для RBAC)
-     */
     public String getRolesFromToken(String token) {
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(getSigningKey())

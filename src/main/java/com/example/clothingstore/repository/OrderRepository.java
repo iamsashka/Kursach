@@ -73,16 +73,12 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
                                                 @Param("end") LocalDateTime end,
                                                 @Param("limit") int limit);
 
-    // НОВЫЕ МЕТОДЫ ДЛЯ АНАЛИТИКИ:
-
-    // Количество заказов за период с фильтром по статусам
     @Query("SELECT COUNT(o) FROM Order o WHERE o.orderDate BETWEEN :start AND :end " +
             "AND o.status IN :statuses AND o.deleted = false")
     Long countByOrderDateBetweenAndStatusIn(@Param("start") LocalDateTime start,
                                             @Param("end") LocalDateTime end,
                                             @Param("statuses") List<OrderStatus> statuses);
 
-    // Выручка за период с фильтром по статусам
     @Query("SELECT COALESCE(SUM(o.totalAmount), 0) FROM Order o " +
             "WHERE o.orderDate BETWEEN :start AND :end " +
             "AND o.status IN :statuses AND o.deleted = false")
@@ -90,7 +86,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
                                           @Param("end") LocalDateTime end,
                                           @Param("statuses") List<OrderStatus> statuses);
 
-    // Заказы по дням - ЕДИНСТВЕННЫЙ правильный метод
     @Query("SELECT CAST(o.orderDate AS LocalDate), COUNT(o) FROM Order o " +
             "WHERE o.orderDate BETWEEN :start AND :end " +
             "AND o.deleted = false " +
@@ -118,7 +113,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     long countByStatus(OrderStatus status);
 
     Page<Order> findByDeletedFalse(Pageable pageable);
-    // Для поиска по активным заказам
     @Query("SELECT o FROM Order o WHERE o.deleted = false AND " +
             "(o.orderNumber LIKE %:search% OR o.user.email LIKE %:search% OR o.shippingAddress LIKE %:search%)")
     Page<Order> searchActiveOrders(@Param("search") String search, Pageable pageable);

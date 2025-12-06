@@ -12,7 +12,6 @@ public class OrderRequest {
     private String receiptEmail;
     private boolean useProfileEmail = true;
 
-    // Поля для карты
     private String cardNumber;
     private String cardExpiry;
     private String cardCvv;

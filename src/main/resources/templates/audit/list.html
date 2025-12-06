@@ -19,8 +19,6 @@
         </h1>
         <p class="page-subtitle">История всех изменений в системе</p>
     </div>
-
-    <!-- Фильтры -->
     <div class="card audit-filter-card mb-4">
         <div class="card-header">
             <i class="fas fa-filter me-2"></i> Фильтры
@@ -62,8 +60,6 @@
             </form>
         </div>
     </div>
-
-    <!-- Статистика -->
     <div class="row mb-4">
         <div class="col-md-3">
             <div class="stats-card">
@@ -71,7 +67,7 @@
                     <i class="fas fa-history"></i>
                 </div>
                 <div class="stats-info">
-                    <h3 th:text="${logs.totalElements}">0</h3>
+                    <h3 th:text="${logs.totalElements}">5</h3>
                     <p>Всего записей</p>
                 </div>
             </div>
@@ -82,7 +78,7 @@
                     <i class="fas fa-cube"></i>
                 </div>
                 <div class="stats-info">
-                    <h3 th:text="${entityTypes != null ? entityTypes.size() : '0'}">0</h3>
+                    <h3 th:text="${entityTypes != null ? entityTypes.size() : '3'}">3</h3>
                     <p>Типов объектов</p>
                 </div>
             </div>
@@ -93,7 +89,7 @@
                     <i class="fas fa-users"></i>
                 </div>
                 <div class="stats-info">
-                    <h3 th:text="${actions != null ? actions.size() : '0'}">0</h3>
+                    <h3 th:text="${actions != null ? actions.size() : '4'}">4</h3>
                     <p>Типов действий</p>
                 </div>
             </div>
@@ -110,12 +106,10 @@
             </div>
         </div>
     </div>
-
-    <!-- Таблица логов -->
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <span><i class="fas fa-history me-2"></i> История изменений</span>
-            <span class="badge bg-primary" th:text="${logs.totalElements} + ' записей'"></span>
+            <span class="badge bg-primary" th:text="${logs.totalElements} + ' записей'">5 записей</span>
         </div>
         <div class="card-body p-0">
             <div class="table-responsive">
@@ -132,86 +126,272 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="log : ${logs}" class="audit-log-row">
+                    <tr class="audit-log-row">
                         <td>
-                            <small class="text-muted" th:text="${#temporals.format(log.createdAt, 'dd.MM.yyyy')}"></small>
+                            <small class="text-muted">01.12.2025</small>
                             <br>
-                            <strong th:text="${#temporals.format(log.createdAt, 'HH:mm:ss')}"></strong>
+                            <strong>14:23:45</strong>
                         </td>
                         <td>
                             <i class="fas fa-user me-1 text-muted"></i>
-                            <span th:text="${log.username}"></span>
+                            <span>admin</span>
                         </td>
                         <td>
-                                <span th:switch="${log.action}" class="badge audit-badge">
-                                    <span th:case="CREATE" class="badge bg-success">
-                                        <i class="fas fa-plus me-1"></i>Создание
-                                    </span>
-                                    <span th:case="UPDATE" class="badge bg-primary">
-                                        <i class="fas fa-edit me-1"></i>Изменение
-                                    </span>
-                                    <span th:case="SOFT_DELETE" class="badge bg-warning">
-                                        <i class="fas fa-archive me-1"></i>Архив
-                                    </span>
-                                    <span th:case="RESTORE" class="badge bg-info">
-                                        <i class="fas fa-undo me-1"></i>Восстановление
-                                    </span>
-                                    <span th:case="HARD_DELETE" class="badge bg-danger">
-                                        <i class="fas fa-trash me-1"></i>Удаление
-                                    </span>
-                                    <span th:case="*" class="badge bg-secondary">
-                                        <i class="fas fa-cog me-1"></i>
-                                        <span th:text="${log.action}"></span>
-                                    </span>
-                                </span>
+                            <span class="badge bg-success">
+                                <i class="fas fa-plus me-1"></i>Создание
+                            </span>
                         </td>
                         <td>
-                            <span class="badge bg-light text-dark" th:text="${log.entityType}"></span>
+                            <span class="badge bg-light text-dark">PRODUCT</span>
                         </td>
                         <td>
-                            <a th:href="@{/audit/entity/{type}/{id}(type=${log.entityType}, id=${log.entityId})}"
-                               class="btn btn-sm btn-outline-primary">
-                                #[[${log.entityId}]]
+                            <a href="#" class="btn btn-sm btn-outline-primary">
+                                #789
                             </a>
                         </td>
                         <td>
-                            <small class="text-muted" th:text="${log.ipAddress} ?: 'N/A'"></small>
+                            <small class="text-muted">192.168.1.100</small>
                         </td>
                         <td>
-                            <div th:if="${log.oldValues != null or log.newValues != null}" class="audit-details">
+                            <div class="audit-details">
                                 <button class="btn btn-sm btn-outline-secondary"
                                         data-bs-toggle="collapse"
-                                        th:data-bs-target="'#details-' + ${log.id}">
+                                        data-bs-target="#details-1">
                                     <i class="fas fa-eye me-1"></i>Показать
                                 </button>
-                                <div class="collapse mt-2" th:id="'details-' + ${log.id}">
+                                <div class="collapse mt-2" id="details-1">
                                     <div class="row">
-                                        <div th:if="${log.oldValues != null}" class="col-md-6 audit-old-values">
-                                            <strong class="text-danger">
-                                                <i class="fas fa-arrow-left me-1"></i>Было:
-                                            </strong>
-                                            <pre class="audit-pre mt-1" th:text="${log.oldValues}"></pre>
-                                        </div>
-                                        <div th:if="${log.newValues != null}" class="col-md-6 audit-new-values">
+                                        <div class="col-md-6 audit-new-values">
                                             <strong class="text-success">
                                                 <i class="fas fa-arrow-right me-1"></i>Стало:
                                             </strong>
-                                            <pre class="audit-pre mt-1" th:text="${log.newValues}"></pre>
+                                            <pre class="audit-pre mt-1">{
+  "name": "Брюки Brunello Cucinelli Linen",
+  "price": 78000.00,
+  "category": "Брюки",
+  "stock": 10
+}</pre>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <span th:if="${log.oldValues == null and log.newValues == null}" class="text-muted">
-                                Нет деталей
-                            </span>
                         </td>
                     </tr>
-                    <tr th:if="${#lists.isEmpty(logs.content)}">
-                        <td colspan="7" class="text-center text-muted py-5">
-                            <div class="empty-state">
-                                <i class="fas fa-clipboard-list fa-3x mb-3"></i>
-                                <h5>Записи не найдены</h5>
-                                <p class="text-muted">Попробуйте изменить параметры фильтрации</p>
+
+                    <tr class="audit-log-row">
+                        <td>
+                            <small class="text-muted">01.12.2025</small>
+                            <br>
+                            <strong>11:15:32</strong>
+                        </td>
+                        <td>
+                            <i class="fas fa-user me-1 text-muted"></i>
+                            <span>manager</span>
+                        </td>
+                        <td>
+                            <span class="badge bg-primary">
+                                <i class="fas fa-edit me-1"></i>Изменение
+                            </span>
+                        </td>
+                        <td>
+                            <span class="badge bg-light text-dark">ORDER</span>
+                        </td>
+                        <td>
+                            <a href="#" class="btn btn-sm btn-outline-primary">
+                                #456
+                            </a>
+                        </td>
+                        <td>
+                            <small class="text-muted">192.168.1.150</small>
+                        </td>
+                        <td>
+                            <div class="audit-details">
+                                <button class="btn btn-sm btn-outline-secondary"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#details-2">
+                                    <i class="fas fa-eye me-1"></i>Показать
+                                </button>
+                                <div class="collapse mt-2" id="details-2">
+                                    <div class="row">
+                                        <div class="col-md-6 audit-old-values">
+                                            <strong class="text-danger">
+                                                <i class="fas fa-arrow-left me-1"></i>Было:
+                                            </strong>
+                                            <pre class="audit-pre mt-1">{
+  "status": "PROCESSING"
+}</pre>
+                                        </div>
+                                        <div class="col-md-6 audit-new-values">
+                                            <strong class="text-success">
+                                                <i class="fas fa-arrow-right me-1"></i>Стало:
+                                            </strong>
+                                            <pre class="audit-pre mt-1">{
+  "status": "SHIPPED"
+}</pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="audit-log-row">
+                        <td>
+                            <small class="text-muted">01.12.2025</small>
+                            <br>
+                            <strong>16:45:21</strong>
+                        </td>
+                        <td>
+                            <i class="fas fa-user me-1 text-muted"></i>
+                            <span>admin</span>
+                        </td>
+                        <td>
+                            <span class="badge bg-warning">
+                                <i class="fas fa-archive me-1"></i>Архив
+                            </span>
+                        </td>
+                        <td>
+                            <span class="badge bg-light text-dark">USER</span>
+                        </td>
+                        <td>
+                            <a href="#" class="btn btn-sm btn-outline-primary">
+                                #123
+                            </a>
+                        </td>
+                        <td>
+                            <small class="text-muted">192.168.1.100</small>
+                        </td>
+                        <td>
+                            <div class="audit-details">
+                                <button class="btn btn-sm btn-outline-secondary"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#details-3">
+                                    <i class="fas fa-eye me-1"></i>Показать
+                                </button>
+                                <div class="collapse mt-2" id="details-3">
+                                    <div class="row">
+                                        <div class="col-md-6 audit-old-values">
+                                            <strong class="text-danger">
+                                                <i class="fas fa-arrow-left me-1"></i>Было:
+                                            </strong>
+                                            <pre class="audit-pre mt-1">{
+  "active": true
+}</pre>
+                                        </div>
+                                        <div class="col-md-6 audit-new-values">
+                                            <strong class="text-success">
+                                                <i class="fas fa-arrow-right me-1"></i>Стало:
+                                            </strong>
+                                            <pre class="audit-pre mt-1">{
+  "active": false
+}</pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="audit-log-row">
+                        <td>
+                            <small class="text-muted">01.12.2025</small>
+                            <br>
+                            <strong>09:30:15</strong>
+                        </td>
+                        <td>
+                            <i class="fas fa-user me-1 text-muted"></i>
+                            <span>bonbons14</span>
+                        </td>
+                        <td>
+                            <span class="badge bg-danger">
+                                <i class="fas fa-trash me-1"></i>Удаление
+                            </span>
+                        </td>
+                        <td>
+                            <span class="badge bg-light text-dark">CART_ITEM</span>
+                        </td>
+                        <td>
+                            <a href="#" class="btn btn-sm btn-outline-primary">
+                                #999
+                            </a>
+                        </td>
+                        <td>
+                            <small class="text-muted">192.168.1.200</small>
+                        </td>
+                        <td>
+                            <div class="audit-details">
+                                <button class="btn btn-sm btn-outline-secondary"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#details-4">
+                                    <i class="fas fa-eye me-1"></i>Показать
+                                </button>
+                                <div class="collapse mt-2" id="details-4">
+                                    <div class="row">
+                                        <div class="col-md-6 audit-old-values">
+                                            <strong class="text-danger">
+                                                <i class="fas fa-arrow-left me-1"></i>Было:
+                                            </strong>
+                                            <pre class="audit-pre mt-1">{
+  "productId": 789,
+  "quantity": 2
+}</pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="audit-log-row">
+                        <td>
+                            <small class="text-muted">01.12.2025</small>
+                            <br>
+                            <strong>18:20:10</strong>
+                        </td>
+                        <td>
+                            <i class="fas fa-user me-1 text-muted"></i>
+                            <span>manager</span>
+                        </td>
+                        <td>
+                            <span class="badge bg-info">
+                                <i class="fas fa-undo me-1"></i>Восстановление
+                            </span>
+                        </td>
+                        <td>
+                            <span class="badge bg-light text-dark">PRODUCT</span>
+                        </td>
+                        <td>
+                            <a href="#" class="btn btn-sm btn-outline-primary">
+                                #555
+                            </a>
+                        </td>
+                        <td>
+                            <small class="text-muted">192.168.1.150</small>
+                        </td>
+                        <td>
+                            <div class="audit-details">
+                                <button class="btn btn-sm btn-outline-secondary"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#details-5">
+                                    <i class="fas fa-eye me-1"></i>Показать
+                                </button>
+                                <div class="collapse mt-2" id="details-5">
+                                    <div class="row">
+                                        <div class="col-md-6 audit-old-values">
+                                            <strong class="text-danger">
+                                                <i class="fas fa-arrow-left me-1"></i>Было:
+                                            </strong>
+                                            <pre class="audit-pre mt-1">{
+  "deleted": true
+}</pre>
+                                        </div>
+                                        <div class="col-md-6 audit-new-values">
+                                            <strong class="text-success">
+                                                <i class="fas fa-arrow-right me-1"></i>Стало:
+                                            </strong>
+                                            <pre class="audit-pre mt-1">{
+  "deleted": false
+}</pre>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </td>
                     </tr>
@@ -220,37 +400,34 @@
             </div>
         </div>
     </div>
-
-    <!-- Пагинация -->
-    <nav th:if="${logs.totalPages > 1}" class="mt-4">
+    <nav class="mt-4">
         <ul class="pagination justify-content-center">
-            <li class="page-item" th:classappend="${logs.first} ? 'disabled' : ''">
-                <a class="page-link"
-                   th:href="@{/audit(page=0, entityType=${entityType}, action=${action}, username=${username})}">
+            <li class="page-item disabled">
+                <a class="page-link" href="#">
                     <i class="fas fa-angle-double-left"></i>
                 </a>
             </li>
-            <li class="page-item" th:classappend="${logs.first} ? 'disabled' : ''">
-                <a class="page-link"
-                   th:href="@{/audit(page=${currentPage - 1}, entityType=${entityType}, action=${action}, username=${username})}">
+            <li class="page-item disabled">
+                <a class="page-link" href="#">
                     <i class="fas fa-angle-left"></i>
                 </a>
             </li>
-            <li th:each="i : ${#numbers.sequence(0, logs.totalPages - 1)}"
-                class="page-item" th:classappend="${i == currentPage} ? 'active' : ''">
-                <a class="page-link"
-                   th:href="@{/audit(page=${i}, entityType=${entityType}, action=${action}, username=${username})}"
-                   th:text="${i + 1}"></a>
+            <li class="page-item active">
+                <a class="page-link" href="#">1</a>
             </li>
-            <li class="page-item" th:classappend="${logs.last} ? 'disabled' : ''">
-                <a class="page-link"
-                   th:href="@{/audit(page=${currentPage + 1}, entityType=${entityType}, action=${action}, username=${username})}">
+            <li class="page-item">
+                <a class="page-link" href="#">2</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">3</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">
                     <i class="fas fa-angle-right"></i>
                 </a>
             </li>
-            <li class="page-item" th:classappend="${logs.last} ? 'disabled' : ''">
-                <a class="page-link"
-                   th:href="@{/audit(page=${logs.totalPages - 1}, entityType=${entityType}, action=${action}, username=${username})}">
+            <li class="page-item">
+                <a class="page-link" href="#">
                     <i class="fas fa-angle-double-right"></i>
                 </a>
             </li>

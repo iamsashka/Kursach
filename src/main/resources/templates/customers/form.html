@@ -37,7 +37,6 @@
             <div class="form-card">
                 <form th:action="@{/customers/create}" method="post">
 
-                    <!-- Личная информация -->
                     <div class="form-section">
                         <h3 class="form-section-title">
                             <i class="fas fa-user-circle"></i>Личная информация
@@ -75,8 +74,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Контактная информация -->
                     <div class="form-section">
                         <h3 class="form-section-title">
                             <i class="fas fa-address-book"></i>Контактная информация
@@ -98,7 +95,6 @@
                         </div>
                     </div>
 
-                    <!-- Адрес -->
                     <div class="form-section">
                         <h3 class="form-section-title">
                             <i class="fas fa-map-marker-alt"></i>Адрес
@@ -123,8 +119,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Настройки и роль -->
                     <div class="form-section">
                         <h3 class="form-section-title">
                             <i class="fas fa-cog"></i>Настройки
@@ -149,8 +143,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Кнопки действий -->
                     <div class="row mt-4">
                         <div class="col-md-12 d-flex justify-content-between">
                             <a th:href="@{/customers}" class="btn btn-secondary">
@@ -164,8 +156,6 @@
                     </div>
                 </form>
             </div>
-
-            <!-- Информационное сообщение -->
             <div class="alert alert-info mt-4">
                 <div class="d-flex">
                     <i class="fas fa-info-circle me-3 mt-1"></i>

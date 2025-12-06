@@ -242,10 +242,8 @@
             </div>
         </div>
     </div>
-    <!-- ЗАМЕНИТЬ ВСЕ ссылки в пагинации на этот формат -->
     <nav th:if="${products.totalPages > 1}" class="mt-4">
         <ul class="pagination justify-content-center">
-            <!-- Первая страница -->
             <li class="page-item" th:classappend="${products.first} ? 'disabled' : ''">
                 <a class="page-link"
                    th:href="${'/products?page=0&size=' + size + '&sortBy=' + sortBy + '&sortDir=' + sortDir +
@@ -257,8 +255,6 @@
                     <i class="fas fa-angle-double-left"></i>
                 </a>
             </li>
-
-            <!-- Предыдущая страница -->
             <li class="page-item" th:classappend="${products.first} ? 'disabled' : ''">
                 <a class="page-link"
                    th:href="${'/products?page=' + (currentPage - 1) + '&size=' + size + '&sortBy=' + sortBy + '&sortDir=' + sortDir +
@@ -270,8 +266,6 @@
                     <i class="fas fa-angle-left"></i>
                 </a>
             </li>
-
-            <!-- Номера страниц -->
             <li th:each="i : ${#numbers.sequence(0, products.totalPages - 1)}"
                 class="page-item" th:classappend="${i == currentPage} ? 'active' : ''">
                 <a class="page-link"
@@ -284,8 +278,6 @@
                    th:text="${i + 1}">
                 </a>
             </li>
-
-            <!-- Следующая страница -->
             <li class="page-item" th:classappend="${products.last} ? 'disabled' : ''">
                 <a class="page-link"
                    th:href="${'/products?page=' + (currentPage + 1) + '&size=' + size + '&sortBy=' + sortBy + '&sortDir=' + sortDir +
@@ -297,8 +289,6 @@
                     <i class="fas fa-angle-right"></i>
                 </a>
             </li>
-
-            <!-- Последняя страница -->
             <li class="page-item" th:classappend="${products.last} ? 'disabled' : ''">
                 <a class="page-link"
                    th:href="${'/products?page=' + (products.totalPages - 1) + '&size=' + size + '&sortBy=' + sortBy + '&sortDir=' + sortDir +

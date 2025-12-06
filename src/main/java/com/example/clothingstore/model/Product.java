@@ -37,11 +37,9 @@ public class Product {
 
     private String sizes;
 
-    // Связь с изображениями
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductImage> images = new ArrayList<>();
 
-    // Связь с цветами
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductColor> colors = new ArrayList<>();
 

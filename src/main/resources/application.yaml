@@ -29,7 +29,6 @@ server:
     session:
       timeout: 15m
 
-# JWT Configuration
 app:
   jwt:
     secret: "mySuperSecretKeyForJWTGenerationInClothingStoreApplication2024"
@@ -38,7 +37,6 @@ app:
 analytics:
   revenue-statuses: DELIVERED,PROCESSING,SHIPPED
   order-count-statuses: PENDING,PROCESSING,SHIPPED,DELIVERED
-# Swagger Configuration
 springdoc:
   api-docs:
     path: /v3/api-docs

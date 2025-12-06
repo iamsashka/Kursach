@@ -51,17 +51,14 @@ public class ProfileController {
                 return "redirect:/login";
             }
 
-            // Загружаем данные профиля
             loadProfileData(user, model);
 
-            // Устанавливаем режим редактирования
             model.addAttribute("editing", Boolean.TRUE.equals(editing));
             model.addAttribute("user", user);
 
             return "profile";
 
         } catch (Exception e) {
-            // Логируем ошибку для диагностики
             System.err.println("Error loading profile: " + e.getMessage());
             e.printStackTrace();
             return "redirect:/profile?error=load_failed";
@@ -87,8 +84,6 @@ public class ProfileController {
             if (currentUser == null) {
                 return "redirect:/login";
             }
-
-            // Проверка username - исправленная версия
             if (!username.equals(currentUser.getUsername())) {
                 User existingUser = userService.findByUsername(username);
                 if (existingUser != null) {
@@ -96,8 +91,6 @@ public class ProfileController {
                 }
                 currentUser.setUsername(username);
             }
-
-            // Обновляем поля
             currentUser.setFirstName(firstName);
             currentUser.setLastName(lastName);
             currentUser.setPhone(phone);
@@ -114,7 +107,6 @@ public class ProfileController {
     }
     private void loadProfileData(User user, Model model) {
         try {
-            // Упрощаем загрузку и устанавливаем значения по умолчанию ДО любых операций
             int cartItemsCount = 0;
             long favoritesCount = 0;
             long ordersCount = 0;
@@ -145,8 +137,6 @@ public class ProfileController {
             } catch (Exception e) {
                 System.err.println("Order service error: " + e.getMessage());
             }
-
-            // Гарантированно устанавливаем все атрибуты
             model.addAttribute("cartItemsCount", cartItemsCount);
             model.addAttribute("favoritesCount", favoritesCount);
             model.addAttribute("ordersCount", ordersCount);
@@ -154,7 +144,6 @@ public class ProfileController {
             model.addAttribute("recentOrders", recentOrders);
 
         } catch (Exception e) {
-            // Финальный fallback
             System.err.println("Critical error in loadProfileData: " + e.getMessage());
             model.addAttribute("cartItemsCount", 0);
             model.addAttribute("favoritesCount", 0);

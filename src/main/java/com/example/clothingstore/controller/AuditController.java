@@ -34,7 +34,6 @@ public class AuditController {
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
         Page<AuditLog> auditLogs;
 
-        // Комбинированная фильтрация
         if ((entityType != null && !entityType.isEmpty()) ||
                 (action != null && !action.isEmpty()) ||
                 (username != null && !username.isEmpty())) {

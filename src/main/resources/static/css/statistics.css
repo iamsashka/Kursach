@@ -1,4 +1,3 @@
-/* === Переменные тем === */
 :root {
     --bg-color: #f8f9fa;
     --card-bg: rgba(255, 255, 255, 0.8);
@@ -19,7 +18,6 @@
     --muted-color: #a0a0a0;
 }
 
-/* === Базовые стили === */
 body.tareno-analytics-container {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     background: var(--bg-color);
@@ -27,13 +25,11 @@ body.tareno-analytics-container {
     transition: background 0.3s, color 0.3s;
 }
 
-/* === Заголовки === */
 .tareno-section-title {
     font-weight: 600;
     font-size: 1.75rem;
 }
 
-/* === Карточки метрик === */
 .tareno-metric-card {
     background: var(--card-bg);
     border-radius: var(--border-radius);
@@ -46,7 +42,6 @@ body.tareno-analytics-container {
     box-shadow: 0 8px 30px rgba(0,0,0,0.15);
 }
 
-/* === Метрики === */
 .tareno-metric-number {
     font-size: 1.5rem;
     font-weight: 700;
@@ -67,7 +62,6 @@ body.tareno-analytics-container {
     font-weight: 500;
 }
 
-/* === Карточки фильтров и таблиц === */
 .tareno-filter-card, .tareno-data-container, .tareno-chart {
     background: var(--card-bg);
     border-radius: var(--border-radius);
@@ -77,7 +71,6 @@ body.tareno-analytics-container {
     transition: background 0.3s, box-shadow 0.3s;
 }
 
-/* === Таблицы === */
 .tareno-table {
     background: transparent;
     border-collapse: separate;
@@ -99,7 +92,6 @@ body.tareno-analytics-container {
     box-shadow: var(--shadow);
 }
 
-/* === Ссылки === */
 .tareno-product-link {
     color: var(--primary-color);
     text-decoration: none;
@@ -109,7 +101,6 @@ body.tareno-analytics-container {
     text-decoration: underline;
 }
 
-/* === Кнопки темы и dropdown === */
 .theme-toggle-btn {
     background: var(--card-bg);
     border-radius: 50%;
@@ -122,13 +113,11 @@ body.tareno-analytics-container {
     background: rgba(0,0,0,0.1);
 }
 
-/* === Чат- и графические карточки === */
 .tareno-chart canvas {
     background: var(--card-bg);
     border-radius: var(--border-radius);
 }
 
-/* === Гибкая сетка горячих клавиш === */
 .tareno-filter-card .badge {
     border-radius: 8px;
     padding: 0.35em 0.6em;
@@ -136,7 +125,6 @@ body.tareno-analytics-container {
     font-weight: 500;
 }
 .tareno-metric-card {
-    /* существующие стили */
     transition: all 0.3s ease;
 }
 
@@ -145,9 +133,6 @@ body.tareno-analytics-container {
     box-shadow: 0 8px 25px rgba(0,0,0,0.15);
     cursor: pointer;
 }
-/* === Адаптивные брейкпоинты === */
-
-/* Mobile (до 768px) */
 @media (max-width: 767.98px) {
     .tareno-section-title {
         font-size: 1.5rem !important;
@@ -161,24 +146,20 @@ body.tareno-analytics-container {
         padding: 0.75rem;
     }
 
-    /* Сетка метрик для мобильных */
     .col-6 {
         margin-bottom: 0.5rem;
     }
 
-    /* Горячие клавиши - вертикальное расположение */
     .tareno-filter-card .d-flex {
         flex-direction: column;
         gap: 0.5rem !important;
     }
 
-    /* Таблицы с горизонтальным скроллом */
     .table-responsive {
         font-size: 0.875rem;
     }
 }
 
-/* Tablet (768px - 1199px) */
 @media (min-width: 768px) and (max-width: 1199.98px) {
     .tareno-section-title {
         font-size: 1.6rem;
@@ -188,13 +169,11 @@ body.tareno-analytics-container {
         font-size: 1.35rem;
     }
 
-    /* Адаптивная сетка для планшетов */
     .col-md-4 {
         margin-bottom: 1rem;
     }
 }
 
-/* Desktop (1200px и выше) */
 @media (min-width: 1200px) {
     .container-fluid {
         max-width: 1400px;
@@ -202,7 +181,6 @@ body.tareno-analytics-container {
     }
 }
 
-/* Улучшенная адаптивность для контейнеров графиков */
 .tareno-chart {
     position: relative;
     min-height: 250px;
@@ -213,14 +191,12 @@ body.tareno-analytics-container {
     height: 250px !important;
 }
 
-/* Адаптивные карточки */
 .tareno-metric-card,
 .tareno-filter-card,
 .tareno-data-container {
     transition: all 0.3s ease;
 }
 
-/* Улучшенная читаемость на мобильных */
 @media (max-width: 575.98px) {
     body {
         font-size: 0.9rem;
@@ -235,8 +211,6 @@ body.tareno-analytics-container {
         font-size: 0.875rem;
     }
 }
-
-/* Адаптивные таблицы */
 @media (max-width: 767.98px) {
     .tareno-table th,
     .tareno-table td {
@@ -248,8 +222,6 @@ body.tareno-analytics-container {
         font-size: 0.7rem;
     }
 }
-
-/* Плавные переходы для тем */
 .tareno-metric-card,
 .tareno-filter-card,
 .tareno-data-container,

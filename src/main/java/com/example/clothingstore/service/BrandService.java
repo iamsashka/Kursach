@@ -29,43 +29,28 @@ public class BrandService {
     public BrandService(BrandRepository brandRepository) {
         this.brandRepository = brandRepository;
     }
-
-    // Получить все активные бренды
     public List<Brand> getAllActiveBrands() {
         return brandRepository.findByDeletedFalse();
     }
-
-    // Получить все бренды с пагинацией (для админки)
     public Page<Brand> getAllBrands(Pageable pageable) {
         return brandRepository.findAll(pageable);
     }
-
-    // Получить все бренды (без пагинации)
     public List<Brand> getAllBrands() {
         return brandRepository.findAll();
     }
-
-    // Найти бренд по ID
     public Brand getBrandById(Long id) {
         return brandRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Бренд с ID " + id + " не найден"));
     }
-
-    // Создать новый бренд
     public Brand createBrand(Brand brand) {
-        // Проверяем уникальность имени среди активных брендов
         if (brandRepository.existsByNameAndDeletedFalse(brand.getName())) {
             throw new RuntimeException("Бренд с названием '" + brand.getName() + "' уже существует");
         }
         brand.setDeleted(false);
         return brandRepository.save(brand);
     }
-
-    // Обновить бренд
     public Brand updateBrand(Long id, Brand brandDetails) {
         Brand brand = getBrandById(id);
-
-        // Проверяем уникальность имени, если оно изменилось
         if (!brand.getName().equals(brandDetails.getName()) &&
                 brandRepository.existsByNameAndDeletedFalse(brandDetails.getName())) {
             throw new RuntimeException("Бренд с названием '" + brandDetails.getName() + "' уже существует");
@@ -75,38 +60,28 @@ public class BrandService {
         brand.setContactEmail(brandDetails.getContactEmail());
         return brandRepository.save(brand);
     }
-
-    // Мягкое удаление
     public void softDeleteBrand(Long id) {
         Brand brand = getBrandById(id);
         brand.setDeleted(true);
         brandRepository.save(brand);
     }
-
-    // Полное удаление
     public void hardDeleteBrand(Long id) {
         brandRepository.deleteById(id);
     }
 
-    // Поиск брендов
     public List<Brand> searchBrands(String query) {
         return brandRepository.findByNameContainingIgnoreCaseAndDeletedFalse(query);
     }
-
-    // Восстановить бренд
     public Brand restoreBrand(Long id) {
         Brand brand = getBrandById(id);
         brand.setDeleted(false);
         return brandRepository.save(brand);
     }
 
-    // Найти бренд по имени
     public Optional<Brand> findByName(String name) {
         return brandRepository.findByNameAndDeletedFalse(name);
     }
 
-
-    // Статистика
     public long getTotalBrandsCount() {
         return brandRepository.countTotalBrands();
     }
@@ -123,12 +98,10 @@ public class BrandService {
         return brandRepository.findByDeletedTrue(pageable);
     }
 
-    // Экспорт в Excel
     public void exportToExcel(List<Brand> brands, HttpServletResponse response) throws IOException {
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Бренды");
 
-            // Заголовки
             org.apache.poi.ss.usermodel.Row headerRow = sheet.createRow(0);
             String[] headers = {"ID", "Название", "Email", "Статус"};
 
@@ -145,7 +118,6 @@ public class BrandService {
                 cell.setCellStyle(headerStyle);
             }
 
-            // Данные
             int rowNum = 1;
             for (Brand brand : brands) {
                 org.apache.poi.ss.usermodel.Row row = sheet.createRow(rowNum++);
@@ -155,8 +127,6 @@ public class BrandService {
                 row.createCell(2).setCellValue(brand.getContactEmail() != null ? brand.getContactEmail() : "");
                 row.createCell(3).setCellValue(brand.isDeleted() ? "Удален" : "Активен");
             }
-
-            // Авто-размер колонок
             for (int i = 0; i < headers.length; i++) {
                 sheet.autoSizeColumn(i);
             }
@@ -164,27 +134,22 @@ public class BrandService {
             workbook.write(response.getOutputStream());
         }
     }
-
-    // Экспорт в PDF
     public void exportToPdf(List<Brand> brands, HttpServletResponse response) throws IOException {
         try {
             Document document = new Document(PageSize.A4.rotate());
             PdfWriter.getInstance(document, response.getOutputStream());
             document.open();
 
-            // Заголовок
             Font titleFont = new Font(Font.HELVETICA, 16, Font.BOLD);
             Paragraph title = new Paragraph("Отчет по брендам - " + LocalDate.now(), titleFont);
             title.setAlignment(Element.ALIGN_CENTER);
             title.setSpacingAfter(20);
             document.add(title);
 
-            // Таблица
             PdfPTable table = new PdfPTable(4);
             table.setWidthPercentage(100);
             table.setSpacingBefore(10);
 
-            // Заголовки таблицы
             String[] headers = {"ID", "Название", "Email", "Статус"};
             Font headerFont = new Font(Font.HELVETICA, 10, Font.BOLD);
 
@@ -196,7 +161,6 @@ public class BrandService {
                 table.addCell(headerCell);
             }
 
-            // Данные
             Font dataFont = new Font(Font.HELVETICA, 8, Font.NORMAL);
 
             for (Brand brand : brands) {

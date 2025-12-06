@@ -66,25 +66,20 @@ public class ExcelImportService {
 
         return result;
     }
-
-    // Добавляем метод generateTemplate
     public byte[] generateTemplate() {
         try (Workbook workbook = new XSSFWorkbook();
              ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
 
-            // Лист для категорий
             Sheet categoriesSheet = workbook.createSheet("Categories");
             Row categoryHeader = categoriesSheet.createRow(0);
             categoryHeader.createCell(0).setCellValue("Название");
             categoryHeader.createCell(1).setCellValue("Описание");
 
-            // Лист для брендов
             Sheet brandsSheet = workbook.createSheet("Brands");
             Row brandHeader = brandsSheet.createRow(0);
             brandHeader.createCell(0).setCellValue("Название");
             brandHeader.createCell(1).setCellValue("Email");
 
-            // Лист для товаров
             Sheet productsSheet = workbook.createSheet("Products");
             Row productHeader = productsSheet.createRow(0);
             productHeader.createCell(0).setCellValue("Название");
@@ -99,7 +94,6 @@ public class ExcelImportService {
             productHeader.createCell(9).setCellValue("Оригинальная цена");
             productHeader.createCell(10).setCellValue("Теги (через запятую: NEW_ARRIVAL, SALE, etc)");
 
-            // Лист для пользователей
             Sheet usersSheet = workbook.createSheet("Users");
             Row userHeader = usersSheet.createRow(0);
             userHeader.createCell(0).setCellValue("Email");
@@ -110,7 +104,6 @@ public class ExcelImportService {
             userHeader.createCell(5).setCellValue("Телефон");
             userHeader.createCell(6).setCellValue("Роли (через запятую: ROLE_CUSTOMER, ROLE_ADMIN)");
 
-            // Авто-размер колонок
             for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
                 Sheet sheet = workbook.getSheetAt(i);
                 for (int j = 0; j < sheet.getRow(0).getLastCellNum(); j++) {
@@ -126,10 +119,6 @@ public class ExcelImportService {
             return new byte[0];
         }
     }
-
-    // Остальные методы импорта (importCategories, importBrands, importProducts, importUsers)
-    // остаются без изменений, как в предыдущем коде
-
     private SheetResult importCategories(Sheet sheet) {
         SheetResult result = new SheetResult("Категории");
 
@@ -379,8 +368,6 @@ public class ExcelImportService {
 
         return result;
     }
-
-    // Вспомогательные методы
     private String getCellStringValue(Cell cell) {
         if (cell == null) return null;
 

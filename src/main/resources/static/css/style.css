@@ -1,4 +1,3 @@
-/* Переменные для темы */
 :root {
     --tareno-black: #000000;
     --tareno-white: #ffffff;
@@ -23,26 +22,22 @@
     --tareno-shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.4);
 }
 
-/* Основной фон страницы каталога */
 body {
     background-color: var(--tareno-white);
     color: var(--tareno-black);
     transition: all 0.3s ease;
 }
 
-/* Контейнер каталога */
 .container.mt-4 {
     background-color: var(--tareno-white);
     min-height: calc(100vh - 200px);
 }
 
-/* Колонки каталога */
 .col-md-3,
 .col-md-9 {
     background-color: var(--tareno-white) !important;
 }
 
-/* Общие стили для каталога */
 .page-header {
     background: var(--tareno-white);
     border-bottom: 1px solid var(--tareno-border);
@@ -70,7 +65,6 @@ body {
     max-width: 1400px;
 }
 
-/* Карточка фильтров */
 .card {
     border: 1px solid var(--tareno-border);
     border-radius: 0;
@@ -99,7 +93,6 @@ body {
     background: var(--tareno-white);
 }
 
-/* Секции фильтров */
 .filter-section {
     margin-bottom: 1.75rem;
     padding-bottom: 1.75rem;
@@ -161,7 +154,6 @@ body {
     color: var(--tareno-dark);
 }
 
-/* Кнопки фильтров */
 .btn {
     border-radius: 0;
     font-weight: 500;
@@ -197,7 +189,6 @@ body {
     color: var(--tareno-white);
 }
 
-/* Активные фильтры */
 .active-filters {
     background: var(--tareno-light);
     border: 1px solid var(--tareno-border);
@@ -239,7 +230,6 @@ body {
     color: var(--tareno-black);
 }
 
-/* Панель управления */
 .d-flex.justify-content-between.align-items-center.mb-4 {
     padding: 1rem 0;
     border-bottom: 1px solid var(--tareno-border);
@@ -252,7 +242,6 @@ body {
     color: var(--tareno-gray) !important;
 }
 
-/* Кнопки сортировки */
 .btn-group .btn {
     padding: 0.5rem 1rem;
     font-size: 0.8rem;
@@ -271,7 +260,6 @@ body {
     border-color: var(--tareno-border);
 }
 
-/* Опции вида */
 .view-options {
     display: flex;
     align-items: center;
@@ -298,7 +286,6 @@ body {
     color: var(--tareno-white);
 }
 
-/* Сетка товаров */
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -333,7 +320,6 @@ body {
     opacity: 0.7;
 }
 
-/* Изображение товара */
 .product-image {
     position: relative;
     overflow: hidden;
@@ -355,7 +341,6 @@ body {
     transform: scale(1.05);
 }
 
-/* Бейджи */
 .tag-badge {
     position: absolute;
     top: 12px;
@@ -412,7 +397,6 @@ body {
     letter-spacing: 0.5px;
 }
 
-/* Кнопка быстрого просмотра */
 .quick-view-btn {
     position: absolute;
     bottom: -50px;
@@ -438,7 +422,6 @@ body {
     background: var(--tareno-accent);
 }
 
-/* Нет в наличии */
 .out-of-stock-overlay {
     position: absolute;
     top: 0;
@@ -460,7 +443,6 @@ body {
     color: var(--tareno-white);
 }
 
-/* Детали товара */
 .product-details {
     padding: 1.5rem;
     flex-grow: 1;
@@ -482,12 +464,10 @@ body {
     color: var(--tareno-gray) !important;
 }
 
-/* Рейтинг */
 .rating-stars {
     font-size: 0.8rem;
 }
 
-/* Цены */
 .product-price {
     font-weight: 600;
     font-size: 1.1rem;
@@ -500,12 +480,10 @@ body {
     font-size: 0.9rem;
 }
 
-/* Дополнительная информация */
 .small.text-muted.mb-2 div {
     margin-bottom: 0.25rem;
 }
 
-/* Действия с товаром */
 .product-actions {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -542,7 +520,6 @@ body {
     color: var(--tareno-white);
 }
 
-/* Списковое представление */
 .list-view .product-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
@@ -571,7 +548,6 @@ body {
     margin-top: 1rem;
 }
 
-/* Сообщение об отсутствии товаров */
 .text-center.py-5 {
     padding: 4rem 2rem;
 }
@@ -588,7 +564,6 @@ body {
     color: var(--tareno-black);
 }
 
-/* Пагинация */
 .pagination {
     margin: 3rem 0 2rem;
 }
@@ -621,7 +596,6 @@ body {
     color: var(--tareno-gray);
 }
 
-/* Индикатор загрузки */
 .loading-spinner {
     text-align: center;
     padding: 3rem;
@@ -638,7 +612,6 @@ body {
     color: var(--tareno-black);
 }
 
-/* Модальное окно */
 .modal-content {
     border: none;
     border-radius: 0;
@@ -670,7 +643,6 @@ body {
     background: var(--tareno-white);
 }
 
-/* Адаптивность */
 @media (max-width: 1200px) {
     .product-grid {
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -762,7 +734,6 @@ body {
     }
 }
 
-/* Улучшенная доступность */
 .btn:focus,
 .form-control:focus,
 .form-select:focus,
@@ -773,12 +744,10 @@ body {
     box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
 }
 
-/* Плавная прокрутка */
 html {
     scroll-behavior: smooth;
 }
 
-/* Улучшенная читаемость для длинных названий */
 .product-details h6 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -786,14 +755,12 @@ html {
     overflow: hidden;
 }
 
-/* Консистентные отступы */
 .mb-2 { margin-bottom: 0.75rem !important; }
 .mb-3 { margin-bottom: 1.25rem !important; }
 .mb-4 { margin-bottom: 2rem !important; }
 .mt-4 { margin-top: 2rem !important; }
 .mt-5 { margin-top: 3rem !important; }
 
-/* Специфичные стили для темной темы каталога */
 [data-theme="dark"] body {
     background-color: var(--tareno-white);
 }
@@ -810,7 +777,6 @@ html {
 [data-theme="dark"] .loading-spinner p {
     color: var(--tareno-gray);
 }
-/* Стили для кликабельного изображения товара */
 .product-image-link {
     display: block;
     width: 100%;
@@ -825,7 +791,6 @@ html {
     color: inherit;
 }
 
-/* Иконка для товаров без изображения внутри ссылки */
 .product-image-link i {
     font-size: 3rem;
     color: var(--tareno-gray);
@@ -840,16 +805,14 @@ html {
     color: var(--tareno-white);
 }
 
-/* Убедимся, что бейджи остаются поверх ссылки */
 .tag-badge,
 .discount-badge,
 .stock-badge,
 .quick-view-btn {
     position: absolute;
-    z-index: 3; /* Выше чем ссылка */
+    z-index: 3;
 }
 
-/* Стили для overlay "Нет в наличии" */
 .out-of-stock-overlay {
     position: absolute;
     top: 0;
@@ -864,7 +827,7 @@ html {
     letter-spacing: 1px;
     text-transform: uppercase;
     color: var(--tareno-gray);
-    z-index: 2; /* Поверх ссылки но под бейджами */
+    z-index: 2;
 }
 
 [data-theme="dark"] .out-of-stock-overlay {
@@ -872,12 +835,10 @@ html {
     color: var(--tareno-white);
 }
 
-/* Курсор pointer для кликабельных элементов */
 .product-image-link {
     cursor: pointer;
 }
 
-/* Состояние hover для изображения */
 .product-image-link img {
     transition: transform 0.5s ease, opacity 0.3s ease;
 }
@@ -886,7 +847,6 @@ html {
     transform: scale(1.05);
 }
 
-/* Отключение клика для товаров не в наличии */
 .product-card.out-of-stock .product-image-link {
     cursor: default;
     pointer-events: none;
@@ -896,7 +856,6 @@ html {
     opacity: 0.7;
 }
 
-/* Улучшенная доступность для фокуса */
 .product-image-link:focus {
     outline: 2px solid var(--tareno-black);
     outline-offset: 2px;
@@ -905,20 +864,17 @@ html {
 [data-theme="dark"] .product-image-link:focus {
     outline-color: var(--tareno-white);
 }
-/* Фиксированные элементы каталога */
 .navbar.sticky-top {
-    z-index: 1030; /* Стандартный z-index для Bootstrap navbar */
+    z-index: 1030;
 }
 
-/* Карточка фильтров с правильным z-index */
 .card.sticky-top {
-    top: 100px !important; /* Отступ от верхней части страницы */
-    z-index: 1020; /* Ниже чем navbar но выше чем контент */
+    top: 100px !important;
+    z-index: 1020;
     max-height: calc(100vh - 120px);
     overflow-y: auto;
 }
 
-/* Улучшенная прокрутка для фильтров */
 .card.sticky-top::-webkit-scrollbar {
     width: 4px;
 }
@@ -936,7 +892,6 @@ html {
     background: var(--tareno-dark);
 }
 
-/* Адаптивность для мобильных устройств */
 @media (max-width: 992px) {
     .card.sticky-top {
         position: static !important;
@@ -946,13 +901,11 @@ html {
     }
 }
 
-/* Дополнительный отступ для основного контента при скролле */
 .col-md-9 {
     position: relative;
     z-index: 1010;
 }
 
-/* Гармоничное расположение элементов на изображении */
 .tag-badge {
     position: absolute;
     top: 12px;
@@ -994,7 +947,6 @@ html {
     z-index: 4;
 }
 
-/* Стили для избранного в углу */
 .btn-favorite-top {
     display: flex;
     align-items: center;
@@ -1025,7 +977,6 @@ html {
     transition: all 0.3s ease;
 }
 
-/* Адаптивность */
 @media (max-width: 768px) {
 
     .btn-favorite-top {
@@ -1039,7 +990,6 @@ html {
     }
 }
 
-/* Для темной темы */
 [data-theme="dark"] .btn-favorite-top {
     background: rgba(26, 26, 26, 0.95);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
@@ -1048,7 +998,6 @@ html {
 [data-theme="dark"] .btn-favorite-top:hover {
     background: var(--tareno-white);
 }
-/* Стили для избранного с изображениями */
 .favorite-section {
     display: flex;
     align-items: center;
@@ -1102,7 +1051,6 @@ html {
     transform: scale(1.1);
 }
 
-/* Анимация для переключения состояния */
 @keyframes favoritePulse {
     0% {
         transform: scale(1);
@@ -1120,7 +1068,6 @@ html {
     outline-offset: 2px;
 }
 
-/* Состояние загрузки */
 .btn-favorite-icon.loading {
     pointer-events: none;
     opacity: 0.7;
@@ -1142,7 +1089,6 @@ html {
     }
 }
 
-/* Адаптивность */
 @media (max-width: 768px) {
     .btn-favorite-icon {
         width: 40px;
@@ -1167,7 +1113,6 @@ html {
     }
 }
 
-/* Для темной темы */
 [data-theme="dark"] .btn-favorite-icon {
     background: var(--tareno-white);
     border-color: var(--tareno-border);
@@ -1185,7 +1130,6 @@ html {
 [data-theme="dark"] .btn-favorite-icon:hover .favorite-icon {
     filter: brightness(1);
 }
-/* Дополнительные стили для улучшенного внешнего вида */
 .btn-favorite-icon {
     position: relative;
     z-index: 1;
@@ -1208,7 +1152,6 @@ html {
     opacity: 0.05;
 }
 
-/* Эффект ripple при клике */
 .btn-favorite-icon::after {
     content: '';
     position: absolute;

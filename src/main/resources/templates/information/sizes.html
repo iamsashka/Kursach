@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Размеры - TARENO</title>
+    <th:block th:insert="~{fragments/head :: head}"></th:block>
+</head>
+<body>
+<th:block th:insert="~{fragments/header :: header}"></th:block>
+
+<main class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <nav aria-label="breadcrumb" class="mb-4">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/}">Главная</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/information}">Информация</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Размеры</li>
+                    </ol>
+                </nav>
+
+                <h1 class="mb-4 fw-light" style="letter-spacing: 1px;">ТАБЛИЦА РАЗМЕРОВ</h1>
+
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h5 class="fw-light mb-3">Как определить свой размер</h5>
+                        <p>Для точного определения размера измерьте:</p>
+                        <ul>
+                            <li><strong>Обхват груди</strong> - измерьте по самой выступающей точке груди</li>
+                            <li><strong>Обхват талии</strong> - измерьте по самому узкому месту</li>
+                            <li><strong>Обхват бедер</strong> - измерьте по самым выступающим точкам ягодиц</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h5 class="fw-light mb-3">Женская одежда</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-center">
+                                <thead class="table-light">
+                                <tr>
+                                    <th>Российский размер</th>
+                                    <th>Международный</th>
+                                    <th>Обхват груди (см)</th>
+                                    <th>Обхват талии (см)</th>
+                                    <th>Обхват бедер (см)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>40</td>
+                                    <td>XS</td>
+                                    <td>78-82</td>
+                                    <td>60-64</td>
+                                    <td>86-90</td>
+                                </tr>
+                                <tr>
+                                    <td>42</td>
+                                    <td>S</td>
+                                    <td>82-86</td>
+                                    <td>64-68</td>
+                                    <td>90-94</td>
+                                </tr>
+                                <tr>
+                                    <td>44</td>
+                                    <td>M</td>
+                                    <td>86-90</td>
+                                    <td>68-72</td>
+                                    <td>94-98</td>
+                                </tr>
+                                <tr>
+                                    <td>46</td>
+                                    <td>L</td>
+                                    <td>90-94</td>
+                                    <td>72-76</td>
+                                    <td>98-102</td>
+                                </tr>
+                                <tr>
+                                    <td>48</td>
+                                    <td>XL</td>
+                                    <td>94-98</td>
+                                    <td>76-80</td>
+                                    <td>102-106</td>
+                                </tr>
+                                <tr>
+                                    <td>50</td>
+                                    <td>XXL</td>
+                                    <td>98-102</td>
+                                    <td>80-84</td>
+                                    <td>106-110</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h5 class="fw-light mb-3">Мужская одежда</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-center">
+                                <thead class="table-light">
+                                <tr>
+                                    <th>Российский размер</th>
+                                    <th>Международный</th>
+                                    <th>Обхват груди (см)</th>
+                                    <th>Обхват талии (см)</th>
+                                    <th>Рост (см)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>44-46</td>
+                                    <td>S</td>
+                                    <td>88-92</td>
+                                    <td>78-82</td>
+                                    <td>170-176</td>
+                                </tr>
+                                <tr>
+                                    <td>48-50</td>
+                                    <td>M</td>
+                                    <td>92-96</td>
+                                    <td>82-86</td>
+                                    <td>176-182</td>
+                                </tr>
+                                <tr>
+                                    <td>52-54</td>
+                                    <td>L</td>
+                                    <td>96-100</td>
+                                    <td>86-90</td>
+                                    <td>182-188</td>
+                                </tr>
+                                <tr>
+                                    <td>56-58</td>
+                                    <td>XL</td>
+                                    <td>100-104</td>
+                                    <td>90-94</td>
+                                    <td>182-188</td>
+                                </tr>
+                                <tr>
+                                    <td>60-62</td>
+                                    <td>XXL</td>
+                                    <td>104-108</td>
+                                    <td>94-98</td>
+                                    <td>182-188</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body p-4">
+                                <h5 class="fw-light mb-3">Обувь</h5>
+                                <table class="table table-borderless">
+                                    <tbody>
+                                    <tr>
+                                        <th>Российский</th>
+                                        <td>35</td>
+                                        <td>36</td>
+                                        <td>37</td>
+                                        <td>38</td>
+                                        <td>39</td>
+                                        <td>40</td>
+                                        <td>41</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Европейский</th>
+                                        <td>36</td>
+                                        <td>37</td>
+                                        <td>38</td>
+                                        <td>39</td>
+                                        <td>40</td>
+                                        <td>41</td>
+                                        <td>42</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body p-4">
+                                <h5 class="fw-light mb-3">Советы по выбору</h5>
+                                <ul>
+                                    <li>Измеряйте себя перед каждой покупкой</li>
+                                    <li>Учитывайте материал (хлопок дает усадку)</li>
+                                    <li>Проверяйте размерную сетку каждого бренда</li>
+                                    <li>При сомнениях выбирайте больший размер</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<th:block th:insert="~{fragments/footer :: footer}"></th:block>
+</body>
+</html>

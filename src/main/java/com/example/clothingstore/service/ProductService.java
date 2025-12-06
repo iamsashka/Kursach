@@ -85,12 +85,9 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
-    // Поиск и фильтрация
     public Page<Product> searchProducts(String keyword, Pageable pageable) {
         return productRepository.findByNameContainingIgnoreCaseAndDeletedFalse(keyword, pageable);
     }
-
-    // Основной метод фильтрации со всеми параметрами
     public Page<Product> filterProducts(String name, Long categoryId, Long brandId,
                                         BigDecimal minPrice, BigDecimal maxPrice,
                                         String color, String size, String country,
@@ -99,8 +96,6 @@ public class ProductService {
         return productRepository.findByFilters(name, categoryId, brandId, minPrice, maxPrice,
                 color, size, country, audience, tag, pageable);
     }
-
-    // Альтернативный метод фильтрации
     public Page<Product> filterProductsAlternative(String name, Long categoryId, Long brandId,
                                                    BigDecimal minPrice, BigDecimal maxPrice,
                                                    String color, String size, String country,
@@ -109,8 +104,6 @@ public class ProductService {
         return productRepository.findByFiltersAlternative(name, categoryId, brandId, minPrice, maxPrice,
                 color, size, country, audience, tag, pageable);
     }
-
-    // Метод для обратной совместимости (старые вызовы)
     public Page<Product> filterProducts(String name, Long categoryId, Long brandId,
                                         Double minPrice, Double maxPrice, Pageable pageable) {
         BigDecimal minPriceBigDecimal = minPrice != null ? BigDecimal.valueOf(minPrice) : null;
@@ -160,7 +153,6 @@ public class ProductService {
         return productRepository.findByTagsContainingAndDeletedFalse(tag, pageable);
     }
 
-    // Методы для получения уникальных значений фильтров
     public List<String> getAvailableColors() {
         return productRepository.findDistinctColors();
     }
@@ -173,7 +165,6 @@ public class ProductService {
         return productRepository.findDistinctCountries();
     }
 
-    // Дополнительные методы из репозитория
     public Page<Product> getDiscountedProducts(Pageable pageable) {
         return productRepository.findDiscountedProducts(pageable);
     }
@@ -194,34 +185,26 @@ public class ProductService {
         return productRepository.findPopularProducts(pageable);
     }
 
-    // Новые методы для расширенной функциональности
-
-    // Поиск товаров по нескольким тегам
     public Page<Product> getProductsByMultipleTags(List<ProductTag> tags, Pageable pageable) {
         return productRepository.findByMultipleTags(tags, pageable);
     }
 
-    // Поиск товаров по диапазону дат
     public Page<Product> getProductsByDateRange(LocalDateTime startDate, LocalDateTime endDate, Pageable pageable) {
         return productRepository.findByCreatedAtBetween(startDate, endDate, pageable);
     }
 
-    // Товары с максимальной скидкой
     public Page<Product> getTopDiscountedProducts(Pageable pageable) {
         return productRepository.findTopDiscountedProducts(pageable);
     }
 
-    // Товары по рейтингу
     public Page<Product> getProductsByRating(Double minRating, Pageable pageable) {
         return productRepository.findByRatingGreaterThanEqual(minRating, pageable);
     }
 
-    // Товары по цвету
     public Page<Product> getProductsByColor(String colorName, Pageable pageable) {
         return productRepository.findByColorName(colorName, pageable);
     }
 
-    // Товары по нескольким цветам
     public Page<Product> getProductsByColors(List<String> colorNames, Pageable pageable) {
         return productRepository.findByColorNames(colorNames, pageable);
     }
@@ -234,17 +217,14 @@ public class ProductService {
         return productRepository.countDiscountedProducts();
     }
 
-    // Самые просматриваемые товары
     public Page<Product> getMostViewedProducts(Pageable pageable) {
         return productRepository.findMostViewedProducts(pageable);
     }
 
-    // Автодополнение для поиска
     public List<String> getProductNameSuggestions(String query, int limit) {
         return productRepository.findProductNamesContaining(query, PageRequest.of(0, limit));
     }
 
-    // Вспомогательные методы
     public List<Product> getProductsWithTag(ProductTag tag, int limit) {
         return productRepository.findByTagsContainingAndDeletedFalse(tag, PageRequest.of(0, limit))
                 .getContent();
@@ -258,16 +238,13 @@ public class ProductService {
     public List<Product> getRelatedProducts(Product product) {
         return productRepository.findTop4ByCategoryAndIdNot(product.getCategory(), product.getId());
     }
-    // Метод для получения рекомендованных товаров (улучшенный)
     public List<Product> getRecommendedProducts(Long productId, int limit) {
         try {
             Product currentProduct = getProductById(productId);
 
-            // Увеличиваем счетчик просмотров
             currentProduct.incrementViews();
             productRepository.save(currentProduct);
 
-            // Рекомендуем товары той же категории и бренда
             if (currentProduct.getCategory() != null && currentProduct.getBrand() != null) {
                 return productRepository.findByBrandIdAndCategoryIdAndDeletedFalse(
                         currentProduct.getBrand().getId(),
@@ -276,16 +253,12 @@ public class ProductService {
                 ).getContent();
             }
 
-            // Если нет категории/бренда, возвращаем популярные товары
             return getPopularProducts(PageRequest.of(0, limit)).getContent();
 
         } catch (Exception e) {
-            // В случае ошибки возвращаем популярные товары
             return getPopularProducts(PageRequest.of(0, limit)).getContent();
         }
     }
-
-    // Метод для проверки наличия товара
     public boolean isProductAvailable(Long productId, int quantity) {
         try {
             Product product = getProductById(productId);
@@ -294,8 +267,6 @@ public class ProductService {
             return false;
         }
     }
-
-    // Метод для обновления количества товара
     public void updateStockQuantity(Long productId, int quantity) {
         Product product = getProductById(productId);
         if (product.getStockQuantity() >= quantity) {
@@ -306,27 +277,24 @@ public class ProductService {
         }
     }
 
-    // Метод для увеличения количества товара
     public void increaseStockQuantity(Long productId, int quantity) {
         Product product = getProductById(productId);
         product.setStockQuantity(product.getStockQuantity() + quantity);
         productRepository.save(product);
     }
 
-    // Метод для получения товаров с максимальной скидкой (сортировка)
     public List<Product> getTopDiscountedProductsList(int limit) {
         return getDiscountedProducts(PageRequest.of(0, limit * 2)).getContent()
                 .stream()
                 .sorted((p1, p2) -> {
                     BigDecimal discount1 = p1.getDiscountAmount();
                     BigDecimal discount2 = p2.getDiscountAmount();
-                    return discount2.compareTo(discount1); // Сортировка по убыванию скидки
+                    return discount2.compareTo(discount1);
                 })
                 .limit(limit)
                 .collect(Collectors.toList());
     }
 
-    // Метод для поиска товаров по нескольким критериям (упрощенный)
     public Page<Product> searchProductsAdvanced(String keyword, Long categoryId, Long brandId,
                                                 BigDecimal minPrice, BigDecimal maxPrice,
                                                 Pageable pageable) {
@@ -334,14 +302,12 @@ public class ProductService {
                 null, null, null, null, null, pageable);
     }
 
-    // Метод для обновления рейтинга товара
     public void updateProductRating(Long productId, Double newRating) {
         Product product = getProductById(productId);
         product.updateRating(newRating);
         productRepository.save(product);
     }
 
-    // Метод для получения новинок (созданных за последние 30 дней)
     public List<Product> getRecentArrivals(int limit) {
         LocalDateTime thirtyDaysAgo = LocalDateTime.now().minusDays(30);
         return productRepository.findByCreatedAtBetween(
@@ -349,24 +315,20 @@ public class ProductService {
         ).getContent();
     }
 
-    // Метод для получения товаров с низким запасом
     public List<Product> getLowStockProducts(int threshold) {
         return getAllActiveProducts().stream()
                 .filter(p -> p.getStockQuantity() <= threshold && p.getStockQuantity() > 0)
                 .collect(Collectors.toList());
     }
 
-    // Метод для получения товаров по популярности (просмотры + рейтинг)
     public Page<Product> getTrendingProducts(Pageable pageable) {
-        return getPopularProducts(pageable); // Можно улучшить логику
+        return getPopularProducts(pageable);
     }
 
-    // Метод для массового обновления товаров
     public void bulkUpdateProducts(List<Product> products) {
         productRepository.saveAll(products);
     }
 
-    // Метод для проверки уникальности названия товара
     public boolean isProductNameUnique(String name, Long excludeProductId) {
         List<Product> products = productRepository.findByNameContainingIgnoreCaseAndDeletedFalse(name, PageRequest.of(0, 1)).getContent();
         if (products.isEmpty()) {
@@ -379,13 +341,9 @@ public class ProductService {
         return productRepository.findByIdIgnoreDeleted(id)
                 .orElseThrow(() -> new IllegalArgumentException("Товар с ID " + id + " не найден"));
     }
-    // Метод для получения товаров с определенным тегом и аудиторией
     public Page<Product> getProductsByTagAndAudience(ProductTag tag, TargetAudience audience, Pageable pageable) {
         return filterProducts(null, null, null, null, null, null, null, null, audience, tag, pageable);
     }
-// === ДОБАВИТЬ В ProductService.java ===
-
-    // Архив
     public Page<Product> getArchivedProducts(Pageable pageable) {
         return productRepository.findByDeletedTrue(pageable);
     }
@@ -396,7 +354,6 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    // Статистика
     public long getTotalProductsCount() {
         return productRepository.count();
     }
@@ -409,7 +366,6 @@ public class ProductService {
         return productRepository.countByDeletedTrue();
     }
 
-    // Экспорт
     public List<Product> getProductsForExport(String search, Long categoryId, Long brandId, Double minPrice, Double maxPrice) {
         BigDecimal minPriceBigDecimal = minPrice != null ? BigDecimal.valueOf(minPrice) : null;
         BigDecimal maxPriceBigDecimal = maxPrice != null ? BigDecimal.valueOf(maxPrice) : null;
@@ -439,13 +395,11 @@ public class ProductService {
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Товары");
 
-            // Стиль для заголовков
             CellStyle headerStyle = workbook.createCellStyle();
             Font headerFont = workbook.createFont();
             headerFont.setBold(true);
             headerStyle.setFont(headerFont);
 
-            // Заголовки
             Row headerRow = sheet.createRow(0);
             String[] headers = {"ID", "Название", "Цена", "Количество", "Категория", "Бренд", "Статус"};
             for (int i = 0; i < headers.length; i++) {
@@ -454,7 +408,6 @@ public class ProductService {
                 cell.setCellStyle(headerStyle);
             }
 
-            // Данные
             int rowNum = 1;
             for (Product product : products) {
                 Row row = sheet.createRow(rowNum++);
@@ -467,7 +420,6 @@ public class ProductService {
                 row.createCell(6).setCellValue(product.isDeleted() ? "Архив" : "Активен");
             }
 
-            // Авто-размер колонок
             for (int i = 0; i < headers.length; i++) {
                 sheet.autoSizeColumn(i);
             }
@@ -477,7 +429,6 @@ public class ProductService {
     }
 
     public void exportToPdf(List<Product> products, HttpServletResponse response) throws IOException {
-        // Для простоты делаем текстовый PDF
         response.setCharacterEncoding("UTF-8");
 
         StringBuilder pdfContent = new StringBuilder();
@@ -517,7 +468,6 @@ public class ProductService {
     public Product createProduct(Product product, HttpServletRequest request) {
         Product savedProduct = productRepository.save(product);
 
-        // Логируем создание
         auditService.logAction("CREATE", "PRODUCT", savedProduct.getId(),
                 null, JsonUtils.toJson(savedProduct), request);
 
@@ -527,10 +477,8 @@ public class ProductService {
     public Product updateProduct(Long id, Product productDetails, HttpServletRequest request) {
         Product product = getProductById(id);
 
-        // Сохраняем старые значения
         String oldValues = JsonUtils.toJson(product);
 
-        // Обновляем поля
         product.setName(productDetails.getName());
         product.setDescription(productDetails.getDescription());
         product.setPrice(productDetails.getPrice());
@@ -545,7 +493,6 @@ public class ProductService {
 
         Product savedProduct = productRepository.save(product);
 
-        // Логируем изменение
         String newValues = JsonUtils.toJson(savedProduct);
         auditService.logAction("UPDATE", "PRODUCT", id, oldValues, newValues, request);
 

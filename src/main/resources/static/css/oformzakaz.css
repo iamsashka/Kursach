@@ -1,4 +1,3 @@
-/* Переменные для темы */
 :root {
     --tareno-black: #000000;
     --tareno-white: #ffffff;
@@ -23,7 +22,6 @@
     --tareno-shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.4);
 }
 
-/* Основные стили */
 body {
     background-color: var(--tareno-white);
     color: var(--tareno-black);
@@ -34,14 +32,12 @@ body {
     padding: 0;
 }
 
-/* Контейнер */
 .container.mt-4 {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 15px;
 }
 
-/* Заголовок */
 h1 {
     font-weight: 300;
     font-size: 2.2rem;
@@ -54,7 +50,6 @@ h1 {
     padding-bottom: 1rem;
 }
 
-/* Сетка */
 .row {
     display: flex;
     flex-wrap: wrap;
@@ -67,7 +62,6 @@ h1 {
     padding: 0 15px;
 }
 
-/* Карточки */
 .card {
     border: 1px solid var(--tareno-border);
     border-radius: 0;
@@ -101,7 +95,6 @@ h1 {
     background: var(--tareno-white);
 }
 
-/* Форма */
 form {
     width: 100%;
 }
@@ -114,7 +107,6 @@ form {
     margin-bottom: 2rem;
 }
 
-/* Радиокнопки */
 .form-check {
     margin-bottom: 1rem;
     display: flex;
@@ -144,7 +136,6 @@ form {
     margin-left: 0.25rem;
 }
 
-/* Поля формы */
 .form-label {
     font-weight: 500;
     font-size: 0.9rem;
@@ -174,14 +165,12 @@ form {
     outline: none;
 }
 
-/* Текстовое поле */
 textarea.form-control {
     resize: vertical;
     min-height: 100px;
     font-family: inherit;
 }
 
-/* Вспомогательный текст */
 .form-text {
     font-size: 0.85rem;
     color: var(--tareno-gray);
@@ -189,7 +178,6 @@ textarea.form-control {
     display: block;
 }
 
-/* Кнопки */
 .d-grid {
     display: flex;
     gap: 1rem;
@@ -260,7 +248,6 @@ textarea.form-control {
     font-size: 1rem;
 }
 
-/* Анимация появления поля email */
 .mb-3[th\\:if] {
     animation: fadeIn 0.5s ease;
 }
@@ -276,7 +263,6 @@ textarea.form-control {
     }
 }
 
-/* Адаптивность */
 @media (max-width: 992px) {
     .col-md-8 {
         flex: 0 0 100%;
@@ -353,7 +339,6 @@ textarea.form-control {
     }
 }
 
-/* Улучшенная доступность */
 .btn:focus,
 .form-control:focus,
 .form-select:focus,
@@ -369,13 +354,11 @@ textarea.form-control {
     box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
 }
 
-/* Стили для placeholder */
 .form-control::placeholder {
     color: var(--tareno-gray);
     opacity: 0.7;
 }
 
-/* Обязательные поля */
 .form-control:required,
 .form-select:required {
     border-left: 3px solid var(--tareno-black);
@@ -386,7 +369,6 @@ textarea.form-control {
     border-left-color: var(--tareno-white);
 }
 
-/* Специфичные стили для темной темы */
 [data-theme="dark"] body {
     background-color: var(--tareno-white);
 }
@@ -395,7 +377,6 @@ textarea.form-control {
     background-color: var(--tareno-white);
 }
 
-/* Стили для выпадающего списка */
 .form-select {
     appearance: none;
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
@@ -408,7 +389,6 @@ textarea.form-control {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23a0a0a0' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
 }
 
-/* Стили для опций select */
 .form-select option {
     background-color: var(--tareno-white);
     color: var(--tareno-black);

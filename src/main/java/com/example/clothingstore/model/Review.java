@@ -39,7 +39,6 @@ public class Review {
 
     private boolean approved = false;
 
-    // Constructors, Getters, Setters
     public Review() {}
 
     public Review(String comment, Integer rating, User user, Product product) {
@@ -49,7 +48,6 @@ public class Review {
         this.product = product;
     }
 
-    // Getters and Setters...
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getComment() { return comment; }

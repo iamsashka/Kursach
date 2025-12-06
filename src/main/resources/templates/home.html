@@ -89,14 +89,11 @@
                 <div class="tareno-product-card h-100">
                     <div class="tareno-product-image-container">
                         <div class="tareno-product-image position-relative">
-                            <!-- Реальное изображение продукта -->
                             <img th:if="${product.hasImage}"
                                  th:src="${product.imageUrl}"
                                  th:alt="${product.name}"
                                  class="w-100 h-100"
                                  onerror="handleImageError(this)">
-
-                            <!-- Заглушка если нет изображения -->
                             <div th:unless="${product.hasImage}" class="w-100 h-100 d-flex align-items-center justify-content-center bg-light">
                                 <i class="fas fa-shopping-bag fa-2x text-muted"></i>
                             </div>
@@ -123,8 +120,6 @@
         </div>
     </div>
 </section>
-
-<!-- Категории -->
 <section class="tareno-categories">
     <div class="container">
         <div class="tareno-section-header text-center">
@@ -183,8 +178,6 @@
         </div>
     </div>
 </section>
-
-<!-- Хиты продаж -->
 <section class="tareno-section tareno-section-alt" th:if="${bestSellers != null and !bestSellers.isEmpty()}">
     <div class="container">
         <div class="tareno-section-header text-center">
@@ -227,8 +220,6 @@
         </div>
     </div>
 </section>
-
-<!-- Преимущества -->
 <section class="tareno-benefits">
     <div class="container">
         <div class="tareno-section-header text-center">
@@ -265,8 +256,6 @@
         </div>
     </div>
 </section>
-
-<!-- Рассылка -->
 <section class="tareno-newsletter">
     <div class="container">
         <div class="row align-items-center">
